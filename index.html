@@ -434,9 +434,10 @@
                 name: getCityName(tz),
                 region: tz.split('/')[0],
                 offset: getTimezoneOffset(tz),
+                offsetMinutes: getTimezoneOffsetMinutes(tz), // add numeric offset for sorting
                 popular: true
             }));
-
+        
             // Add more timezones
             const additionalTimezones = [
                 'Asia/Tbilisi', 'Asia/Yerevan', 'Asia/Baku', 'Europe/Helsinki', 'Europe/Stockholm',
@@ -444,7 +445,7 @@
                 'America/Vancouver', 'America/Montreal', 'America/Phoenix', 'America/Las_Vegas',
                 'Pacific/Honolulu', 'Asia/Kolkata', 'Asia/Karachi', 'Asia/Tashkent', 'Asia/Almaty'
             ];
-
+        
             additionalTimezones.forEach(tz => {
                 if (!allTimezones.find(t => t.id === tz)) {
                     allTimezones.push({
@@ -452,18 +453,20 @@
                         name: getCityName(tz),
                         region: tz.split('/')[0],
                         offset: getTimezoneOffset(tz),
+                        offsetMinutes: getTimezoneOffsetMinutes(tz),
                         popular: false
                     });
                 }
             });
-
-            // Sort by popularity first, then by name
+        
+            // ✅ Sort by offset first, then name
             allTimezones.sort((a, b) => {
-                if (a.popular && !b.popular) return -1;
-                if (!a.popular && b.popular) return 1;
-                return a.name.localeCompare(b.name);
+                if (a.offsetMinutes !== b.offsetMinutes) {
+                    return a.offsetMinutes - b.offsetMinutes; // sort by GMT offset
+                }
+                return a.name.localeCompare(b.name); // fallback: alphabetical within same offset
             });
-
+        
             displayTimezones(allTimezones);
         }
 
