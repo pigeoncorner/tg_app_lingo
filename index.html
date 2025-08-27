@@ -1,4 +1,98 @@
-<!DOCTYPE html>
+        <!-- Page: Timezone Settings -->
+        <div class="page" id="timezonePage">
+            <div class="current-time">
+                <h2>Current Time</h2>
+                <div class="time-display" id="currentTime">--:--:--</div>
+                <div class="timezone-display" id="currentTimezone">Loading...</div>
+            </div>
+
+            <div class="timezone-section">
+                <div class="section-title">Quick Setup</div>
+                <button class="auto-detect" onclick="autoDetectTimezone()">
+                    🎯 Auto-detect my timezone
+                </button>
+                
+                <div class="section-title">Or choose manually</div>
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        id="searchInput" 
+                        placeholder="Search for city or timezone..."
+                        oninput="filterTimezones()"
+                    >
+                </div>
+                
+                <div id="messages"></div>
+                
+                <div class="timezone-list" id="timezoneList">
+                    <div class="loading">Loading timezones...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Page: Settings -->
+        <div class="page hidden" id="settingsPage">
+            <div class="timezone-section">
+                <div class="section-title">Display Settings</div>
+                
+                <div class="setting-item">
+                    <label class="setting-label">
+                        <input type="checkbox" id="use24Hour" checked onchange="updateTimeFormat()">
+                        <span class="checkmark"></span>
+                        Use 24-hour format
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <label class="setting-label">
+                        <input type="checkbox" id="showSeconds" checked onchange="updateTimeFormat()">
+                        <span class="checkmark"></span>
+                        Show seconds
+                    </label>
+                </div>
+                
+                <div class="setting-item">
+                    <label class="setting-label">
+                        <input type="checkbox" id="autoRefresh" checked onchange="toggleAutoRefresh()">
+                        <span class="checkmark"></span>
+                        Auto-refresh time
+                    </label>
+                </div>
+
+                <div class="section-title">Notification Settings</div>
+                
+                <div class="setting-item">
+                    <label class="setting-label">
+                        <input type="checkbox" id="enableNotifications" onchange="toggleNotifications()">
+                        <span class="checkmark"></span>
+                        Enable timezone change notifications
+                    </label>
+                </div>
+
+                <div class="section-title">Data Management</div>
+                <button class="danger-button" onclick="clearAllData()">
+                    🗑️ Clear All Data
+                </button>
+            </div>
+        </div>
+
+        <!-- Page: About -->
+        <div class="page hidden" id="aboutPage">
+            <div class="timezone-section">
+                <div class="section-title">About This App</div>
+                <p class="about-text">
+                    This timezone miniapp helps you set and manage your timezone preferences 
+                    for better time display across your Telegram bot interactions.
+                </p>
+                
+                <div class="section-title">Features</div>
+                <ul class="feature-list">
+                    <li>🎯 Auto-detect your current timezone</li>
+                    <li>🔍 Search from hundreds of timezones</li>
+                    <li>⏰ Real-time preview</li>
+                    <li>📱 Mobile-friendly interface</li>
+                    <li>🎨 Adapts to your Telegram theme</li<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -220,8 +314,15 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌍 Set Your Timezone</h1>
-            <p>Choose your timezone for accurate time display</p>
+            <h1 id="pageTitle">🌍 Set Your Timezone</h1>
+            <p id="pageSubtitle">Choose your timezone for accurate time display</p>
+        </div>
+
+        <!-- Navigation Menu -->
+        <div class="nav-menu" id="navMenu">
+            <button class="nav-button active" onclick="showPage('timezone')">🌍 Timezone</button>
+            <button class="nav-button" onclick="showPage('settings')">⚙️ Settings</button>
+            <button class="nav-button" onclick="showPage('about')">ℹ️ About</button>
         </div>
 
         <div class="current-time">
@@ -287,15 +388,49 @@
         function getTimezoneOffset(timezone) {
             try {
                 const now = new Date();
-                const utc = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
-                const targetTime = new Date(utc.toLocaleString("en-US", {timeZone: timezone}));
-                const offset = (targetTime.getTime() - utc.getTime()) / (1000 * 60 * 60);
-                const sign = offset >= 0 ? '+' : '';
-                const hours = Math.floor(Math.abs(offset));
-                const minutes = Math.round((Math.abs(offset) - hours) * 60);
-                return `UTC${sign}${offset >= 0 ? hours : -hours}${minutes > 0 ? ':' + minutes.toString().padStart(2, '0') : ''}`;
+                
+                // Create a date formatter for the target timezone
+                const formatter = new Intl.DateTimeFormat('en', {
+                    timeZone: timezone,
+                    timeZoneName: 'longOffset'
+                });
+                
+                // Get the offset string directly from Intl
+                const parts = formatter.formatToParts(now);
+                const offsetPart = parts.find(part => part.type === 'timeZoneName');
+                
+                if (offsetPart && offsetPart.value) {
+                    // Convert GMT±XX:XX to UTC±XX:XX format
+                    return offsetPart.value.replace('GMT', 'UTC');
+                }
+                
+                // Fallback method if Intl doesn't work
+                const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+                const targetTime = new Date(utcTime + (getTimezoneOffsetMinutes(timezone) * 60000));
+                const offsetMinutes = (targetTime.getTime() - utcTime) / (1000 * 60);
+                const offsetHours = Math.floor(Math.abs(offsetMinutes) / 60);
+                const offsetMins = Math.abs(offsetMinutes) % 60;
+                const sign = offsetMinutes >= 0 ? '+' : '-';
+                
+                if (offsetMins === 0) {
+                    return `UTC${sign}${offsetHours}`;
+                } else {
+                    return `UTC${sign}${offsetHours}:${offsetMins.toString().padStart(2, '0')}`;
+                }
             } catch (e) {
                 return 'UTC+0';
+            }
+        }
+        
+        // Helper function to get timezone offset in minutes
+        function getTimezoneOffsetMinutes(timezone) {
+            try {
+                const now = new Date();
+                const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
+                const tzDate = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+                return (tzDate.getTime() - utcDate.getTime()) / (1000 * 60);
+            } catch (e) {
+                return 0;
             }
         }
 
