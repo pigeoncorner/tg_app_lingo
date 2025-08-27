@@ -1,4 +1,4 @@
-        <!-- Page: Timezone Settings -->
+<!-- Page: Timezone Settings -->
         <div class="page" id="timezonePage">
             <div class="current-time">
                 <h2>Current Time</h2>
@@ -385,22 +385,53 @@
         }
 
         // Get timezone offset string
-        function getTimezoneOffset(tz) {
-            const now = new Date();
-            const formatter = new Intl.DateTimeFormat("en-US", {
-                timeZone: tz,
-                timeZoneName: "shortOffset"
-            });
-            const parts = formatter.formatToParts(now);
-            const offset = parts.find(p => p.type === "timeZoneName");
-            return offset ? offset.value.replace("UTC", "GMT") : "GMT";
+        function getTimezoneOffset(timezone) {
+            try {
+                const now = new Date();
+                
+                // Create a date formatter for the target timezone
+                const formatter = new Intl.DateTimeFormat('en', {
+                    timeZone: timezone,
+                    timeZoneName: 'longOffset'
+                });
+                
+                // Get the offset string directly from Intl
+                const parts = formatter.formatToParts(now);
+                const offsetPart = parts.find(part => part.type === 'timeZoneName');
+                
+                if (offsetPart && offsetPart.value) {
+                    // Convert GMT±XX:XX to UTC±XX:XX format
+                    return offsetPart.value.replace('GMT', 'UTC');
+                }
+                
+                // Fallback method if Intl doesn't work
+                const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+                const targetTime = new Date(utcTime + (getTimezoneOffsetMinutes(timezone) * 60000));
+                const offsetMinutes = (targetTime.getTime() - utcTime) / (1000 * 60);
+                const offsetHours = Math.floor(Math.abs(offsetMinutes) / 60);
+                const offsetMins = Math.abs(offsetMinutes) % 60;
+                const sign = offsetMinutes >= 0 ? '+' : '-';
+                
+                if (offsetMins === 0) {
+                    return `UTC${sign}${offsetHours}`;
+                } else {
+                    return `UTC${sign}${offsetHours}:${offsetMins.toString().padStart(2, '0')}`;
+                }
+            } catch (e) {
+                return 'UTC+0';
+            }
         }
         
         // Helper function to get timezone offset in minutes
-        function getTimezoneOffsetMinutes(tz) {
-            const now = new Date();
-            const localTime = new Date(now.toLocaleString("en-US", { timeZone: tz }));
-            return (localTime - now) / 60000; // difference in minutes
+        function getTimezoneOffsetMinutes(timezone) {
+            try {
+                const now = new Date();
+                const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
+                const tzDate = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+                return (tzDate.getTime() - utcDate.getTime()) / (1000 * 60);
+            } catch (e) {
+                return 0;
+            }
         }
 
         // Load and display timezones
@@ -411,10 +442,9 @@
                 name: getCityName(tz),
                 region: tz.split('/')[0],
                 offset: getTimezoneOffset(tz),
-                offsetMinutes: getTimezoneOffsetMinutes(tz), // add numeric offset for sorting
                 popular: true
             }));
-        
+
             // Add more timezones
             const additionalTimezones = [
                 'Asia/Tbilisi', 'Asia/Yerevan', 'Asia/Baku', 'Europe/Helsinki', 'Europe/Stockholm',
@@ -422,7 +452,7 @@
                 'America/Vancouver', 'America/Montreal', 'America/Phoenix', 'America/Las_Vegas',
                 'Pacific/Honolulu', 'Asia/Kolkata', 'Asia/Karachi', 'Asia/Tashkent', 'Asia/Almaty'
             ];
-        
+
             additionalTimezones.forEach(tz => {
                 if (!allTimezones.find(t => t.id === tz)) {
                     allTimezones.push({
@@ -430,20 +460,18 @@
                         name: getCityName(tz),
                         region: tz.split('/')[0],
                         offset: getTimezoneOffset(tz),
-                        offsetMinutes: getTimezoneOffsetMinutes(tz),
                         popular: false
                     });
                 }
             });
-        
-            // ✅ Sort by offset first, then name
+
+            // Sort by popularity first, then by name
             allTimezones.sort((a, b) => {
-                if (a.offsetMinutes !== b.offsetMinutes) {
-                    return a.offsetMinutes - b.offsetMinutes; // sort by GMT offset
-                }
-                return a.name.localeCompare(b.name); // fallback: alphabetical within same offset
+                if (a.popular && !b.popular) return -1;
+                if (!a.popular && b.popular) return 1;
+                return a.name.localeCompare(b.name);
             });
-        
+
             displayTimezones(allTimezones);
         }
 
