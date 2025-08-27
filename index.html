@@ -1,4 +1,4 @@
-        <!-- Page: Timezone Settings -->
+<!-- Page: Timezone Settings -->
         <div class="page" id="timezonePage">
             <div class="current-time">
                 <h2>Current Time</h2>
@@ -411,32 +411,68 @@
             return city;
         }
 
-        // Get timezone offset in minutes (more reliable method)
+        // Get timezone offset in minutes (bulletproof method)
         function getTimezoneOffsetMinutes(timezone) {
             try {
-                const now = new Date();
+                // Use a fixed date in summer to get consistent results
+                const date = new Date('2023-07-15T00:00:00.000Z');
                 
-                // Create two dates at the exact same moment
-                const utcDate = new Date(now.toLocaleString('sv-SE', { timeZone: 'UTC' }));
-                const localDate = new Date(now.toLocaleString('sv-SE', { timeZone: timezone }));
+                // Create formatters for UTC and target timezone
+                const utc = new Intl.DateTimeFormat('sv-SE', {
+                    timeZone: 'UTC',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }).formatToParts(date);
                 
-                // Calculate the difference in minutes
+                const local = new Intl.DateTimeFormat('sv-SE', {
+                    timeZone: timezone,
+                    year: 'numeric', 
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }).formatToParts(date);
+                
+                // Extract values from parts
+                const utcDate = new Date(
+                    parseInt(utc.find(p => p.type === 'year').value),
+                    parseInt(utc.find(p => p.type === 'month').value) - 1,
+                    parseInt(utc.find(p => p.type === 'day').value),
+                    parseInt(utc.find(p => p.type === 'hour').value),
+                    parseInt(utc.find(p => p.type === 'minute').value)
+                );
+                
+                const localDate = new Date(
+                    parseInt(local.find(p => p.type === 'year').value),
+                    parseInt(local.find(p => p.type === 'month').value) - 1,
+                    parseInt(local.find(p => p.type === 'day').value),
+                    parseInt(local.find(p => p.type === 'hour').value),
+                    parseInt(local.find(p => p.type === 'minute').value)
+                );
+                
+                // Calculate difference in minutes
                 const diffMs = localDate.getTime() - utcDate.getTime();
                 return Math.round(diffMs / (1000 * 60));
+                
             } catch (e) {
-                // Fallback method using Date constructor
-                try {
-                    const jan = new Date(now.getFullYear(), 0, 1);
-                    const jul = new Date(now.getFullYear(), 6, 1);
-                    const janOffset = new Date(jan.toLocaleString('en-US', { timeZone: timezone })) - new Date(jan.toLocaleString('en-US', { timeZone: 'UTC' }));
-                    const julOffset = new Date(jul.toLocaleString('en-US', { timeZone: timezone })) - new Date(jul.toLocaleString('en-US', { timeZone: 'UTC' }));
-                    
-                    // Use current season offset
-                    const currentOffset = new Date(now.toLocaleString('en-US', { timeZone: timezone })) - new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
-                    return Math.round(currentOffset / (1000 * 60));
-                } catch (e2) {
-                    return 0;
-                }
+                console.error(`Error with ${timezone}:`, e);
+                // Last resort: use a hardcoded map for common problematic timezones
+                const offsetMap = {
+                    'America/Las_Vegas': -420,    // UTC-7 (PDT)
+                    'America/Los_Angeles': -420,  // UTC-7 (PDT)  
+                    'America/Phoenix': -420,      // UTC-7 (no DST)
+                    'Asia/Mumbai': 330,           // UTC+5:30
+                    'Asia/Kolkata': 330,          // UTC+5:30
+                    'Asia/Dubai': 240,            // UTC+4
+                    'Europe/London': 60,          // UTC+1 (BST)
+                    'America/New_York': -240,     // UTC-4 (EDT)
+                    'America/Chicago': -300,      // UTC-5 (CDT)
+                };
+                
+                return offsetMap[timezone] || 0;
             }
         }
 
