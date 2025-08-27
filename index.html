@@ -1,4 +1,4 @@
-<!-- Page: Timezone Settings -->
+        <!-- Page: Timezone Settings -->
         <div class="page" id="timezonePage">
             <div class="current-time">
                 <h2>Current Time</h2>
@@ -367,14 +367,41 @@
 
         // Popular timezones with major cities
         const popularTimezones = [
-            'America/New_York', 'America/Los_Angeles', 'America/Chicago', 'America/Denver',
-            'Europe/London', 'Europe/Paris', 'Europe/Berlin', 'Europe/Rome', 'Europe/Madrid',
-            'Europe/Moscow', 'Europe/Kiev', 'Europe/Istanbul',
-            'Asia/Tokyo', 'Asia/Shanghai', 'Asia/Seoul', 'Asia/Hong_Kong', 'Asia/Singapore',
-            'Asia/Mumbai', 'Asia/Dubai', 'Asia/Bangkok', 'Asia/Jakarta',
-            'Australia/Sydney', 'Australia/Melbourne', 'Pacific/Auckland',
-            'America/Toronto', 'America/Mexico_City', 'America/Sao_Paulo',
-            'Africa/Cairo', 'Africa/Lagos', 'Africa/Johannesburg'
+            'Pacific/Kiritimati',        // UTC+14 (Line Islands)
+            'Pacific/Auckland',          // UTC+12/+13 (New Zealand)
+            'Australia/Sydney',          // UTC+10/+11 (Australia)
+            'Australia/Melbourne',       // UTC+10/+11 (Australia)
+            'Asia/Tokyo',               // UTC+9 (Japan)
+            'Asia/Seoul',               // UTC+9 (South Korea)
+            'Asia/Shanghai',            // UTC+8 (China)
+            'Asia/Hong_Kong',           // UTC+8 (Hong Kong)
+            'Asia/Singapore',           // UTC+8 (Singapore)
+            'Asia/Bangkok',             // UTC+7 (Thailand)
+            'Asia/Jakarta',             // UTC+7 (Indonesia)
+            'Asia/Mumbai',              // UTC+5:30 (India)
+            'Asia/Kolkata',             // UTC+5:30 (India - same as Mumbai)
+            'Asia/Dubai',               // UTC+4 (UAE)
+            'Europe/Moscow',            // UTC+3 (Russia)
+            'Europe/Istanbul',          // UTC+3 (Turkey)
+            'Africa/Cairo',             // UTC+2 (Egypt)
+            'Europe/Berlin',            // UTC+1/+2 (Germany)
+            'Europe/Paris',             // UTC+1/+2 (France)
+            'Europe/Rome',              // UTC+1/+2 (Italy)
+            'Europe/Madrid',            // UTC+1/+2 (Spain)
+            'Europe/London',            // UTC+0/+1 (UK)
+            'Africa/Lagos',             // UTC+1 (Nigeria)
+            'Africa/Johannesburg',      // UTC+2 (South Africa)
+            'America/Sao_Paulo',        // UTC-3 (Brazil)
+            'America/New_York',         // UTC-5/-4 (US East)
+            'America/Chicago',          // UTC-6/-5 (US Central)
+            'America/Denver',           // UTC-7/-6 (US Mountain)
+            'America/Phoenix',          // UTC-7 (Arizona - no DST)
+            'America/Los_Angeles',      // UTC-8/-7 (US Pacific)
+            'America/Las_Vegas',        // UTC-8/-7 (Nevada)
+            'America/Vancouver',        // UTC-8/-7 (Canada Pacific)
+            'America/Anchorage',        // UTC-9/-8 (Alaska)
+            'Pacific/Honolulu',         // UTC-10 (Hawaii)
+            'Pacific/Midway'            // UTC-11 (Midway Island)
         ];
 
         // Get readable city name from timezone
@@ -389,18 +416,27 @@
             try {
                 const now = new Date();
                 
-                // Get UTC time
-                const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
+                // Create two dates at the exact same moment
+                const utcDate = new Date(now.toLocaleString('sv-SE', { timeZone: 'UTC' }));
+                const localDate = new Date(now.toLocaleString('sv-SE', { timeZone: timezone }));
                 
-                // Create date in target timezone
-                const targetDate = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
-                const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
-                
-                // Calculate difference in minutes
-                const diffMs = targetDate.getTime() - utcDate.getTime();
+                // Calculate the difference in minutes
+                const diffMs = localDate.getTime() - utcDate.getTime();
                 return Math.round(diffMs / (1000 * 60));
             } catch (e) {
-                return 0;
+                // Fallback method using Date constructor
+                try {
+                    const jan = new Date(now.getFullYear(), 0, 1);
+                    const jul = new Date(now.getFullYear(), 6, 1);
+                    const janOffset = new Date(jan.toLocaleString('en-US', { timeZone: timezone })) - new Date(jan.toLocaleString('en-US', { timeZone: 'UTC' }));
+                    const julOffset = new Date(jul.toLocaleString('en-US', { timeZone: timezone })) - new Date(jul.toLocaleString('en-US', { timeZone: 'UTC' }));
+                    
+                    // Use current season offset
+                    const currentOffset = new Date(now.toLocaleString('en-US', { timeZone: timezone })) - new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
+                    return Math.round(currentOffset / (1000 * 60));
+                } catch (e2) {
+                    return 0;
+                }
             }
         }
 
@@ -434,12 +470,24 @@
                 popular: true
             }));
 
-            // Add more timezones
+            // Add more timezones including extreme offsets
             const additionalTimezones = [
-                'Asia/Tbilisi', 'Asia/Yerevan', 'Asia/Baku', 'Europe/Helsinki', 'Europe/Stockholm',
-                'Europe/Warsaw', 'Europe/Prague', 'Europe/Vienna', 'Europe/Zurich', 'Europe/Amsterdam',
-                'America/Vancouver', 'America/Montreal', 'America/Phoenix', 'America/Las_Vegas',
-                'Pacific/Honolulu', 'Asia/Kolkata', 'Asia/Karachi', 'Asia/Tashkent', 'Asia/Almaty'
+                'Asia/Tbilisi', 'Asia/Yerevan', 'Asia/Baku', 
+                'Europe/Helsinki', 'Europe/Stockholm', 'Europe/Warsaw', 
+                'Europe/Prague', 'Europe/Vienna', 'Europe/Zurich', 'Europe/Amsterdam',
+                'Europe/Kiev', 'America/Toronto', 'America/Montreal', 'America/Mexico_City',
+                'Asia/Karachi', 'Asia/Tashkent', 'Asia/Almaty',
+                'Pacific/Samoa',        // UTC-11
+                'Pacific/Niue',         // UTC-11  
+                'Pacific/Marquesas',    // UTC-9:30
+                'Pacific/Gambier',      // UTC-9
+                'Pacific/Pitcairn',     // UTC-8
+                'Pacific/Easter',       // UTC-6/-5 (Easter Island)
+                'America/St_Johns',     // UTC-3:30 (Newfoundland)
+                'Atlantic/Cape_Verde',  // UTC-1
+                'Pacific/Chatham',      // UTC+12:45/+13:45
+                'Pacific/Tongatapu',    // UTC+13
+                'Pacific/Fakaofo'       // UTC+13
             ];
 
             additionalTimezones.forEach(tz => {
