@@ -385,45 +385,22 @@
         }
 
         // Get timezone offset string
-        function getTimezoneOffset(timezone) {
-            try {
-                const now = new Date();
-        
-                // Get the time in the given timezone as a Date object
-                const options = { timeZone: timezone };
-                const tzDateStr = now.toLocaleString('en-US', options);
-                const tzDate = new Date(tzDateStr);
-        
-                // Calculate offset in minutes
-                const offsetMinutes = (tzDate.getTime() - now.getTime()) / (60 * 1000);
-        
-                // Invert sign to match UTC/GMT convention
-                const totalMinutes = -offsetMinutes;
-                const sign = totalMinutes >= 0 ? '+' : '-';
-        
-                const absMinutes = Math.abs(totalMinutes);
-                const hours = Math.floor(absMinutes / 60)
-                    .toString()
-                    .padStart(2, '0');
-                const minutes = (absMinutes % 60).toString().padStart(2, '0');
-        
-                return `GMT${sign}${hours}:${minutes}`;
-            } catch (e) {
-                console.error('Offset error', e);
-                return 'GMT+00:00';
-            }
+        function getTimezoneOffset(tz) {
+            const now = new Date();
+            const formatter = new Intl.DateTimeFormat("en-US", {
+                timeZone: tz,
+                timeZoneName: "shortOffset"
+            });
+            const parts = formatter.formatToParts(now);
+            const offset = parts.find(p => p.type === "timeZoneName");
+            return offset ? offset.value.replace("UTC", "GMT") : "GMT";
         }
         
         // Helper function to get timezone offset in minutes
-        function getTimezoneOffsetMinutes(timezone) {
-            try {
-                const now = new Date();
-                const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
-                const tzDate = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
-                return (tzDate.getTime() - utcDate.getTime()) / (1000 * 60);
-            } catch (e) {
-                return 0;
-            }
+        function getTimezoneOffsetMinutes(tz) {
+            const now = new Date();
+            const localTime = new Date(now.toLocaleString("en-US", { timeZone: tz }));
+            return (localTime - now) / 60000; // difference in minutes
         }
 
         // Load and display timezones
