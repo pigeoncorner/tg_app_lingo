@@ -384,30 +384,30 @@
             return city;
         }
 
-        // Get timezone offset string
-        function getTimezoneOffset(timezone) {
+        // Get timezone offset in minutes (more reliable method)
+        function getTimezoneOffsetMinutes(timezone) {
             try {
                 const now = new Date();
                 
-                // Create a date formatter for the target timezone
-                const formatter = new Intl.DateTimeFormat('en', {
-                    timeZone: timezone,
-                    timeZoneName: 'longOffset'
-                });
-                
-                // Get the offset string directly from Intl
-                const parts = formatter.formatToParts(now);
-                const offsetPart = parts.find(part => part.type === 'timeZoneName');
-                
-                if (offsetPart && offsetPart.value) {
-                    // Convert GMT±XX:XX to UTC±XX:XX format
-                    return offsetPart.value.replace('GMT', 'UTC');
-                }
-                
-                // Fallback method if Intl doesn't work
+                // Get UTC time
                 const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
-                const targetTime = new Date(utcTime + (getTimezoneOffsetMinutes(timezone) * 60000));
-                const offsetMinutes = (targetTime.getTime() - utcTime) / (1000 * 60);
+                
+                // Create date in target timezone
+                const targetDate = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+                const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
+                
+                // Calculate difference in minutes
+                const diffMs = targetDate.getTime() - utcDate.getTime();
+                return Math.round(diffMs / (1000 * 60));
+            } catch (e) {
+                return 0;
+            }
+        }
+
+        // Get timezone offset string
+        function getTimezoneOffset(timezone) {
+            try {
+                const offsetMinutes = getTimezoneOffsetMinutes(timezone);
                 const offsetHours = Math.floor(Math.abs(offsetMinutes) / 60);
                 const offsetMins = Math.abs(offsetMinutes) % 60;
                 const sign = offsetMinutes >= 0 ? '+' : '-';
@@ -421,18 +421,6 @@
                 return 'UTC+0';
             }
         }
-        
-        // Helper function to get timezone offset in minutes
-        function getTimezoneOffsetMinutes(timezone) {
-            try {
-                const now = new Date();
-                const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
-                const tzDate = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
-                return (tzDate.getTime() - utcDate.getTime()) / (1000 * 60);
-            } catch (e) {
-                return 0;
-            }
-        }
 
         // Load and display timezones
         function loadTimezones() {
@@ -442,6 +430,7 @@
                 name: getCityName(tz),
                 region: tz.split('/')[0],
                 offset: getTimezoneOffset(tz),
+                offsetMinutes: getTimezoneOffsetMinutes(tz),
                 popular: true
             }));
 
@@ -460,15 +449,19 @@
                         name: getCityName(tz),
                         region: tz.split('/')[0],
                         offset: getTimezoneOffset(tz),
+                        offsetMinutes: getTimezoneOffsetMinutes(tz),
                         popular: false
                     });
                 }
             });
 
-            // Sort by popularity first, then by name
+            // Sort by UTC offset (from UTC-12 to UTC+12), then by name within same offset
             allTimezones.sort((a, b) => {
-                if (a.popular && !b.popular) return -1;
-                if (!a.popular && b.popular) return 1;
+                // First sort by offset
+                if (a.offsetMinutes !== b.offsetMinutes) {
+                    return a.offsetMinutes - b.offsetMinutes;
+                }
+                // If same offset, sort by name
                 return a.name.localeCompare(b.name);
             });
 
