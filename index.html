@@ -389,24 +389,28 @@
             try {
                 const now = new Date();
         
-                // Format with numeric offset
-                const formatter = new Intl.DateTimeFormat('en-US', {
-                    timeZone: timezone,
-                    timeZoneName: 'shortOffset'
-                });
+                // Get the time in the given timezone as a Date object
+                const options = { timeZone: timezone };
+                const tzDateStr = now.toLocaleString('en-US', options);
+                const tzDate = new Date(tzDateStr);
         
-                const parts = formatter.formatToParts(now);
-                const offsetPart = parts.find(p => p.type === 'timeZoneName');
+                // Calculate offset in minutes
+                const offsetMinutes = (tzDate.getTime() - now.getTime()) / (60 * 1000);
         
-                if (offsetPart && offsetPart.value) {
-                    // Example: "GMT+4" → "UTC+4"
-                    return offsetPart.value.replace('GMT', 'UTC');
-                }
+                // Invert sign to match UTC/GMT convention
+                const totalMinutes = -offsetMinutes;
+                const sign = totalMinutes >= 0 ? '+' : '-';
         
-                return 'UTC+0';
+                const absMinutes = Math.abs(totalMinutes);
+                const hours = Math.floor(absMinutes / 60)
+                    .toString()
+                    .padStart(2, '0');
+                const minutes = (absMinutes % 60).toString().padStart(2, '0');
+        
+                return `GMT${sign}${hours}:${minutes}`;
             } catch (e) {
                 console.error('Offset error', e);
-                return 'UTC+0';
+                return 'GMT+00:00';
             }
         }
         
