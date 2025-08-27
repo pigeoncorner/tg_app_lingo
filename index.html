@@ -388,34 +388,37 @@
         function getTimezoneOffset(timezone) {
             try {
                 const now = new Date();
-                
-                // Create a date formatter for the target timezone
+        
+                // Try native Intl API first
                 const formatter = new Intl.DateTimeFormat('en', {
                     timeZone: timezone,
                     timeZoneName: 'longOffset'
                 });
-                
-                // Get the offset string directly from Intl
                 const parts = formatter.formatToParts(now);
                 const offsetPart = parts.find(part => part.type === 'timeZoneName');
-                
+        
                 if (offsetPart && offsetPart.value) {
-                    // Convert GMT±XX:XX to UTC±XX:XX format
                     return offsetPart.value.replace('GMT', 'UTC');
                 }
-                
-                // Fallback method if Intl doesn't work
-                const utcTime = now.getTime() + (now.getTimezoneOffset() * 60000);
-                const targetTime = new Date(utcTime + (getTimezoneOffsetMinutes(timezone) * 60000));
-                const offsetMinutes = (targetTime.getTime() - utcTime) / (1000 * 60);
-                const offsetHours = Math.floor(Math.abs(offsetMinutes) / 60);
-                const offsetMins = Math.abs(offsetMinutes) % 60;
+        
+                // Fallback method
+                const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
+                const tzDate = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+                let offsetMinutes = (tzDate.getTime() - utcDate.getTime()) / (1000 * 60);
+        
+                // Round to nearest whole minute to avoid floating errors
+                offsetMinutes = Math.round(offsetMinutes);
+        
                 const sign = offsetMinutes >= 0 ? '+' : '-';
-                
-                if (offsetMins === 0) {
-                    return `UTC${sign}${offsetHours}`;
+                offsetMinutes = Math.abs(offsetMinutes);
+        
+                const hours = Math.floor(offsetMinutes / 60);
+                const minutes = offsetMinutes % 60;
+        
+                if (minutes === 0) {
+                    return `UTC${sign}${hours}`;
                 } else {
-                    return `UTC${sign}${offsetHours}:${offsetMins.toString().padStart(2, '0')}`;
+                    return `UTC${sign}${hours}:${minutes.toString().padStart(2, '0')}`;
                 }
             } catch (e) {
                 return 'UTC+0';
