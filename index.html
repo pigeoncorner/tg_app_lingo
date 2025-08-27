@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Your Timezone</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 100%;
+            padding: 16px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 16px 0;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--tg-theme-text-color, #000000);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.7;
+            color: var(--tg-theme-hint-color, #999999);
+        }
+
+        .timezone-section {
+            background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+        }
+
+        .current-time {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            color: white;
+        }
+
+        .current-time h2 {
+            font-size: 16px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .time-display {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .timezone-display {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--tg-theme-text-color, #000000);
+        }
+
+        .auto-detect {
+            background: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            width: 100%;
+            cursor: pointer;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+        }
+
+        .auto-detect:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .auto-detect:active {
+            transform: translateY(0);
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+            border-radius: 8px;
+            font-size: 16px;
+            background: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--tg-theme-button-color, #3390ec);
+            box-shadow: 0 0 0 2px rgba(51, 144, 236, 0.1);
+        }
+
+        .timezone-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+            border-radius: 8px;
+            background: var(--tg-theme-bg-color, #ffffff);
+        }
+
+        .timezone-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timezone-item:last-child {
+            border-bottom: none;
+        }
+
+        .timezone-item:hover {
+            background: var(--tg-theme-section-bg-color, #f8f9fa);
+        }
+
+        .timezone-item.selected {
+            background: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #ffffff);
+        }
+
+        .timezone-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .timezone-offset {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .selected .timezone-offset {
+            opacity: 0.9;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--tg-theme-hint-color, #999999);
+        }
+
+        .error {
+            background: #ff6b6b;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .success {
+            background: #51cf66;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 12px;
+            }
+            
+            .timezone-section {
+                padding: 16px;
+            }
+            
+            .time-display {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌍 Set Your Timezone</h1>
+            <p>Choose your timezone for accurate time display</p>
+        </div>
+
+        <div class="current-time">
+            <h2>Current Time</h2>
+            <div class="time-display" id="currentTime">--:--:--</div>
+            <div class="timezone-display" id="currentTimezone">Loading...</div>
+        </div>
+
+        <div class="timezone-section">
+            <div class="section-title">Quick Setup</div>
+            <button class="auto-detect" onclick="autoDetectTimezone()">
+                🎯 Auto-detect my timezone
+            </button>
+            
+            <div class="section-title">Or choose manually</div>
+            <div class="search-container">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="searchInput" 
+                    placeholder="Search for city or timezone..."
+                    oninput="filterTimezones()"
+                >
+            </div>
+            
+            <div id="messages"></div>
+            
+            <div class="timezone-list" id="timezoneList">
+                <div class="loading">Loading timezones...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        let selectedTimezone = null;
+        let allTimezones = [];
+
+        // Initialize the app
+        tg.ready();
+        tg.expand();
+
+        // Popular timezones with major cities
+        const popularTimezones = [
+            'America/New_York', 'America/Los_Angeles', 'America/Chicago', 'America/Denver',
+            'Europe/London', 'Europe/Paris', 'Europe/Berlin', 'Europe/Rome', 'Europe/Madrid',
+            'Europe/Moscow', 'Europe/Kiev', 'Europe/Istanbul',
+            'Asia/Tokyo', 'Asia/Shanghai', 'Asia/Seoul', 'Asia/Hong_Kong', 'Asia/Singapore',
+            'Asia/Mumbai', 'Asia/Dubai', 'Asia/Bangkok', 'Asia/Jakarta',
+            'Australia/Sydney', 'Australia/Melbourne', 'Pacific/Auckland',
+            'America/Toronto', 'America/Mexico_City', 'America/Sao_Paulo',
+            'Africa/Cairo', 'Africa/Lagos', 'Africa/Johannesburg'
+        ];
+
+        // Get readable city name from timezone
+        function getCityName(timezone) {
+            const parts = timezone.split('/');
+            const city = parts[parts.length - 1].replace(/_/g, ' ');
+            return city;
+        }
+
+        // Get timezone offset string
+        function getTimezoneOffset(timezone) {
+            try {
+                const now = new Date();
+                const utc = new Date(now.getTime() + (now.getTimezoneOffset() * 60000));
+                const targetTime = new Date(utc.toLocaleString("en-US", {timeZone: timezone}));
+                const offset = (targetTime.getTime() - utc.getTime()) / (1000 * 60 * 60);
+                const sign = offset >= 0 ? '+' : '';
+                const hours = Math.floor(Math.abs(offset));
+                const minutes = Math.round((Math.abs(offset) - hours) * 60);
+                return `UTC${sign}${offset >= 0 ? hours : -hours}${minutes > 0 ? ':' + minutes.toString().padStart(2, '0') : ''}`;
+            } catch (e) {
+                return 'UTC+0';
+            }
+        }
+
+        // Load and display timezones
+        function loadTimezones() {
+            // Create timezone list with popular ones first
+            allTimezones = popularTimezones.map(tz => ({
+                id: tz,
+                name: getCityName(tz),
+                region: tz.split('/')[0],
+                offset: getTimezoneOffset(tz),
+                popular: true
+            }));
+
+            // Add more timezones
+            const additionalTimezones = [
+                'Asia/Tbilisi', 'Asia/Yerevan', 'Asia/Baku', 'Europe/Helsinki', 'Europe/Stockholm',
+                'Europe/Warsaw', 'Europe/Prague', 'Europe/Vienna', 'Europe/Zurich', 'Europe/Amsterdam',
+                'America/Vancouver', 'America/Montreal', 'America/Phoenix', 'America/Las_Vegas',
+                'Pacific/Honolulu', 'Asia/Kolkata', 'Asia/Karachi', 'Asia/Tashkent', 'Asia/Almaty'
+            ];
+
+            additionalTimezones.forEach(tz => {
+                if (!allTimezones.find(t => t.id === tz)) {
+                    allTimezones.push({
+                        id: tz,
+                        name: getCityName(tz),
+                        region: tz.split('/')[0],
+                        offset: getTimezoneOffset(tz),
+                        popular: false
+                    });
+                }
+            });
+
+            // Sort by popularity first, then by name
+            allTimezones.sort((a, b) => {
+                if (a.popular && !b.popular) return -1;
+                if (!a.popular && b.popular) return 1;
+                return a.name.localeCompare(b.name);
+            });
+
+            displayTimezones(allTimezones);
+        }
+
+        // Display timezones in the list
+        function displayTimezones(timezones) {
+            const list = document.getElementById('timezoneList');
+            
+            if (timezones.length === 0) {
+                list.innerHTML = '<div class="loading">No timezones found</div>';
+                return;
+            }
+
+            list.innerHTML = timezones.map(tz => `
+                <div class="timezone-item" onclick="selectTimezone('${tz.id}')">
+                    <div class="timezone-name">${tz.name} (${tz.region.replace('_', ' ')})</div>
+                    <div class="timezone-offset">${tz.offset}</div>
+                </div>
+            `).join('');
+        }
+
+        // Filter timezones based on search
+        function filterTimezones() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = allTimezones.filter(tz => 
+                tz.name.toLowerCase().includes(query) || 
+                tz.id.toLowerCase().includes(query) ||
+                tz.region.toLowerCase().includes(query)
+            );
+            displayTimezones(filtered);
+        }
+
+        // Select a timezone
+        function selectTimezone(timezoneId) {
+            selectedTimezone = timezoneId;
+            
+            // Update UI
+            document.querySelectorAll('.timezone-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            event.target.closest('.timezone-item').classList.add('selected');
+            
+            // Update current time display
+            updateCurrentTime();
+            
+            // Send data back to bot
+            sendTimezoneToBot(timezoneId);
+        }
+
+        // Auto-detect timezone
+        function autoDetectTimezone() {
+            try {
+                const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                if (detectedTimezone) {
+                    selectTimezone(detectedTimezone);
+                    showMessage('✅ Timezone detected automatically!', 'success');
+                    
+                    // Scroll to show the detected timezone
+                    const selectedItem = document.querySelector('.selected');
+                    if (selectedItem) {
+                        selectedItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                } else {
+                    showMessage('❌ Could not detect timezone automatically', 'error');
+                }
+            } catch (error) {
+                showMessage('❌ Could not detect timezone automatically', 'error');
+            }
+        }
+
+        // Update current time display
+        function updateCurrentTime() {
+            const now = new Date();
+            const timezone = selectedTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+            
+            try {
+                const timeString = now.toLocaleTimeString('en-US', {
+                    timeZone: timezone,
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                
+                const cityName = getCityName(timezone);
+                const offset = getTimezoneOffset(timezone);
+                
+                document.getElementById('currentTime').textContent = timeString;
+                document.getElementById('currentTimezone').textContent = `${cityName} (${offset})`;
+            } catch (error) {
+                document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+                document.getElementById('currentTimezone').textContent = 'Local Time';
+            }
+        }
+
+        // Show message to user
+        function showMessage(text, type) {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML = `<div class="${type}">${text}</div>`;
+            setTimeout(() => {
+                messagesDiv.innerHTML = '';
+            }, 3000);
+        }
+
+        // Send timezone data to bot
+        function sendTimezoneToBot(timezone) {
+            const data = {
+                timezone: timezone,
+                cityName: getCityName(timezone),
+                offset: getTimezoneOffset(timezone),
+                timestamp: new Date().toISOString()
+            };
+            
+            // Send data to bot
+            tg.sendData(JSON.stringify(data));
+            
+            showMessage('✅ Timezone saved successfully!', 'success');
+            
+            // Close the miniapp after a short delay
+            setTimeout(() => {
+                tg.close();
+            }, 1500);
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTimezones();
+            updateCurrentTime();
+            
+            // Update time every second
+            setInterval(updateCurrentTime, 1000);
+            
+            // Auto-detect on load if no timezone selected
+            setTimeout(autoDetectTimezone, 1000);
+        });
+
+        // Handle back button
+        tg.BackButton.onClick(() => {
+            tg.close();
+        });
+    </script>
+</body>
+</html>
