@@ -233,6 +233,17 @@
             font-size: 14px;
         }
 
+        .debug {
+            background: #495057;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
         @media (max-width: 480px) {
             .container {
                 padding: 12px;
@@ -297,6 +308,12 @@
         // Initialize the app
         tg.ready();
         tg.expand();
+        
+        // Add debugging
+        console.log('Telegram WebApp initialized');
+        console.log('Platform:', tg.platform);
+        console.log('Version:', tg.version);
+        console.log('Init data:', tg.initData);
 
         // Popular timezones with major cities
         const popularTimezones = [
@@ -722,6 +739,12 @@
             submitButton.disabled = false;
             const cityName = selectedTimezone ? getCityName(selectedTimezone) : '';
             submitButton.textContent = `✅ Confirm ${cityName}`;
+            
+            // Also set up Telegram MainButton
+            if (selectedTimezone) {
+                tg.MainButton.setText(`Confirm ${cityName}`);
+                tg.MainButton.show();
+            }
         }
 
         // Submit timezone
@@ -740,145 +763,4 @@
                 const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
                 console.log('Detected timezone:', detectedTimezone);
                 
-                if (detectedTimezone) {
-                    // Check if the detected timezone exists in our list
-                    const foundTimezone = allTimezones.find(tz => tz.id === detectedTimezone);
-                    console.log('Found in timezone list:', foundTimezone);
-                    
-                    if (foundTimezone) {
-                        console.log('Selecting timezone:', detectedTimezone);
-                        selectTimezone(detectedTimezone, false); // Don't auto-submit
-                        showMessage('✅ Timezone detected automatically: ' + getCityName(detectedTimezone), 'success');
-                        
-                        // Scroll to show the detected timezone
-                        setTimeout(() => {
-                            const selectedItem = document.querySelector('.selected');
-                            console.log('Selected item found:', selectedItem);
-                            if (selectedItem) {
-                                selectedItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }
-                        }, 100);
-                    } else {
-                        console.log('Timezone not found in list, but detection worked');
-                        // Even if not in list, we can still use it for time display
-                        selectedTimezone = detectedTimezone;
-                        updateCurrentTime();
-                        enableSubmitButton();
-                        showMessage('✅ Timezone detected: ' + getCityName(detectedTimezone) + ' (not in selection list)', 'success');
-                    }
-                } else {
-                    console.log('No timezone detected');
-                    showMessage('❌ Could not detect timezone automatically', 'error');
-                }
-            } catch (error) {
-                console.error('Auto-detect error:', error);
-                showMessage('❌ Error during timezone detection: ' + error.message, 'error');
-            }
-        }
-
-        // Update current time display
-        function updateCurrentTime() {
-            const now = new Date();
-            const timezone = selectedTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
-            
-            try {
-                const timeString = now.toLocaleTimeString('en-US', {
-                    timeZone: timezone,
-                    hour12: false,
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                });
-                
-                const cityName = getCityName(timezone);
-                const offset = getTimezoneOffset(timezone);
-                
-                document.getElementById('currentTime').textContent = timeString;
-                document.getElementById('currentTimezone').textContent = `${cityName} (${offset})`;
-            } catch (error) {
-                document.getElementById('currentTime').textContent = now.toLocaleTimeString();
-                document.getElementById('currentTimezone').textContent = 'Local Time';
-            }
-        }
-
-        // Show message to user
-        function showMessage(text, type) {
-            const messagesDiv = document.getElementById('messages');
-            messagesDiv.innerHTML = `<div class="${type}">${text}</div>`;
-            setTimeout(() => {
-                messagesDiv.innerHTML = '';
-            }, 3000);
-        }
-
-        // Send timezone data to bot
-        function sendTimezoneToBot(timezone) {
-            const data = {
-                timezone: timezone,
-                cityName: getCityName(timezone),
-                offset: getTimezoneOffset(timezone),
-                timestamp: new Date().toISOString()
-            };
-            
-            console.log('Sending data to bot:', data);
-            showDebug(`Sending: ${JSON.stringify(data).substring(0, 100)}...`);
-            
-            // Debug bot ID info
-            const botIdMatch = tg.initData ? tg.initData.match(/bot=(\d+)/) : null;
-            if (botIdMatch) {
-                showDebug(`Target Bot ID: ${botIdMatch[1]}`);
-                console.log('Target Bot ID:', botIdMatch[1]);
-            } else {
-                showDebug('No bot ID found in init data');
-                console.log('Init data:', tg.initData);
-            }
-            
-            // Method 1: Try sendData first
-            try {
-                tg.sendData(JSON.stringify(data));
-                console.log('Data sent via sendData');
-                showDebug('✓ sendData() called successfully');
-                showMessage('✅ Timezone saved successfully!', 'success');
-                
-                setTimeout(() => {
-                    showDebug('Closing app...');
-                    tg.close();
-                }, 1500);
-            } catch (error) {
-                console.error('sendData failed:', error);
-                showDebug(`✗ sendData failed: ${error.message}`);
-                
-                // Method 2: Fallback to MainButton
-                tg.MainButton.setText('✅ Confirm Timezone');
-                tg.MainButton.show();
-                showDebug('Fallback to MainButton');
-                tg.MainButton.onClick(() => {
-                    console.log('MainButton clicked, sending data');
-                    showDebug('MainButton clicked');
-                    tg.sendData(JSON.stringify(data));
-                    tg.close();
-                });
-            }
-        }
-
-
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
-            loadTimezones();
-            updateCurrentTime();
-            
-            // Update time every second
-            setInterval(updateCurrentTime, 1000);
-            
-            // Auto-detect on load if no timezone selected (but don't auto-submit)
-            setTimeout(() => {
-                autoDetectTimezone();
-            }, 1000);
-        });
-
-        // Handle back button
-        tg.BackButton.onClick(() => {
-            tg.close();
-        });
-    </script>
-</body>
-</html>
+                if (det
