@@ -139,6 +139,37 @@
             border: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
             border-radius: 8px;
             background: var(--tg-theme-bg-color, #ffffff);
+            margin-bottom: 20px;
+        }
+
+        .submit-button {
+            background: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            border-radius: 8px;
+            padding: 14px 16px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+
+        .submit-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .submit-button:disabled {
+            background: var(--tg-theme-hint-color, #999999);
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none;
         }
 
         .timezone-item {
@@ -251,6 +282,10 @@
             <div class="timezone-list" id="timezoneList">
                 <div class="loading">Loading timezones...</div>
             </div>
+            
+            <button class="submit-button" id="submitButton" onclick="submitTimezone()" disabled>
+                ✅ Confirm & Set Timezone
+            </button>
         </div>
     </div>
 
@@ -589,7 +624,7 @@
             }
 
             list.innerHTML = timezones.map(tz => `
-                <div class="timezone-item" onclick="selectTimezone('${tz.id}')">
+                <div class="timezone-item" onclick="selectTimezone('${tz.id}', true)">
                     <div class="timezone-name">${tz.name} (${tz.country})</div>
                     <div class="timezone-offset">${tz.offset}</div>
                 </div>
@@ -642,7 +677,7 @@
         }
 
         // Select a timezone
-        function selectTimezone(timezoneId) {
+        function selectTimezone(timezoneId, autoSubmit = false) {
             console.log('Selecting timezone:', timezoneId);
             selectedTimezone = timezoneId;
             
@@ -672,8 +707,30 @@
             // Update current time display
             updateCurrentTime();
             
-            // Send data back to bot
-            sendTimezoneToBot(timezoneId);
+            // Enable submit button
+            enableSubmitButton();
+            
+            // Only auto-submit if explicitly requested (for manual clicks)
+            if (autoSubmit) {
+                sendTimezoneToBot(timezoneId);
+            }
+        }
+
+        // Enable submit button
+        function enableSubmitButton() {
+            const submitButton = document.getElementById('submitButton');
+            submitButton.disabled = false;
+            const cityName = selectedTimezone ? getCityName(selectedTimezone) : '';
+            submitButton.textContent = `✅ Confirm ${cityName}`;
+        }
+
+        // Submit timezone
+        function submitTimezone() {
+            if (selectedTimezone) {
+                sendTimezoneToBot(selectedTimezone);
+            } else {
+                showMessage('❌ Please select a timezone first', 'error');
+            }
         }
 
         // Auto-detect timezone
@@ -690,7 +747,7 @@
                     
                     if (foundTimezone) {
                         console.log('Selecting timezone:', detectedTimezone);
-                        selectTimezone(detectedTimezone);
+                        selectTimezone(detectedTimezone, false); // Don't auto-submit
                         showMessage('✅ Timezone detected automatically: ' + getCityName(detectedTimezone), 'success');
                         
                         // Scroll to show the detected timezone
@@ -706,6 +763,7 @@
                         // Even if not in list, we can still use it for time display
                         selectedTimezone = detectedTimezone;
                         updateCurrentTime();
+                        enableSubmitButton();
                         showMessage('✅ Timezone detected: ' + getCityName(detectedTimezone) + ' (not in selection list)', 'success');
                     }
                 } else {
@@ -780,8 +838,10 @@
             // Update time every second
             setInterval(updateCurrentTime, 1000);
             
-            // Auto-detect on load if no timezone selected
-            setTimeout(autoDetectTimezone, 1000);
+            // Auto-detect on load if no timezone selected (but don't auto-submit)
+            setTimeout(() => {
+                autoDetectTimezone();
+            }, 1000);
         });
 
         // Handle back button
