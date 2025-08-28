@@ -494,6 +494,8 @@
 
         // Load and display timezones
         function loadTimezones() {
+            console.log('Loading timezones...');
+            
             // Create timezone list with popular ones first
             allTimezones = popularTimezones.map(tz => ({
                 id: tz,
@@ -503,6 +505,8 @@
                 offsetMinutes: getTimezoneOffsetMinutes(tz),
                 popular: true
             }));
+
+            console.log('Popular timezones loaded:', allTimezones.length);
 
             // Add more timezones including extreme offsets
             const additionalTimezones = [
@@ -568,6 +572,9 @@
                 // If same offset, sort by name
                 return a.name.localeCompare(b.name);
             });
+
+            console.log('Total timezones after sorting:', allTimezones.length);
+            console.log('All timezone IDs:', allTimezones.map(tz => tz.id));
 
             displayTimezones(allTimezones);
         }
@@ -636,13 +643,31 @@
 
         // Select a timezone
         function selectTimezone(timezoneId) {
+            console.log('Selecting timezone:', timezoneId);
             selectedTimezone = timezoneId;
             
             // Update UI
             document.querySelectorAll('.timezone-item').forEach(item => {
                 item.classList.remove('selected');
             });
-            event.target.closest('.timezone-item').classList.add('selected');
+            
+            // Find and highlight the timezone item
+            const timezoneItems = document.querySelectorAll('.timezone-item');
+            let found = false;
+            timezoneItems.forEach(item => {
+                const itemText = item.textContent;
+                const cityName = getCityName(timezoneId);
+                console.log('Checking item:', itemText, 'against city:', cityName);
+                if (itemText.includes(cityName)) {
+                    item.classList.add('selected');
+                    found = true;
+                    console.log('Found and selected item');
+                }
+            });
+            
+            if (!found) {
+                console.log('Timezone item not found in current list for highlighting');
+            }
             
             // Update current time display
             updateCurrentTime();
@@ -654,21 +679,42 @@
         // Auto-detect timezone
         function autoDetectTimezone() {
             try {
+                console.log('Starting auto-detection...');
                 const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                console.log('Detected timezone:', detectedTimezone);
+                
                 if (detectedTimezone) {
-                    selectTimezone(detectedTimezone);
-                    showMessage('✅ Timezone detected automatically!', 'success');
+                    // Check if the detected timezone exists in our list
+                    const foundTimezone = allTimezones.find(tz => tz.id === detectedTimezone);
+                    console.log('Found in timezone list:', foundTimezone);
                     
-                    // Scroll to show the detected timezone
-                    const selectedItem = document.querySelector('.selected');
-                    if (selectedItem) {
-                        selectedItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    if (foundTimezone) {
+                        console.log('Selecting timezone:', detectedTimezone);
+                        selectTimezone(detectedTimezone);
+                        showMessage('✅ Timezone detected automatically: ' + getCityName(detectedTimezone), 'success');
+                        
+                        // Scroll to show the detected timezone
+                        setTimeout(() => {
+                            const selectedItem = document.querySelector('.selected');
+                            console.log('Selected item found:', selectedItem);
+                            if (selectedItem) {
+                                selectedItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        }, 100);
+                    } else {
+                        console.log('Timezone not found in list, but detection worked');
+                        // Even if not in list, we can still use it for time display
+                        selectedTimezone = detectedTimezone;
+                        updateCurrentTime();
+                        showMessage('✅ Timezone detected: ' + getCityName(detectedTimezone) + ' (not in selection list)', 'success');
                     }
                 } else {
+                    console.log('No timezone detected');
                     showMessage('❌ Could not detect timezone automatically', 'error');
                 }
             } catch (error) {
-                showMessage('❌ Could not detect timezone automatically', 'error');
+                console.error('Auto-detect error:', error);
+                showMessage('❌ Error during timezone detection: ' + error.message, 'error');
             }
         }
 
