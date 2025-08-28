@@ -624,7 +624,7 @@
             }
 
             list.innerHTML = timezones.map(tz => `
-                <div class="timezone-item" onclick="selectTimezone('${tz.id}', true)">
+                <div class="timezone-item" onclick="selectTimezone('${tz.id}', false)">
                     <div class="timezone-name">${tz.name} (${tz.country})</div>
                     <div class="timezone-offset">${tz.offset}</div>
                 </div>
