@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Set Your Timezone v3</title>
+    <title>Set Your Timezone</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         * {
@@ -233,17 +233,6 @@
             font-size: 14px;
         }
 
-        .debug {
-            background: #495057;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-bottom: 8px;
-            font-size: 12px;
-            font-family: monospace;
-            word-break: break-all;
-        }
-
         @media (max-width: 480px) {
             .container {
                 padding: 12px;
@@ -262,7 +251,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🌍 Set Your Timezone v3</h1>
+            <h1>🌍 Set Your Timezone</h1>
         </div>
 
         <div class="current-time">
@@ -308,12 +297,6 @@
         // Initialize the app
         tg.ready();
         tg.expand();
-
-        // Add debugging
-        console.log('Telegram WebApp initialized');
-        console.log('Platform:', tg.platform);
-        console.log('Version:', tg.version);
-        console.log('Init data:', tg.initData);
 
         // Popular timezones with major cities
         const popularTimezones = [
@@ -544,25 +527,6 @@
             }
         }
 
-        // Show message to user
-        function showMessage(text, type) {
-            const messagesDiv = document.getElementById('messages');
-            messagesDiv.innerHTML = `<div class="${type}">${text}</div>`;
-            setTimeout(() => {
-                messagesDiv.innerHTML = '';
-            }, 3000);
-        }
-
-        // Add debug message function
-        function showDebug(text) {
-            const messagesDiv = document.getElementById('messages');
-            const existingContent = messagesDiv.innerHTML;
-            messagesDiv.innerHTML = existingContent + `<div class="debug">DEBUG: ${text}</div>`;
-            
-            // Also log to console for good measure
-            console.log('DEBUG:', text);
-        }
-
         // Load and display timezones
         function loadTimezones() {
             console.log('Loading timezones...');
@@ -764,3 +728,126 @@
         function submitTimezone() {
             if (selectedTimezone) {
                 sendTimezoneToBot(selectedTimezone);
+            } else {
+                showMessage('❌ Please select a timezone first', 'error');
+            }
+        }
+
+        // Auto-detect timezone
+        function autoDetectTimezone() {
+            try {
+                console.log('Starting auto-detection...');
+                const detectedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                console.log('Detected timezone:', detectedTimezone);
+                
+                if (detectedTimezone) {
+                    // Check if the detected timezone exists in our list
+                    const foundTimezone = allTimezones.find(tz => tz.id === detectedTimezone);
+                    console.log('Found in timezone list:', foundTimezone);
+                    
+                    if (foundTimezone) {
+                        console.log('Selecting timezone:', detectedTimezone);
+                        selectTimezone(detectedTimezone, false); // Don't auto-submit
+                        showMessage('✅ Timezone detected automatically: ' + getCityName(detectedTimezone), 'success');
+                        
+                        // Scroll to show the detected timezone
+                        setTimeout(() => {
+                            const selectedItem = document.querySelector('.selected');
+                            console.log('Selected item found:', selectedItem);
+                            if (selectedItem) {
+                                selectedItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                        }, 100);
+                    } else {
+                        console.log('Timezone not found in list, but detection worked');
+                        // Even if not in list, we can still use it for time display
+                        selectedTimezone = detectedTimezone;
+                        updateCurrentTime();
+                        enableSubmitButton();
+                        showMessage('✅ Timezone detected: ' + getCityName(detectedTimezone) + ' (not in selection list)', 'success');
+                    }
+                } else {
+                    console.log('No timezone detected');
+                    showMessage('❌ Could not detect timezone automatically', 'error');
+                }
+            } catch (error) {
+                console.error('Auto-detect error:', error);
+                showMessage('❌ Error during timezone detection: ' + error.message, 'error');
+            }
+        }
+
+        // Update current time display
+        function updateCurrentTime() {
+            const now = new Date();
+            const timezone = selectedTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+            
+            try {
+                const timeString = now.toLocaleTimeString('en-US', {
+                    timeZone: timezone,
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+                
+                const cityName = getCityName(timezone);
+                const offset = getTimezoneOffset(timezone);
+                
+                document.getElementById('currentTime').textContent = timeString;
+                document.getElementById('currentTimezone').textContent = `${cityName} (${offset})`;
+            } catch (error) {
+                document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+                document.getElementById('currentTimezone').textContent = 'Local Time';
+            }
+        }
+
+        // Show message to user
+        function showMessage(text, type) {
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML = `<div class="${type}">${text}</div>`;
+            setTimeout(() => {
+                messagesDiv.innerHTML = '';
+            }, 3000);
+        }
+
+        // Send timezone data to bot
+        function sendTimezoneToBot(timezone) {
+            const data = {
+                timezone: timezone,
+                cityName: getCityName(timezone),
+                offset: getTimezoneOffset(timezone),
+                timestamp: new Date().toISOString()
+            };
+            
+            // Send data to bot
+            tg.sendData(JSON.stringify(data));
+            
+            showMessage('✅ Timezone saved successfully!', 'success');
+            
+            // Close the miniapp after a short delay
+            setTimeout(() => {
+                tg.close();
+            }, 1500);
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTimezones();
+            updateCurrentTime();
+            
+            // Update time every second
+            setInterval(updateCurrentTime, 1000);
+            
+            // Auto-detect on load if no timezone selected (but don't auto-submit)
+            setTimeout(() => {
+                autoDetectTimezone();
+            }, 1000);
+        });
+
+        // Handle back button
+        tg.BackButton.onClick(() => {
+            tg.close();
+        });
+    </script>
+</body>
+</html>
