@@ -221,7 +221,6 @@
     <div class="container">
         <div class="header">
             <h1>🌍 Set Your Timezone</h1>
-            <p>Choose your timezone for accurate time display</p>
         </div>
 
         <div class="current-time">
@@ -242,7 +241,7 @@
                     type="text" 
                     class="search-input" 
                     id="searchInput" 
-                    placeholder="Search for city or timezone..."
+                    placeholder="Search by city, country, or UTC offset (+3, -5, utc+8)..."
                     oninput="filterTimezones()"
                 >
             </div>
@@ -308,6 +307,106 @@
             const parts = timezone.split('/');
             const city = parts[parts.length - 1].replace(/_/g, ' ');
             return city;
+        }
+
+        // Get country name from timezone
+        function getCountryName(timezone) {
+            const countryMap = {
+                // Popular timezones
+                'Pacific/Kiritimati': 'Kiribati',
+                'Pacific/Auckland': 'New Zealand',
+                'Australia/Sydney': 'Australia',
+                'Australia/Melbourne': 'Australia',
+                'Asia/Tokyo': 'Japan',
+                'Asia/Seoul': 'South Korea',
+                'Asia/Shanghai': 'China',
+                'Asia/Hong_Kong': 'Hong Kong',
+                'Asia/Singapore': 'Singapore',
+                'Asia/Bangkok': 'Thailand',
+                'Asia/Jakarta': 'Indonesia',
+                'Asia/Mumbai': 'India',
+                'Asia/Kolkata': 'India',
+                'Asia/Dubai': 'UAE',
+                'Europe/Moscow': 'Russia',
+                'Europe/Istanbul': 'Turkey',
+                'Africa/Cairo': 'Egypt',
+                'Europe/Berlin': 'Germany',
+                'Europe/Paris': 'France',
+                'Europe/Rome': 'Italy',
+                'Europe/Madrid': 'Spain',
+                'Europe/London': 'United Kingdom',
+                'Africa/Lagos': 'Nigeria',
+                'Africa/Johannesburg': 'South Africa',
+                'America/Sao_Paulo': 'Brazil',
+                'America/New_York': 'United States',
+                'America/Chicago': 'United States',
+                'America/Denver': 'United States',
+                'America/Phoenix': 'United States',
+                'America/Los_Angeles': 'United States',
+                'America/Las_Vegas': 'United States',
+                'America/Vancouver': 'Canada',
+                'America/Anchorage': 'United States',
+                'Pacific/Honolulu': 'United States',
+                'Pacific/Midway': 'United States',
+                
+                // Additional timezones
+                'Asia/Tbilisi': 'Georgia',
+                'Asia/Yerevan': 'Armenia',
+                'Asia/Baku': 'Azerbaijan',
+                'Europe/Helsinki': 'Finland',
+                'Europe/Stockholm': 'Sweden',
+                'Europe/Warsaw': 'Poland',
+                'Europe/Prague': 'Czech Republic',
+                'Europe/Vienna': 'Austria',
+                'Europe/Zurich': 'Switzerland',
+                'Europe/Amsterdam': 'Netherlands',
+                'Europe/Kiev': 'Ukraine',
+                'America/Toronto': 'Canada',
+                'America/Montreal': 'Canada',
+                'America/Mexico_City': 'Mexico',
+                'Asia/Karachi': 'Pakistan',
+                'Asia/Tashkent': 'Uzbekistan',
+                'Asia/Almaty': 'Kazakhstan',
+                
+                // New cities from request
+                'Europe/Sofia': 'Bulgaria',
+                'Europe/Belgrade': 'Serbia',
+                'Europe/Bucharest': 'Romania',
+                'Europe/Athens': 'Greece',
+                'Asia/Tehran': 'Iran',
+                'Asia/Ashgabat': 'Turkmenistan',
+                'Asia/Dushanbe': 'Tajikistan',
+                'Asia/Bishkek': 'Kyrgyzstan',
+                
+                // Russian cities
+                'Europe/Kaliningrad': 'Russia',
+                'Europe/Samara': 'Russia',
+                'Asia/Yekaterinburg': 'Russia',
+                'Asia/Omsk': 'Russia',
+                'Asia/Krasnoyarsk': 'Russia',
+                'Asia/Irkutsk': 'Russia',
+                'Asia/Yakutsk': 'Russia',
+                'Asia/Vladivostok': 'Russia',
+                'Asia/Magadan': 'Russia',
+                'Asia/Kamchatka': 'Russia',
+                'Asia/Barnaul': 'Russia',
+                'Asia/Novosibirsk': 'Russia',
+                
+                // Other timezones
+                'Pacific/Samoa': 'Samoa',
+                'Pacific/Niue': 'Niue',
+                'Pacific/Marquesas': 'French Polynesia',
+                'Pacific/Gambier': 'French Polynesia',
+                'Pacific/Pitcairn': 'Pitcairn Islands',
+                'Pacific/Easter': 'Chile',
+                'America/St_Johns': 'Canada',
+                'Atlantic/Cape_Verde': 'Cape Verde',
+                'Pacific/Chatham': 'New Zealand',
+                'Pacific/Tongatapu': 'Tonga',
+                'Pacific/Fakaofo': 'Tokelau'
+            };
+            
+            return countryMap[timezone] || timezone.split('/')[0].replace('_', ' ');
         }
 
         // Get timezone offset in minutes (bulletproof method)
@@ -399,7 +498,7 @@
             allTimezones = popularTimezones.map(tz => ({
                 id: tz,
                 name: getCityName(tz),
-                region: tz.split('/')[0],
+                country: getCountryName(tz),
                 offset: getTimezoneOffset(tz),
                 offsetMinutes: getTimezoneOffsetMinutes(tz),
                 popular: true
@@ -412,6 +511,28 @@
                 'Europe/Prague', 'Europe/Vienna', 'Europe/Zurich', 'Europe/Amsterdam',
                 'Europe/Kiev', 'America/Toronto', 'America/Montreal', 'America/Mexico_City',
                 'Asia/Karachi', 'Asia/Tashkent', 'Asia/Almaty',
+                // New cities from the request
+                'Europe/Istanbul',      // Ankara uses Istanbul timezone
+                'Europe/Sofia',         // Sofia
+                'Europe/Belgrade',      // Belgrade
+                'Europe/Bucharest',     // Bucharest
+                'Europe/Athens',        // Athens
+                'Asia/Tehran',          // Tehran
+                'Asia/Ashgabat',        // Ashgabad
+                'Asia/Dushanbe',        // Dushanbe
+                'Asia/Bishkek',         // Bishkek
+                'Europe/Kaliningrad',   // Kaliningrad UTC+2
+                'Europe/Samara',        // Samara UTC+4
+                'Asia/Yekaterinburg',   // Yekaterinburg UTC+5
+                'Asia/Omsk',            // Omsk UTC+6
+                'Asia/Krasnoyarsk',     // Krasnoyarsk UTC+7
+                'Asia/Irkutsk',         // Irkutsk UTC+8
+                'Asia/Yakutsk',         // Yakutsk UTC+9
+                'Asia/Vladivostok',     // Vladivostok UTC+10
+                'Asia/Magadan',         // Magadan UTC+11
+                'Asia/Kamchatka',       // Petropavlovsk-Kamchatsky UTC+12
+                'Asia/Barnaul',         // Barnaul
+                'Asia/Novosibirsk',     // Novosibirsk
                 'Pacific/Samoa',        // UTC-11
                 'Pacific/Niue',         // UTC-11  
                 'Pacific/Marquesas',    // UTC-9:30
@@ -430,7 +551,7 @@
                     allTimezones.push({
                         id: tz,
                         name: getCityName(tz),
-                        region: tz.split('/')[0],
+                        country: getCountryName(tz),
                         offset: getTimezoneOffset(tz),
                         offsetMinutes: getTimezoneOffsetMinutes(tz),
                         popular: false
@@ -462,7 +583,7 @@
 
             list.innerHTML = timezones.map(tz => `
                 <div class="timezone-item" onclick="selectTimezone('${tz.id}')">
-                    <div class="timezone-name">${tz.name} (${tz.region.replace('_', ' ')})</div>
+                    <div class="timezone-name">${tz.name} (${tz.country})</div>
                     <div class="timezone-offset">${tz.offset}</div>
                 </div>
             `).join('');
@@ -471,11 +592,45 @@
         // Filter timezones based on search
         function filterTimezones() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allTimezones.filter(tz => 
-                tz.name.toLowerCase().includes(query) || 
-                tz.id.toLowerCase().includes(query) ||
-                tz.region.toLowerCase().includes(query)
-            );
+            const filtered = allTimezones.filter(tz => {
+                // Regular search terms
+                const matchesName = tz.name.toLowerCase().includes(query);
+                const matchesId = tz.id.toLowerCase().includes(query);
+                const matchesCountry = tz.country.toLowerCase().includes(query);
+                const matchesOffset = tz.offset.toLowerCase().includes(query);
+                
+                // UTC offset search
+                let matchesUtcOffset = false;
+                if (query.match(/^[+\-]?\d+(:?\d{2})?$/)) {
+                    // Handle queries like "+3", "-5", "+5:30", "3", "-8"
+                    let searchOffset = query;
+                    if (!searchOffset.startsWith('+') && !searchOffset.startsWith('-')) {
+                        searchOffset = '+' + searchOffset;
+                    }
+                    if (!searchOffset.includes(':') && searchOffset.length <= 3) {
+                        searchOffset = searchOffset + '';
+                    }
+                    
+                    // Normalize the timezone offset for comparison
+                    let normalizedTzOffset = tz.offset.replace('UTC', '');
+                    
+                    matchesUtcOffset = normalizedTzOffset === searchOffset;
+                } else if (query.startsWith('utc')) {
+                    // Handle queries like "utc+3", "utc-5"
+                    const utcQuery = query.replace('utc', '');
+                    if (utcQuery.match(/^[+\-]?\d+(:?\d{2})?$/)) {
+                        let searchOffset = utcQuery;
+                        if (!searchOffset.startsWith('+') && !searchOffset.startsWith('-')) {
+                            searchOffset = '+' + searchOffset;
+                        }
+                        
+                        let normalizedTzOffset = tz.offset.replace('UTC', '');
+                        matchesUtcOffset = normalizedTzOffset === searchOffset;
+                    }
+                }
+                
+                return matchesName || matchesId || matchesCountry || matchesOffset || matchesUtcOffset;
+            });
             displayTimezones(filtered);
         }
 
