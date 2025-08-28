@@ -1,98 +1,4 @@
-<!-- Page: Timezone Settings -->
-        <div class="page" id="timezonePage">
-            <div class="current-time">
-                <h2>Current Time</h2>
-                <div class="time-display" id="currentTime">--:--:--</div>
-                <div class="timezone-display" id="currentTimezone">Loading...</div>
-            </div>
-
-            <div class="timezone-section">
-                <div class="section-title">Quick Setup</div>
-                <button class="auto-detect" onclick="autoDetectTimezone()">
-                    🎯 Auto-detect my timezone
-                </button>
-                
-                <div class="section-title">Or choose manually</div>
-                <div class="search-container">
-                    <input 
-                        type="text" 
-                        class="search-input" 
-                        id="searchInput" 
-                        placeholder="Search for city or timezone..."
-                        oninput="filterTimezones()"
-                    >
-                </div>
-                
-                <div id="messages"></div>
-                
-                <div class="timezone-list" id="timezoneList">
-                    <div class="loading">Loading timezones...</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Page: Settings -->
-        <div class="page hidden" id="settingsPage">
-            <div class="timezone-section">
-                <div class="section-title">Display Settings</div>
-                
-                <div class="setting-item">
-                    <label class="setting-label">
-                        <input type="checkbox" id="use24Hour" checked onchange="updateTimeFormat()">
-                        <span class="checkmark"></span>
-                        Use 24-hour format
-                    </label>
-                </div>
-                
-                <div class="setting-item">
-                    <label class="setting-label">
-                        <input type="checkbox" id="showSeconds" checked onchange="updateTimeFormat()">
-                        <span class="checkmark"></span>
-                        Show seconds
-                    </label>
-                </div>
-                
-                <div class="setting-item">
-                    <label class="setting-label">
-                        <input type="checkbox" id="autoRefresh" checked onchange="toggleAutoRefresh()">
-                        <span class="checkmark"></span>
-                        Auto-refresh time
-                    </label>
-                </div>
-
-                <div class="section-title">Notification Settings</div>
-                
-                <div class="setting-item">
-                    <label class="setting-label">
-                        <input type="checkbox" id="enableNotifications" onchange="toggleNotifications()">
-                        <span class="checkmark"></span>
-                        Enable timezone change notifications
-                    </label>
-                </div>
-
-                <div class="section-title">Data Management</div>
-                <button class="danger-button" onclick="clearAllData()">
-                    🗑️ Clear All Data
-                </button>
-            </div>
-        </div>
-
-        <!-- Page: About -->
-        <div class="page hidden" id="aboutPage">
-            <div class="timezone-section">
-                <div class="section-title">About This App</div>
-                <p class="about-text">
-                    This timezone miniapp helps you set and manage your timezone preferences 
-                    for better time display across your Telegram bot interactions.
-                </p>
-                
-                <div class="section-title">Features</div>
-                <ul class="feature-list">
-                    <li>🎯 Auto-detect your current timezone</li>
-                    <li>🔍 Search from hundreds of timezones</li>
-                    <li>⏰ Real-time preview</li>
-                    <li>📱 Mobile-friendly interface</li>
-                    <li>🎨 Adapts to your Telegram theme</li<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -314,15 +220,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 id="pageTitle">🌍 Set Your Timezone</h1>
-            <p id="pageSubtitle">Choose your timezone for accurate time display</p>
-        </div>
-
-        <!-- Navigation Menu -->
-        <div class="nav-menu" id="navMenu">
-            <button class="nav-button active" onclick="showPage('timezone')">🌍 Timezone</button>
-            <button class="nav-button" onclick="showPage('settings')">⚙️ Settings</button>
-            <button class="nav-button" onclick="showPage('about')">ℹ️ About</button>
+            <h1>🌍 Set Your Timezone</h1>
+            <p>Choose your timezone for accurate time display</p>
         </div>
 
         <div class="current-time">
