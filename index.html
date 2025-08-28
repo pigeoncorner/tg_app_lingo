@@ -820,24 +820,40 @@
             };
             
             console.log('Sending data to bot:', data);
+            showDebug(`Sending: ${JSON.stringify(data).substring(0, 100)}...`);
+            
+            // Debug bot ID info
+            const botIdMatch = tg.initData ? tg.initData.match(/bot=(\d+)/) : null;
+            if (botIdMatch) {
+                showDebug(`Target Bot ID: ${botIdMatch[1]}`);
+                console.log('Target Bot ID:', botIdMatch[1]);
+            } else {
+                showDebug('No bot ID found in init data');
+                console.log('Init data:', tg.initData);
+            }
             
             // Method 1: Try sendData first
             try {
                 tg.sendData(JSON.stringify(data));
                 console.log('Data sent via sendData');
+                showDebug('✓ sendData() called successfully');
                 showMessage('✅ Timezone saved successfully!', 'success');
                 
                 setTimeout(() => {
+                    showDebug('Closing app...');
                     tg.close();
                 }, 1500);
             } catch (error) {
                 console.error('sendData failed:', error);
+                showDebug(`✗ sendData failed: ${error.message}`);
                 
                 // Method 2: Fallback to MainButton
                 tg.MainButton.setText('✅ Confirm Timezone');
                 tg.MainButton.show();
+                showDebug('Fallback to MainButton');
                 tg.MainButton.onClick(() => {
                     console.log('MainButton clicked, sending data');
+                    showDebug('MainButton clicked');
                     tg.sendData(JSON.stringify(data));
                     tg.close();
                 });
