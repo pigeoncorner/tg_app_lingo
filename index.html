@@ -819,26 +819,22 @@
                 timestamp: new Date().toISOString()
             };
             
-            // Send data to bot
-            tg.sendData(JSON.stringify(data));
+            console.log('Sending data via answerWebAppQuery:', data);
             
-
-            // Add this to your sendTimezoneToBot function
-            console.log('Full init data:', tg.initData);
-            const botMatch = tg.initData ? tg.initData.match(/bot=(\d+)/) : null;
-            if (botMatch) {
-                console.log('TARGET BOT ID:', botMatch[1]);
-                alert('Sending to Bot ID: ' + botMatch[1]); // Visual confirmation
-            } else {
-                console.log('No bot ID found');
-            }
+            // For inline button Mini Apps, use answerWebAppQuery instead of sendData
+            const result = {
+                type: 'article',
+                id: '1',
+                title: `Timezone Set: ${getCityName(timezone)}`,
+                input_message_content: {
+                    message_text: `🌍 Timezone updated to ${getCityName(timezone)} (${getTimezoneOffset(timezone)})\n\nTimestamp: ${new Date().toLocaleString()}`,
+                    parse_mode: 'HTML'
+                },
+                description: `${getCityName(timezone)} - ${getTimezoneOffset(timezone)}`
+            };
             
-            showMessage('✅ Timezone saved successfully!', 'success');
-            
-            // Close the miniapp after a short delay
-            setTimeout(() => {
-                tg.close();
-            }, 1500);
+            // This sends a message back to the chat and closes the Mini App
+            tg.answerWebAppQuery(tg.initDataUnsafe.query_id, JSON.stringify(result));
         }
 
         // Initialize app
