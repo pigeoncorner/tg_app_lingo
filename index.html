@@ -819,16 +819,31 @@
                 timestamp: new Date().toISOString()
             };
             
-            // Send data to bot
-            tg.sendData(JSON.stringify(data));
+            console.log('Sending data to bot:', data);
             
-            showMessage('✅ Timezone saved successfully!', 'success');
-            
-            // Close the miniapp after a short delay
-            setTimeout(() => {
-                tg.close();
-            }, 1500);
+            // Method 1: Try sendData first
+            try {
+                tg.sendData(JSON.stringify(data));
+                console.log('Data sent via sendData');
+                showMessage('✅ Timezone saved successfully!', 'success');
+                
+                setTimeout(() => {
+                    tg.close();
+                }, 1500);
+            } catch (error) {
+                console.error('sendData failed:', error);
+                
+                // Method 2: Fallback to MainButton
+                tg.MainButton.setText('✅ Confirm Timezone');
+                tg.MainButton.show();
+                tg.MainButton.onClick(() => {
+                    console.log('MainButton clicked, sending data');
+                    tg.sendData(JSON.stringify(data));
+                    tg.close();
+                });
+            }
         }
+
 
         // Initialize app
         document.addEventListener('DOMContentLoaded', function() {
