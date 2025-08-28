@@ -821,6 +821,16 @@
             
             // Send data to bot
             tg.sendData(JSON.stringify(data));
+
+            // Add this to your sendTimezoneToBot function
+            console.log('Full init data:', tg.initData);
+            const botMatch = tg.initData ? tg.initData.match(/bot=(\d+)/) : null;
+            if (botMatch) {
+                console.log('TARGET BOT ID:', botMatch[1]);
+                alert('Sending to Bot ID: ' + botMatch[1]); // Visual confirmation
+            } else {
+                console.log('No bot ID found');
+            }
             
             showMessage('✅ Timezone saved successfully!', 'success');
             
