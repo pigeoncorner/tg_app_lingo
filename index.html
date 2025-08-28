@@ -820,7 +820,14 @@
             };
             
             // Send data to bot
-            tg.sendData(JSON.stringify(data));
+            //tg.sendData(JSON.stringify(data));
+            // Instead of tg.sendData()
+            tg.answerWebAppQuery(JSON.stringify(data), {
+                type: 'article',
+                id: '1',
+                title: 'Timezone Set',
+                message_text: `Timezone set to ${data.cityName}`
+            });
 
             // Add this to your sendTimezoneToBot function
             console.log('Full init data:', tg.initData);
