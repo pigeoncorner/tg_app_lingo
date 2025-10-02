@@ -1,4 +1,4 @@
-// timezone.js - Весь код из оригинального файла для работы с таймзоной
+// timezone.js - Исправленная версия с правильной инициализацией
 
 const tg = window.Telegram.WebApp;
 let selectedTimezone = null;
@@ -18,13 +18,25 @@ const popularTimezones = [
     'America/Anchorage', 'Pacific/Honolulu', 'Pacific/Midway'
 ];
 
-// Инициализация
-document.addEventListener('DOMContentLoaded', function() {
+// ИСПРАВЛЕНИЕ: Используем setTimeout для инициализации после загрузки HTML
+setTimeout(function() {
+    initTimezonePage();
+}, 100);
+
+function initTimezonePage() {
+    // Проверяем, что все элементы загружены
+    if (!document.getElementById('timezoneList')) {
+        console.log('Элементы еще не загружены, повторная попытка...');
+        setTimeout(initTimezonePage, 100);
+        return;
+    }
+    
+    console.log('Инициализация страницы timezone');
     loadTimezones();
     updateCurrentTime();
     setInterval(updateCurrentTime, 1000);
     setTimeout(autoDetectTimezone, 1000);
-});
+}
 
 function getCityName(timezone) {
     const parts = timezone.split('/');
@@ -196,6 +208,7 @@ function getTimezoneOffset(timezone) {
 }
 
 function loadTimezones() {
+    console.log('Loading timezones...');
     allTimezones = popularTimezones.map(tz => ({
         id: tz,
         name: getCityName(tz),
@@ -241,11 +254,17 @@ function loadTimezones() {
         return a.name.localeCompare(b.name);
     });
 
+    console.log('Timezones loaded:', allTimezones.length);
     displayTimezones(allTimezones);
 }
 
 function displayTimezones(timezones) {
     const list = document.getElementById('timezoneList');
+    
+    if (!list) {
+        console.error('timezoneList element not found');
+        return;
+    }
     
     if (timezones.length === 0) {
         list.innerHTML = '<div class="loading">Часовые пояса не найдены</div>';
@@ -258,6 +277,8 @@ function displayTimezones(timezones) {
             <div class="timezone-offset">${tz.offset}</div>
         </div>
     `).join('');
+    
+    console.log('Timezones displayed');
 }
 
 function filterTimezones() {
@@ -319,6 +340,8 @@ function selectTimezone(timezoneId, autoSubmit = false) {
 
 function enableSubmitButton() {
     const submitButton = document.getElementById('submitButton');
+    if (!submitButton) return;
+    
     submitButton.disabled = false;
     const cityName = selectedTimezone ? getCityName(selectedTimezone) : '';
     submitButton.textContent = `✅ Подтвердить ${cityName}`;
@@ -368,6 +391,11 @@ function updateCurrentTime() {
     const now = new Date();
     const timezone = selectedTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
     
+    const timeEl = document.getElementById('currentTime');
+    const tzEl = document.getElementById('currentTimezone');
+    
+    if (!timeEl || !tzEl) return;
+    
     try {
         const timeString = now.toLocaleTimeString('ru-RU', {
             timeZone: timezone,
@@ -380,16 +408,18 @@ function updateCurrentTime() {
         const cityName = getCityName(timezone);
         const offset = getTimezoneOffset(timezone);
         
-        document.getElementById('currentTime').textContent = timeString;
-        document.getElementById('currentTimezone').textContent = `${cityName} (${offset})`;
+        timeEl.textContent = timeString;
+        tzEl.textContent = `${cityName} (${offset})`;
     } catch (error) {
-        document.getElementById('currentTime').textContent = now.toLocaleTimeString();
-        document.getElementById('currentTimezone').textContent = 'Местное время';
+        timeEl.textContent = now.toLocaleTimeString();
+        tzEl.textContent = 'Местное время';
     }
 }
 
 function showMessage(text, type) {
     const messagesDiv = document.getElementById('messages');
+    if (!messagesDiv) return;
+    
     messagesDiv.innerHTML = `<div class="message message-${type}">${text}</div>`;
     setTimeout(() => {
         messagesDiv.innerHTML = '';
@@ -416,3 +446,9 @@ function sendTimezoneToBot(timezone) {
 tg.BackButton.onClick(() => {
     tg.close();
 });
+
+// Экспорт функций в глобальную область видимости для onclick
+window.autoDetectTimezone = autoDetectTimezone;
+window.filterTimezones = filterTimezones;
+window.selectTimezone = selectTimezone;
+window.submitTimezone = submitTimezone;
