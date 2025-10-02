@@ -9,8 +9,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initAgreementPage() {
     // Настройка кнопки "Назад" в Telegram
-    tg.BackButton.show();
-    tg.BackButton.onClick(closeAgreement);
+    if (tg.BackButton) {
+        tg.BackButton.show();
+        tg.BackButton.onClick(closeAgreement);
+    }
 }
 
 function closeAgreement() {
