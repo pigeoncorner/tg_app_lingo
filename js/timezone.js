@@ -1,5 +1,5 @@
 // timezone.js - В самом начале файла
-const tg = window.Telegram.WebApp;
+//const tg = window.Telegram.WebApp;
 let selectedTimezone = null;
 let allTimezones = [];
 
