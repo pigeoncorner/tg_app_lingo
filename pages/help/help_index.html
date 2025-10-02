@@ -1,0 +1,172 @@
+<div class="container help-container">
+    <div class="help-header">
+        <h1>📖 Инструкция по использованию</h1>
+        <p>Руководство пользователя LingoMojo Bot</p>
+    </div>
+
+    <!-- Навигационное меню -->
+    <div class="help-nav">
+        <button class="nav-btn active" data-section="menu" onclick="loadHelpSection('menu')">Главное меню</button>
+        <button class="nav-btn" data-section="daily" onclick="loadHelpSection('daily')">Ежедневные задания</button>
+        <button class="nav-btn" data-section="news" onclick="loadHelpSection('news')">Чтение статей</button>
+    </div>
+
+    <!-- Контейнер для загрузки разделов -->
+    <div id="help-content">
+        <div class="loading">Загрузка раздела...</div>
+    </div>
+
+    <!-- Кнопка возврата в меню бота -->
+    <div class="help-footer">
+        <button class="btn-primary" onclick="closeHelp()">
+            Закрыть инструкцию
+        </button>
+    </div>
+</div>
+
+<style>
+/* Специфичные стили для страницы help */
+.help-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.help-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    color: white;
+}
+
+.help-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.help-header p {
+    font-size: 16px;
+    opacity: 0.9;
+    color: white;
+}
+
+/* Навигационное меню */
+.help-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.nav-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 16px;
+    background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+    border: 2px solid var(--tg-theme-section-separator-color, #e5e5e5);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    color: var(--tg-theme-text-color, #000000);
+}
+
+.nav-btn:hover {
+    background: var(--tg-theme-section-bg-color, #e8e8e8);
+}
+
+.nav-btn.active {
+    background: var(--tg-theme-button-color, #3390ec);
+    color: var(--tg-theme-button-text-color, #ffffff);
+    border-color: var(--tg-theme-button-color, #3390ec);
+}
+
+/* Контейнер контента */
+#help-content {
+    min-height: 400px;
+}
+
+/* Футер */
+.help-footer {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    .help-header h1 {
+        font-size: 22px;
+    }
+    
+    .nav-btn {
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+}
+</style>
+
+<script>
+// Глобальные функции для навигации
+let currentSection = 'menu';
+
+async function loadHelpSection(section) {
+    console.log('Loading section:', section);
+    currentSection = section;
+    
+    // Обновляем активную кнопку
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-section') === section) {
+            btn.classList.add('active');
+        }
+    });
+    
+    // Загружаем контент раздела
+    const contentDiv = document.getElementById('help-content');
+    contentDiv.innerHTML = '<div class="loading">Загрузка раздела...</div>';
+    
+    try {
+        const response = await fetch(`pages/help/help_${section}.html`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const html = await response.text();
+        contentDiv.innerHTML = html;
+        
+        // Прокручиваем наверх
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+        console.error('Error loading section:', error);
+        contentDiv.innerHTML = `
+            <div class="help-card">
+                <h3>Ошибка загрузки</h3>
+                <p>Не удалось загрузить раздел "${section}". Попробуйте еще раз.</p>
+            </div>
+        `;
+    }
+}
+
+function closeHelp() {
+    if (window.tg) {
+        tg.close();
+    } else {
+        window.close();
+    }
+}
+
+// Экспортируем функции
+window.loadHelpSection = loadHelpSection;
+window.closeHelp = closeHelp;
+
+// Загружаем первый раздел при инициализации
+setTimeout(() => {
+    loadHelpSection('menu');
+}, 100);
+</script>
