@@ -151,65 +151,57 @@ function getCountryName(timezone) {
 
 function getTimezoneOffsetMinutes(timezone) {
     try {
-        const date = new Date('2023-07-15T12:00:00.000Z');
+        // Используем фиксированную дату в UTC
+        const date = new Date('2023-07-15T12:00:00Z');
         
-        // Пробуем получить offset через getTimezoneOffset
-        const formatter = new Intl.DateTimeFormat('en-US', {
-            timeZone: timezone,
+        // Получаем строковое представление времени в UTC
+        const utcStr = date.toLocaleString('en-US', {
+            timeZone: 'UTC',
+            hour12: false,
             year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: false
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
         });
         
-        const parts = formatter.formatToParts(date);
-        const localDate = new Date(
-            parts.find(p => p.type === 'year').value,
-            parts.find(p => p.type === 'month').value - 1,
-            parts.find(p => p.type === 'day').value,
-            parts.find(p => p.type === 'hour').value,
-            parts.find(p => p.type === 'minute').value
-        );
+        // Получаем строковое представление времени в целевой таймзоне
+        const tzStr = date.toLocaleString('en-US', {
+            timeZone: timezone,
+            hour12: false,
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
         
-        const utcDate = new Date(Date.UTC(2023, 6, 15, 12, 0, 0));
-        const diffMs = localDate.getTime() - utcDate.getTime();
+        // Парсим обе строки обратно в Date (оба в UTC контексте)
+        const utcDate = new Date(utcStr + ' UTC');
+        const tzDate = new Date(tzStr + ' UTC');
+        
+        // Разница в миллисекундах
+        const diffMs = tzDate - utcDate;
         return Math.round(diffMs / (1000 * 60));
         
     } catch (e) {
         console.warn(`Fallback offset for ${timezone}`);
-        // Расширенная карта запасных значений
         const offsetMap = {
             'Asia/Mumbai': 330,
             'Asia/Kolkata': 330,
+            'Asia/Tbilisi': 240,
             'Asia/Dubai': 240,
-            'Asia/Tehran': 270,
-            'Asia/Kabul': 270,
-            'Asia/Karachi': 300,
-            'Asia/Dhaka': 360,
-            'Asia/Yangon': 390,
-            'Asia/Bangkok': 420,
-            'Asia/Jakarta': 420,
-            'Asia/Shanghai': 480,
-            'Asia/Hong_Kong': 480,
-            'Asia/Singapore': 480,
-            'Asia/Tokyo': 540,
-            'Asia/Seoul': 540,
-            'Australia/Sydney': 600,
-            'Australia/Melbourne': 600,
-            'Pacific/Auckland': 720,
-            'Europe/London': 0,
-            'Europe/Paris': 60,
-            'Europe/Berlin': 60,
             'Europe/Moscow': 180,
             'Europe/Istanbul': 180,
+            'Europe/Athens': 120,
+            'Europe/Berlin': 60,
+            'Europe/Paris': 60,
+            'Europe/London': 0,
             'America/New_York': -300,
             'America/Chicago': -360,
             'America/Denver': -420,
             'America/Los_Angeles': -480,
             'America/Phoenix': -420,
-            'America/Anchorage': -540,
             'Pacific/Honolulu': -600
         };
         
