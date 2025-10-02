@@ -480,10 +480,13 @@ function sendTimezoneToBot(timezone) {
     }, 1500);
 }
 
-// Обработка кнопки "Назад"
-tg.BackButton.onClick(() => {
-    tg.close();
-});
+// Обработка кнопки "Назад" с проверкой версии
+if (tg.BackButton) {
+    tg.BackButton.show();
+    tg.BackButton.onClick(() => {
+        tg.close();
+    });
+}
 
 // Экспорт функций в глобальную область видимости для onclick
 window.autoDetectTimezone = autoDetectTimezone;
