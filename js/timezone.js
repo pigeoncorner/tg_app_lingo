@@ -1,5 +1,4 @@
-// timezone.js - Исправленная версия с правильной инициализацией
-
+// timezone.js - В самом начале файла
 const tg = window.Telegram.WebApp;
 let selectedTimezone = null;
 let allTimezones = [];
@@ -17,6 +16,23 @@ const popularTimezones = [
     'America/Los_Angeles', 'America/Las_Vegas', 'America/Vancouver',
     'America/Anchorage', 'Pacific/Honolulu', 'Pacific/Midway'
 ];
+
+// ГЛАВНОЕ ИСПРАВЛЕНИЕ: Проверяем готовность DOM
+function initWhenReady() {
+    if (document.getElementById('timezoneList')) {
+        console.log('DOM готов, инициализация...');
+        loadTimezones();
+        updateCurrentTime();
+        setInterval(updateCurrentTime, 1000);
+        setTimeout(autoDetectTimezone, 1000);
+    } else {
+        console.log('DOM не готов, ждем...');
+        setTimeout(initWhenReady, 50);
+    }
+}
+
+// Запускаем проверку
+initWhenReady();
 
 // ИСПРАВЛЕНИЕ: Используем setTimeout для инициализации после загрузки HTML
 setTimeout(function() {
