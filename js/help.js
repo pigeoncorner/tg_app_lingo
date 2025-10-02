@@ -1,7 +1,7 @@
 // help.js - Логика для страницы инструкций
 
 // Получаем экземпляр Telegram WebApp
-const tg = window.Telegram.WebApp;
+//const tg = window.Telegram.WebApp;
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
