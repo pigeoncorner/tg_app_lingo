@@ -40,15 +40,21 @@
                 `;
                 return;
             }
-
+        
             try {
                 const response = await fetch(pageUrl);
                 const html = await response.text();
                 document.getElementById('app-container').innerHTML = html;
                 
-                // Загрузка соответствующего JS файла
+                // ИСПРАВЛЕНИЕ: Загружаем скрипт и ждем его выполнения
                 const script = document.createElement('script');
                 script.src = `js/${pageName}.js`;
+                script.onload = function() {
+                    console.log(`Script ${pageName}.js loaded`);
+                };
+                script.onerror = function() {
+                    console.error(`Failed to load script: js/${pageName}.js`);
+                };
                 document.body.appendChild(script);
                 
             } catch (error) {
