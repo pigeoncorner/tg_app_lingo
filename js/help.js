@@ -1,69 +1,65 @@
-// help.js - Логика для страницы инструкций
+let currentSection = 'menu';
 
-// Получаем экземпляр Telegram WebApp
-//const tg = window.Telegram.WebApp;
-
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    initHelpPage();
-});
-
-function initHelpPage() {
-    // Настройка кнопки "Назад" в Telegram
-    if (tg.BackButton) {
-        tg.BackButton.show();
-        tg.BackButton.onClick(closeHelp);
+function initWhenReady() {
+    if (document.getElementById('help-content')) {
+        console.log('Help page ready');
+        initHelpNavigation();
+        loadHelpSection('menu');
+    } else {
+        setTimeout(initWhenReady, 50);
     }
-    
-    // Инициализация навигации между разделами
-    initNavigation();
-    
-    // Добавляем плавную прокрутку для ссылок
-    setupSmoothScroll();
 }
 
-function initNavigation() {
-    const navButtons = document.querySelectorAll('.nav-btn');
-    const sections = document.querySelectorAll('.help-section');
-    
-    navButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const sectionId = this.getAttribute('data-section');
-            
-            // Убираем активный класс со всех кнопок и секций
-            navButtons.forEach(btn => btn.classList.remove('active'));
-            sections.forEach(section => section.classList.remove('active'));
-            
-            // Добавляем активный класс к выбранным элементам
-            this.classList.add('active');
-            document.getElementById(`section-${sectionId}`).classList.add('active');
-            
-            // Прокручиваем наверх при переключении раздела
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+function initHelpNavigation() {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const section = this.getAttribute('data-section');
+            loadHelpSection(section);
         });
     });
 }
 
-function setupSmoothScroll() {
-    // Плавная прокрутка для всех внутренних ссылок
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
+async function loadHelpSection(section) {
+    console.log('Loading section:', section);
+    currentSection = section;
+    
+    // Обновляем активную кнопку
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-section') === section) {
+            btn.classList.add('active');
+        }
     });
+    
+    const contentDiv = document.getElementById('help-content');
+    contentDiv.innerHTML = '<div class="loading">Загрузка раздела...</div>';
+    
+    try {
+        const response = await fetch(`pages/help/help_${section}.html`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const html = await response.text();
+        contentDiv.innerHTML = html;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+        console.error('Error loading section:', error);
+        contentDiv.innerHTML = `
+            <div style="padding: 20px;">
+                <h3>Ошибка загрузки</h3>
+                <p>Не удалось загрузить раздел "${section}".</p>
+            </div>
+        `;
+    }
 }
 
 function closeHelp() {
-    // Закрываем WebApp
-    tg.close();
+    if (window.tg) {
+        tg.close();
+    }
 }
 
-// Экспорт функций для использования в HTML
+window.loadHelpSection = loadHelpSection;
 window.closeHelp = closeHelp;
+
+initWhenReady();
