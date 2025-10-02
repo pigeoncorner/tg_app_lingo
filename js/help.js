@@ -10,8 +10,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initHelpPage() {
     // Настройка кнопки "Назад" в Telegram
-    tg.BackButton.show();
-    tg.BackButton.onClick(closeHelp);
+    if (tg.BackButton) {
+        tg.BackButton.show();
+        tg.BackButton.onClick(closeHelp);
+    }
     
     // Инициализация навигации между разделами
     initNavigation();
