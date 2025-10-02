@@ -1,0 +1,171 @@
+<div class="help-section">
+    <h2>🏠 Главное меню</h2>
+    
+    <div class="help-card">
+        <h3>Назначение</h3>
+        <p>Главное меню является центральной точкой навигации бота, из которой можно попасть в любой требуемый раздел.</p>
+        <div class="screenshot-placeholder">
+            <img src="images/help/menu-main.png" alt="Главное меню бота">
+            <p class="img-caption">Скриншот 1: Главное меню</p>
+        </div>
+    </div>
+
+    <div class="help-card">
+        <h3>Структура меню</h3>
+        <p>Меню состоит из следующих основных разделов:</p>
+        
+        <div class="menu-item">
+            <h4>📅 Ежедневные задания (Daily)</h4>
+            <p>Содержит список заданий на день. После выполнения требуемого количества заданий строка автоматически исчезает из списка.</p>
+        </div>
+
+        <div class="menu-item">
+            <h4>💬 Разговорные задания (Speak)</h4>
+            <p>Основной раздел с разговорными упражнениями и диалогами для практики устной речи.</p>
+        </div>
+
+        <div class="menu-item">
+            <h4>📝 Изучение слов (Repeat)</h4>
+            <p>Задания на изучение и повторение новых слов и выражений.</p>
+        </div>
+
+        <div class="menu-item">
+            <h4>📰 Новости и статьи (News)</h4>
+            <p>Чтение и анализ новостных статей на английском языке с возможностью перевода.</p>
+        </div>
+
+        <div class="menu-item">
+            <h4>🗣️ Native Speaker</h4>
+            <p>Практика общения с носителями языка.</p>
+        </div>
+
+        <div class="menu-item">
+            <h4>⚙️ Настройки (Settings)</h4>
+            <p>Настройки бота, управление подпиской и другие параметры.</p>
+        </div>
+    </div>
+
+    <div class="help-card">
+        <h3>Как получить доступ к меню</h3>
+        <p>Существует два способа открыть главное меню:</p>
+        <ol>
+            <li>Нажать кнопку "🏠 Меню" в любом разделе бота</li>
+            <li>Использовать команду <code>/menu</code> из списка команд чата Telegram (кнопка Menu внизу слева)</li>
+        </ol>
+        <div class="screenshot-placeholder">
+            <img src="images/help/menu-access.png" alt="Доступ к меню через команды">
+            <p class="img-caption">Скриншот 2: Доступ к меню через команды Telegram</p>
+        </div>
+    </div>
+
+    <div class="help-card tips">
+        <h3>💡 Полезные советы</h3>
+        <ul>
+            <li>Меню всегда доступно — вы можете вернуться к нему из любого раздела</li>
+            <li>Видимость разделов зависит от статуса вашей подписки</li>
+            <li>При активной подписке доступны все разделы меню</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+.help-section h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--tg-theme-text-color, #000000);
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--tg-theme-button-color, #3390ec);
+}
+
+.help-card {
+    background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+}
+
+.help-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--tg-theme-text-color, #000000);
+}
+
+.help-card h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 16px 0 8px 0;
+    color: var(--tg-theme-text-color, #000000);
+}
+
+.help-card p {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.help-card ul,
+.help-card ol {
+    margin: 12px 0 12px 24px;
+}
+
+.help-card li {
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.help-card code {
+    background: var(--tg-theme-bg-color, #ffffff);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+}
+
+.help-card.tips {
+    background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+    border-color: #fdba74;
+}
+
+.menu-item {
+    background: var(--tg-theme-bg-color, #ffffff);
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--tg-theme-button-color, #3390ec);
+}
+
+.screenshot-placeholder {
+    margin: 16px 0;
+    padding: 16px;
+    background: var(--tg-theme-bg-color, #ffffff);
+    border: 2px dashed var(--tg-theme-section-separator-color, #e5e5e5);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.screenshot-placeholder img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
+.img-caption {
+    font-size: 13px;
+    color: var(--tg-theme-hint-color, #999999);
+    font-style: italic;
+    margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+    .help-section h2 {
+        font-size: 20px;
+    }
+    
+    .help-card {
+        padding: 16px;
+    }
+}
+</style>
