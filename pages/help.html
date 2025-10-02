@@ -1,18 +1,108 @@
-<div id="help-container-wrapper"></div>
+<div class="container help-container">
+    <div class="help-header">
+        <h1>📖 Инструкция по использованию</h1>
+        <p>Руководство пользователя LingoMojo Bot</p>
+    </div>
 
-<script>
-async function loadHelpIndex() {
-    const wrapper = document.getElementById('help-container-wrapper');
-    
-    try {
-        const response = await fetch('pages/help/help_index.html');
-        const html = await response.text();
-        wrapper.innerHTML = html;
-    } catch (error) {
-        console.error('Error loading help index:', error);
-        wrapper.innerHTML = '<div class="container"><p>Ошибка загрузки инструкции</p></div>';
-    }
+    <!-- Навигационное меню -->
+    <div class="help-nav">
+        <button class="nav-btn active" data-section="menu">Главное меню</button>
+        <button class="nav-btn" data-section="daily">Ежедневные задания</button>
+        <button class="nav-btn" data-section="news">Чтение статей</button>
+    </div>
+
+    <!-- Контейнер для загрузки разделов -->
+    <div id="help-content">
+        <div class="loading">Загрузка раздела...</div>
+    </div>
+
+    <!-- Кнопка возврата -->
+    <div class="help-footer">
+        <button class="btn-primary" onclick="closeHelp()">
+            Закрыть инструкцию
+        </button>
+    </div>
+</div>
+
+<style>
+/* Все стили из help_index.html */
+.help-container {
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-loadHelpIndex();
-</script>
+.help-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 16px;
+    color: white;
+}
+
+.help-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: white;
+}
+
+.help-header p {
+    font-size: 16px;
+    opacity: 0.9;
+    color: white;
+}
+
+.help-nav {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+}
+
+.nav-btn {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 16px;
+    background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+    border: 2px solid var(--tg-theme-section-separator-color, #e5e5e5);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    color: var(--tg-theme-text-color, #000000);
+}
+
+.nav-btn:hover {
+    background: var(--tg-theme-section-bg-color, #e8e8e8);
+}
+
+.nav-btn.active {
+    background: var(--tg-theme-button-color, #3390ec);
+    color: var(--tg-theme-button-text-color, #ffffff);
+    border-color: var(--tg-theme-button-color, #3390ec);
+}
+
+#help-content {
+    min-height: 400px;
+}
+
+.help-footer {
+    margin-top: 32px;
+    padding-top: 24px;
+    border-top: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+}
+
+@media (max-width: 600px) {
+    .help-header h1 {
+        font-size: 22px;
+    }
+    .nav-btn {
+        font-size: 13px;
+        padding: 10px 12px;
+    }
+}
+</style>
