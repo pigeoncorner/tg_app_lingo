@@ -3,23 +3,27 @@
         <h1>📖 Инструкция по использованию</h1>
         <p>Руководство пользователя LingoMojo Bot</p>
     </div>
-
-    <!-- Навигационное меню -->
-    <div class="help-nav">
-        <button class="nav-btn active" data-section="menu">Главное меню</button>
-        <button class="nav-btn" data-section="daily">Ежедневные задания</button>
-        <button class="nav-btn" data-section="speak">Говорение</button>
-        <button class="nav-btn" data-section="words">Изучение слов</button>
-        <button class="nav-btn" data-section="news">Чтение статей</button>
-        <button class="nav-btn" data-section="native">Носитель языка</button>
-        <button class="nav-btn" data-section="settings">Настройки</button>
+    
+    <!-- Навигационное меню в виде содержания -->
+    <div class="help-toc">
+        <h2>Содержание</h2>
+        <ul class="toc-list">
+            <li><a href="#" onclick="loadHelpSection('menu'); return false;">🏠 Главное меню</a></li>
+            <li><a href="#" onclick="loadHelpSection('daily'); return false;">📅 Ежедневные задания</a></li>
+            <li><a href="#" onclick="loadHelpSection('speak'); return false;">🗣 Говорение</a></li>
+            <li><a href="#" onclick="loadHelpSection('words'); return false;">📝 Изучение слов</a></li>
+            <li><a href="#" onclick="loadHelpSection('news'); return false;">📰 Чтение статей</a></li>
+            <li><a href="#" onclick="loadHelpSection('native'); return false;">🗣️ Носитель языка</a></li>
+            <li><a href="#" onclick="loadHelpSection('settings'); return false;">⚙️ Настройки</a></li>
+            <li><a href="#" onclick="loadHelpSection('subscription'); return false;">💳 Подписка</a></li>
+        </ul>
     </div>
-
+    
     <!-- Контейнер для загрузки разделов -->
     <div id="help-content">
         <div class="loading">Загрузка раздела...</div>
     </div>
-
+    
     <!-- Кнопка возврата -->
     <div class="help-footer">
         <button class="btn-primary" onclick="closeHelp()">
@@ -29,7 +33,7 @@
 </div>
 
 <style>
-/* Все стили из help_index.html */
+/* Основные стили */
 .help-container {
     max-width: 800px;
     margin: 0 auto;
@@ -57,39 +61,56 @@
     color: white;
 }
 
-.help-nav {
-    display: flex;
-    gap: 8px;
+/* Стили для содержания */
+.help-toc {
+    background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+    border-radius: 12px;
+    padding: 24px;
     margin-bottom: 24px;
-    overflow-x: auto;
-    padding-bottom: 8px;
+    border: 2px solid var(--tg-theme-section-separator-color, #e5e5e5);
 }
 
-.nav-btn {
-    flex: 1;
-    min-width: 120px;
-    padding: 12px 16px;
-    background: var(--tg-theme-secondary-bg-color, #f8f9fa);
-    border: 2px solid var(--tg-theme-section-separator-color, #e5e5e5);
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
+.help-toc h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
     color: var(--tg-theme-text-color, #000000);
 }
 
-.nav-btn:hover {
-    background: var(--tg-theme-section-bg-color, #e8e8e8);
+.toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-.nav-btn.active {
+.toc-list li {
+    margin-bottom: 0;
+}
+
+.toc-list a {
+    display: block;
+    padding: 14px 16px;
+    color: var(--tg-theme-text-color, #000000);
+    text-decoration: none;
+    border-radius: 8px;
+    transition: all 0.2s;
+    font-size: 16px;
+    font-weight: 500;
+    border-left: 4px solid transparent;
+}
+
+.toc-list a:hover {
+    background: var(--tg-theme-bg-color, #ffffff);
+    border-left-color: var(--tg-theme-button-color, #3390ec);
+    transform: translateX(4px);
+}
+
+.toc-list a:active {
     background: var(--tg-theme-button-color, #3390ec);
     color: var(--tg-theme-button-text-color, #ffffff);
-    border-color: var(--tg-theme-button-color, #3390ec);
 }
 
+/* Контент и футер */
 #help-content {
     min-height: 400px;
 }
@@ -98,15 +119,42 @@
     margin-top: 32px;
     padding-top: 24px;
     border-top: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+    text-align: center;
 }
 
+.loading {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--tg-theme-hint-color, #999999);
+    font-size: 16px;
+}
+
+/* Адаптивность */
 @media (max-width: 600px) {
+    .help-header {
+        padding: 20px;
+    }
+    
     .help-header h1 {
         font-size: 22px;
     }
-    .nav-btn {
-        font-size: 13px;
-        padding: 10px 12px;
+    
+    .help-header p {
+        font-size: 14px;
+    }
+    
+    .help-toc {
+        padding: 16px;
+    }
+    
+    .help-toc h2 {
+        font-size: 18px;
+        margin-bottom: 12px;
+    }
+    
+    .toc-list a {
+        padding: 12px;
+        font-size: 15px;
     }
 }
 </style>
