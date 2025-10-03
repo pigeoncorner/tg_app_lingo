@@ -79,3 +79,66 @@ window.loadHelpSection = loadHelpSection;
 window.closeHelp = closeHelp;
 
 initWhenReady();
+
+// Функция переключения содержания
+window.toggleTOC = function() {
+    const tocList = document.getElementById('toc-list');
+    const tocHeader = document.querySelector('.toc-header');
+    
+    if (tocList && tocHeader) {
+        tocList.classList.toggle('collapsed');
+        tocHeader.classList.toggle('collapsed');
+    }
+};
+
+// Функция выбора раздела
+window.selectSection = function(section) {
+    // Загружаем раздел
+    loadHelpSection(section);
+    
+    // Сворачиваем содержание
+    const tocList = document.getElementById('toc-list');
+    const tocHeader = document.querySelector('.toc-header');
+    
+    if (tocList && tocHeader) {
+        tocList.classList.add('collapsed');
+        tocHeader.classList.add('collapsed');
+    }
+    
+    // Прокручиваем к началу контента
+    setTimeout(() => {
+        const content = document.getElementById('help-content');
+        if (content) {
+            content.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+    }, 100);
+};
+
+// Инициализация сворачиваемого меню
+function initCollapsibleTOC() {
+    const tocList = document.getElementById('toc-list');
+    const tocHeader = document.querySelector('.toc-header');
+    
+    // Начинаем в развернутом состоянии
+    // Если хотите начать со свернутого - раскомментируйте:
+    // if (tocList && tocHeader) {
+    //     tocList.classList.add('collapsed');
+    //     tocHeader.classList.add('collapsed');
+    // }
+}
+
+// Обновляем функцию initWhenReady
+function initWhenReady() {
+    if (document.getElementById('help-content')) {
+        console.log('Help page ready');
+        initHelpNavigation();
+        initCollapsibleTOC(); // Добавляем инициализацию
+        // Не загружаем раздел по умолчанию, пусть пользователь выберет
+        // loadHelpSection('menu');
+    } else {
+        setTimeout(initWhenReady, 50);
+    }
+}
