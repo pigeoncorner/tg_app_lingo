@@ -4,24 +4,27 @@
         <p>Руководство пользователя LingoMojo Bot</p>
     </div>
     
-    <!-- Навигационное меню в виде содержания -->
+    <!-- Сворачиваемое навигационное меню -->
     <div class="help-toc">
-        <h2>Содержание</h2>
-        <ul class="toc-list">
-            <li><a href="#" onclick="loadHelpSection('menu'); return false;">🏠 Главное меню</a></li>
-            <li><a href="#" onclick="loadHelpSection('daily'); return false;">📅 Ежедневные задания</a></li>
-            <li><a href="#" onclick="loadHelpSection('speak'); return false;">🗣 Говорение</a></li>
-            <li><a href="#" onclick="loadHelpSection('words'); return false;">📝 Изучение слов</a></li>
-            <li><a href="#" onclick="loadHelpSection('news'); return false;">📰 Чтение статей</a></li>
-            <li><a href="#" onclick="loadHelpSection('native'); return false;">🗣️ Носитель языка</a></li>
-            <li><a href="#" onclick="loadHelpSection('settings'); return false;">⚙️ Настройки</a></li>
-            <li><a href="#" onclick="loadHelpSection('subscription'); return false;">💳 Подписка</a></li>
+        <div class="toc-header" onclick="toggleTOC()">
+            <h2>Содержание</h2>
+            <span class="toc-arrow">▼</span>
+        </div>
+        <ul class="toc-list" id="toc-list">
+            <li><a href="#" onclick="selectSection('menu'); return false;">🏠 Главное меню</a></li>
+            <li><a href="#" onclick="selectSection('daily'); return false;">📅 Ежедневные задания</a></li>
+            <li><a href="#" onclick="selectSection('speak'); return false;">🗣 Говорение</a></li>
+            <li><a href="#" onclick="selectSection('words'); return false;">📝 Изучение слов</a></li>
+            <li><a href="#" onclick="selectSection('news'); return false;">📰 Чтение статей</a></li>
+            <li><a href="#" onclick="selectSection('native'); return false;">🗣️ Носитель языка</a></li>
+            <li><a href="#" onclick="selectSection('settings'); return false;">⚙️ Настройки</a></li>
+            <li><a href="#" onclick="selectSection('subscription'); return false;">💳 Подписка</a></li>
         </ul>
     </div>
     
     <!-- Контейнер для загрузки разделов -->
     <div id="help-content">
-        <div class="loading">Загрузка раздела...</div>
+        <div class="loading">Выберите раздел из содержания выше</div>
     </div>
     
     <!-- Кнопка возврата -->
@@ -61,26 +64,61 @@
     color: white;
 }
 
-/* Стили для содержания */
+/* Стили для сворачиваемого содержания */
 .help-toc {
     background: var(--tg-theme-secondary-bg-color, #f8f9fa);
     border-radius: 12px;
-    padding: 24px;
+    padding: 0;
     margin-bottom: 24px;
     border: 2px solid var(--tg-theme-section-separator-color, #e5e5e5);
+    overflow: hidden;
 }
 
-.help-toc h2 {
+.toc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+}
+
+.toc-header:hover {
+    background: var(--tg-theme-bg-color, #ffffff);
+}
+
+.toc-header h2 {
     font-size: 20px;
     font-weight: 600;
-    margin: 0 0 16px 0;
+    margin: 0;
     color: var(--tg-theme-text-color, #000000);
+}
+
+.toc-arrow {
+    font-size: 16px;
+    color: var(--tg-theme-hint-color, #999999);
+    transition: transform 0.3s ease;
+}
+
+.toc-header.collapsed .toc-arrow {
+    transform: rotate(-90deg);
 }
 
 .toc-list {
     list-style: none;
-    padding: 0;
+    padding: 0 20px 20px 20px;
     margin: 0;
+    max-height: 500px;
+    opacity: 1;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+    overflow: hidden;
+}
+
+.toc-list.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding: 0 20px;
 }
 
 .toc-list li {
@@ -143,13 +181,16 @@
         font-size: 14px;
     }
     
-    .help-toc {
-        padding: 16px;
+    .toc-header {
+        padding: 12px 16px;
     }
     
-    .help-toc h2 {
+    .toc-header h2 {
         font-size: 18px;
-        margin-bottom: 12px;
+    }
+    
+    .toc-list {
+        padding: 0 16px 16px 16px;
     }
     
     .toc-list a {
@@ -158,3 +199,46 @@
     }
 }
 </style>
+
+<script>
+// Функция переключения содержания
+function toggleTOC() {
+    const tocList = document.getElementById('toc-list');
+    const tocHeader = document.querySelector('.toc-header');
+    
+    tocList.classList.toggle('collapsed');
+    tocHeader.classList.toggle('collapsed');
+}
+
+// Функция выбора раздела
+function selectSection(section) {
+    // Загружаем раздел
+    loadHelpSection(section);
+    
+    // Сворачиваем содержание
+    const tocList = document.getElementById('toc-list');
+    const tocHeader = document.querySelector('.toc-header');
+    
+    tocList.classList.add('collapsed');
+    tocHeader.classList.add('collapsed');
+    
+    // Прокручиваем к началу контента
+    setTimeout(() => {
+        document.getElementById('help-content').scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+    }, 100);
+}
+
+// Инициализация - начинаем со свернутого состояния
+window.addEventListener('load', function() {
+    const tocList = document.getElementById('toc-list');
+    const tocHeader = document.querySelector('.toc-header');
+    
+    // Начинаем в развернутом состоянии для первого открытия
+    // Если хотите начать со свернутого - раскомментируйте:
+    // tocList.classList.add('collapsed');
+    // tocHeader.classList.add('collapsed');
+});
+</script>
