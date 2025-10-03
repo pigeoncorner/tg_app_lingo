@@ -200,45 +200,4 @@
 }
 </style>
 
-<script>
-// Функция переключения содержания
-function toggleTOC() {
-    const tocList = document.getElementById('toc-list');
-    const tocHeader = document.querySelector('.toc-header');
-    
-    tocList.classList.toggle('collapsed');
-    tocHeader.classList.toggle('collapsed');
-}
 
-// Функция выбора раздела
-function selectSection(section) {
-    // Загружаем раздел
-    loadHelpSection(section);
-    
-    // Сворачиваем содержание
-    const tocList = document.getElementById('toc-list');
-    const tocHeader = document.querySelector('.toc-header');
-    
-    tocList.classList.add('collapsed');
-    tocHeader.classList.add('collapsed');
-    
-    // Прокручиваем к началу контента
-    setTimeout(() => {
-        document.getElementById('help-content').scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
-        });
-    }, 100);
-}
-
-// Инициализация - начинаем со свернутого состояния
-window.addEventListener('load', function() {
-    const tocList = document.getElementById('toc-list');
-    const tocHeader = document.querySelector('.toc-header');
-    
-    // Начинаем в развернутом состоянии для первого открытия
-    // Если хотите начать со свернутого - раскомментируйте:
-    // tocList.classList.add('collapsed');
-    // tocHeader.classList.add('collapsed');
-});
-</script>
