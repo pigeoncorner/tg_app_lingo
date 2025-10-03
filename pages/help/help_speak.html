@@ -212,20 +212,3 @@
     }
 }
 </style>
-
-<script>
-function loadSubsection(type) {
-    const subsectionMap = {
-        'fs': 'speak_fs',
-        'listen': 'speak_listen',
-        'dialog': 'speak_dialog',
-        'hr': 'speak_hr',
-        'monolog': 'speak_monolog',
-        'retell': 'speak_retell'
-    };
-    
-    if (subsectionMap[type]) {
-        window.loadHelpSection(subsectionMap[type]);
-    }
-}
-</script>
