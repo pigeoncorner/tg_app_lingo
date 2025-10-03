@@ -63,3 +63,19 @@ window.loadHelpSection = loadHelpSection;
 window.closeHelp = closeHelp;
 
 initWhenReady();
+
+// Функция для навигации между подразделами
+window.loadSubsection = function(type) {
+    const subsectionMap = {
+        'fs': 'speak_fs',
+        'listen': 'speak_listen',
+        'dialog': 'speak_dialog',
+        'hr': 'speak_hr',
+        'monolog': 'speak_monolog',
+        'retell': 'speak_retell'
+    };
+    
+    if (subsectionMap[type]) {
+        loadHelpSection(subsectionMap[type]);
+    }
+};
