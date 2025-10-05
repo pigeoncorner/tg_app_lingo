@@ -149,3 +149,9 @@ body {
   letter-spacing: 2px;
   font-family: 'Segoe UI', Roboto, sans-serif;
 }
+
+.add-margin {
+    padding-left: 30px;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
