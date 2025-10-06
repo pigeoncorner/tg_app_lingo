@@ -54,9 +54,7 @@ async function loadHelpSection(section) {
 }
 
 function closeHelp() {
-    if (window.tg) {
-        tg.close();
-    }
+    tg.close();
 }
 
 // Функция для навигации между подразделами "Говорение"
