@@ -9,24 +9,31 @@
 </head>
 <body>
     <div id="app-container"></div>
-
     <script>
         // Инициализация Telegram WebApp
         let tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
-
+        
         // Получение параметра page из URL
         const urlParams = new URLSearchParams(window.location.search);
         const page = urlParams.get('page') || 'timezone';
-
+        
         // Маппинг страниц
         const pages = {
             'timezone': 'pages/timezone.html',
             'agreement': 'pages/agreement.html',
-            'help': 'pages/help.html'
+            'help': 'pages/help.html',
+            // Grammar pages - Module 10: Sentence Structure (SPO)
+            'gram_10_01': 'pages/grammar/gram_10_01.html',
+            'gram_10_02': 'pages/grammar/gram_10_02.html',
+            'gram_10_03': 'pages/grammar/gram_10_03.html',
+            'gram_10_04': 'pages/grammar/gram_10_04.html',
+            'gram_10_05': 'pages/grammar/gram_10_05.html',
+            'gram_10_06': 'pages/grammar/gram_10_06.html',
+            'gram_10_07': 'pages/grammar/gram_10_07.html'
         };
-
+        
         // Загрузка соответствующей страницы
         async function loadPage(pageName) {
             const pageUrl = pages[pageName];
@@ -46,14 +53,22 @@
                 const html = await response.text();
                 document.getElementById('app-container').innerHTML = html;
                 
-                // ИСПРАВЛЕНИЕ: Загружаем скрипт и ждем его выполнения
+                // Определяем какой скрипт загружать
+                let scriptName = pageName;
+                
+                // Для всех грамматических страниц используем один общий скрипт
+                if (pageName.startsWith('gram_')) {
+                    scriptName = 'grammar';
+                }
+                
+                // Загружаем скрипт и ждем его выполнения
                 const script = document.createElement('script');
-                script.src = `js/${pageName}.js`;
+                script.src = `js/${scriptName}.js`;
                 script.onload = function() {
-                    console.log(`Script ${pageName}.js loaded`);
+                    console.log(`Script ${scriptName}.js loaded`);
                 };
                 script.onerror = function() {
-                    console.error(`Failed to load script: js/${pageName}.js`);
+                    console.warn(`Script js/${scriptName}.js not found or failed to load`);
                 };
                 document.body.appendChild(script);
                 
@@ -67,7 +82,7 @@
                 `;
             }
         }
-
+        
         // Загрузка страницы при старте
         loadPage(page);
     </script>
