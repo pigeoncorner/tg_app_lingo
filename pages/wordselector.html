@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор слов</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #000000);
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: var(--tg-theme-bg-color, #ffffff);
+            padding: 12px 0 16px 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--tg-theme-hint-color, #e0e0e0);
+            margin-bottom: 16px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .counter {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--tg-theme-button-color, #3390ec);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--tg-theme-hint-color, #e0e0e0);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--tg-theme-button-color, #3390ec);
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .word-item {
+            background: var(--tg-theme-secondary-bg-color, #f5f5f5);
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .word-item:active {
+            transform: scale(0.98);
+        }
+
+        .word-item.selected {
+            background: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border-color: var(--tg-theme-button-color, #3390ec);
+        }
+
+        .word-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--tg-theme-hint-color, #999999);
+            border-radius: 6px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .word-item.selected .word-checkbox {
+            background: var(--tg-theme-button-text-color, #ffffff);
+            border-color: var(--tg-theme-button-text-color, #ffffff);
+        }
+
+        .word-checkbox::after {
+            content: '✓';
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--tg-theme-button-color, #3390ec);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .word-item.selected .word-checkbox::after {
+            opacity: 1;
+        }
+
+        .word-content {
+            flex: 1;
+        }
+
+        .word-main {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .word-transcription {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 2px;
+        }
+
+        .word-translation {
+            font-size: 15px;
+        }
+
+        .word-translation-alt {
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .word-rank {
+            font-size: 13px;
+            opacity: 0.6;
+            margin-top: 4px;
+        }
+
+        .submit-button {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            right: 16px;
+            background: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .submit-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .submit-button:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--tg-theme-bg-color, #ffffff);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 340px;
+            width: 100%;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-icon {
+            font-size: 48px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            font-size: 15px;
+            text-align: center;
+            line-height: 1.4;
+            opacity: 0.8;
+            margin-bottom: 20px;
+        }
+
+        .modal-button {
+            width: 100%;
+            background: var(--tg-theme-button-color, #3390ec);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .modal-button:active {
+            transform: scale(0.98);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px 20px;
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="progress-info">
+            <div class="counter">
+                <span id="selectedCount">0</span> / 10 слов
+            </div>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <div id="wordsList">
+        <div class="loading">Загрузка слов...</div>
+    </div>
+
+    <button class="submit-button" id="submitBtn" disabled>
+        Добавить к изучению
+    </button>
+
+    <div class="modal" id="limitModal">
+        <div class="modal-content">
+            <div class="modal-icon">⚠️</div>
+            <div class="modal-title">Достигнут лимит</div>
+            <div class="modal-text">
+                Рекомендуем добавлять не более 10 слов в день для эффективного обучения. 
+                Ваши выбранные слова будут сохранены.
+            </div>
+            <button class="modal-button" id="modalSubmitBtn">
+                ✅ Завершить выбор
+            </button>
+        </div>
+    </div>
+
+    <script src="../js/wordselector.js"></script>
+</body>
+</html>
