@@ -20,23 +20,36 @@ if (tg.BackButton) {
 // Загрузка данных из URL
 function loadWordsFromURL() {
     try {
+        console.log('=== Word Selector Debug ===');
+        console.log('Full URL:', window.location.href);
+        console.log('Search params:', window.location.search);
+        
         const params = new URLSearchParams(window.location.search);
+        console.log('All params:', Array.from(params.entries()));
+        
         const wordsData = params.get('words');
+        console.log('Words data (raw):', wordsData ? wordsData.substring(0, 100) + '...' : 'NULL');
         
         if (!wordsData) {
-            showError('Данные не найдены');
+            showError('Данные не найдены в URL');
             return;
         }
 
         // Декодируем base64 и парсим JSON
+        console.log('Decoding base64...');
         const decodedData = atob(wordsData);
+        console.log('Decoded data length:', decodedData.length);
+        
+        console.log('Parsing JSON...');
         words = JSON.parse(decodedData);
         
-        console.log('Loaded words:', words.length);
+        console.log('✅ Loaded words:', words.length);
+        console.log('First word:', words[0]);
+        
         renderWords();
         
     } catch (e) {
-        console.error('Error loading words:', e);
+        console.error('❌ Error loading words:', e);
         showError('Ошибка загрузки данных: ' + e.message);
     }
 }
