@@ -1,20 +1,23 @@
 // wordselector.js
-const tg = window.Telegram.WebApp;
+// Используем глобальную переменную tg из index.html
+// const tg уже объявлен в index.html, не объявляем снова!
 
 let words = [];
 let selectedWords = new Set();
 let limitReached = false;
 const MAX_WORDS = 10;
 
-// Инициализация Telegram WebApp
-tg.ready();
-tg.expand();
-
-if (tg.BackButton) {
-    tg.BackButton.show();
-    tg.BackButton.onClick(() => {
-        tg.close();
-    });
+// Дополнительная инициализация Telegram WebApp
+if (window.Telegram && window.Telegram.WebApp) {
+    tg.ready();
+    tg.expand();
+    
+    if (tg.BackButton) {
+        tg.BackButton.show();
+        tg.BackButton.onClick(() => {
+            tg.close();
+        });
+    }
 }
 
 // Загрузка данных из URL
