@@ -6,7 +6,7 @@ let selectedWords = new Set();
 let limitReached = false;
 const MAX_WORDS = 10;
 
-// Инициализация
+// Инициализация Telegram WebApp
 tg.ready();
 tg.expand();
 
@@ -180,5 +180,10 @@ document.getElementById('modalSubmitBtn').addEventListener('click', submitWords)
 // Экспорт функций в глобальную область
 window.toggleWord = toggleWord;
 
-// Инициализация при загрузке
-document.addEventListener('DOMContentLoaded', loadWordsFromURL);
+// Инициализация при загрузке DOM
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadWordsFromURL);
+} else {
+    // DOM уже загружен
+    loadWordsFromURL();
+}
