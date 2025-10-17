@@ -40,8 +40,11 @@ function loadWordsFromURL() {
 
         // Декодируем base64 и парсим JSON
         console.log('Decoding base64...');
-        const decodedData = atob(wordsData);
+        
+        // Правильное декодирование UTF-8 из base64
+        const decodedData = decodeURIComponent(escape(atob(wordsData)));
         console.log('Decoded data length:', decodedData.length);
+        console.log('First 200 chars:', decodedData.substring(0, 200));
         
         console.log('Parsing JSON...');
         words = JSON.parse(decodedData);
