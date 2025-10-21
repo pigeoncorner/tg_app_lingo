@@ -1,884 +1,586 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Be: Практика и реальные ситуации</title>
-    <link rel="stylesheet" href="../../css/styles.css">
-    <style>
-        .grammar-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--tg-theme-text-color, #000000);
-        }
-
-        .grammar-header {
-            text-align: center;
-            margin-bottom: 32px;
-            padding: 24px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 16px;
-            color: white;
-        }
-
-        .grammar-header h1 {
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: white;
-        }
-
-        .subtitle {
-            font-size: 16px;
-            opacity: 0.95;
-            margin-bottom: 16px;
-            color: white;
-        }
-
-        .module-info {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .badge {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-        }
-
-        .content {
-            background: var(--tg-theme-bg-color, #ffffff);
-        }
-
-        .content h2 {
-            font-size: 22px;
-            font-weight: 700;
-            margin: 32px 0 16px 0;
-            color: var(--tg-theme-text-color, #000000);
-            border-bottom: 2px solid var(--tg-theme-section-separator-color, #e5e5e5);
-            padding-bottom: 8px;
-        }
-
-        .content h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin: 24px 0 12px 0;
-            color: var(--tg-theme-text-color, #000000);
-        }
-
-        .content p {
-            margin: 12px 0;
-            line-height: 1.6;
-        }
-
-        .content ul,
-        .content ol {
-            margin: 12px 0 12px 24px;
-        }
-
-        .content li {
-            margin: 8px 0;
-            line-height: 1.6;
-        }
-
-        .content hr {
-            border: none;
-            border-top: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
-            margin: 24px 0;
-        }
-
-        .review-box {
-            background: #f0f9ff;
-            border-left: 4px solid #0369a1;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 20px 0;
-        }
-
-        .review-box ul {
-            margin: 12px 0 0 20px;
-        }
-
-        .transform-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            background: var(--tg-theme-secondary-bg-color, #f8f9fa);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .transform-table thead {
-            background: #667eea;
-            color: white;
-        }
-
-        .transform-table th,
-        .transform-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
-        }
-
-        .transform-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .practice-box {
-            background: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 20px 0;
-        }
-
-        .practice-box strong {
-            display: block;
-            margin-bottom: 12px;
-            color: #92400e;
-        }
-
-        .practice-box ol {
-            margin: 8px 0 8px 20px;
-        }
-
-        .situation-box {
-            background: #f0fdf4;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid #86efac;
-        }
-
-        .situation-box h3 {
-            margin-top: 0;
-            color: #166534;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .situation-box ul {
-            margin: 12px 0 12px 20px;
-        }
-
-        .dialogue-box {
-            background: #ede9fe;
-            border-radius: 12px;
-            padding: 16px;
-            margin: 16px 0;
-        }
-
-        .dialogue-box h4 {
-            margin: 0 0 12px 0;
-            color: #5b21b6;
-            font-size: 16px;
-        }
-
-        .dialogue-line {
-            margin: 6px 0;
-            padding-left: 12px;
-        }
-
-        .scenario-box {
-            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .scenario-box h4 {
-            margin: 0 0 12px 0;
-            color: #92400e;
-        }
-
-        .useful-phrases {
-            background: #dbeafe;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 16px 0;
-        }
-
-        .useful-phrases h4 {
-            margin: 0 0 12px 0;
-            color: #1e40af;
-        }
-
-        .useful-phrases ul {
-            margin: 8px 0 8px 20px;
-        }
-
-        .full-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 16px 0;
-            background: var(--tg-theme-secondary-bg-color, #f8f9fa);
-            border-radius: 8px;
-            overflow: hidden;
-            font-size: 14px;
-        }
-
-        .full-table thead {
-            background: #4f46e5;
-            color: white;
-        }
-
-        .full-table th,
-        .full-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
-        }
-
-        .full-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .recap-box {
-            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
-            border-radius: 12px;
-            padding: 20px;
-            margin: 24px 0;
-        }
-
-        .recap-box h3 {
-            margin-top: 0;
-            color: #4c1d95;
-        }
-
-        .recap-box ul {
-            margin: 12px 0 12px 20px;
-        }
-
-        .emoji-title {
-            display: inline-block;
-            margin-right: 4px;
-        }
-
-        .grammar-footer {
-            margin-top: 32px;
-            padding-top: 24px;
-            border-top: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
-            text-align: center;
-        }
-
-        @media (max-width: 600px) {
-            .grammar-container {
-                padding: 16px;
-            }
-            
-            .grammar-header {
-                padding: 20px;
-            }
-            
-            .grammar-header h1 {
-                font-size: 22px;
-            }
-            
-            .subtitle {
-                font-size: 15px;
-            }
-            
-            .content h2 {
-                font-size: 20px;
-            }
-            
-            .content h3 {
-                font-size: 17px;
-            }
-            
-            .transform-table,
-            .full-table {
-                font-size: 12px;
-            }
-            
-            .transform-table th,
-            .transform-table td,
-            .full-table th,
-            .full-table td {
-                padding: 8px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="grammar-container">
-        <div class="grammar-header">
-            <h1>Глагол to be: Практика и реальные ситуации</h1>
-            <p class="subtitle">Practice & Real Situations</p>
-            <div class="module-info">
-                <span class="badge">Уровень A1</span>
-                <span class="badge">Модуль 20</span>
-                <span class="badge">Финальный урок</span>
-            </div>
-        </div>
-
-        <div class="content">
-            <h2>🔄 Что мы уже знаем</h2>
-            <div class="review-box">
-                <p>В предыдущих трех уроках вы изучили:</p>
-                <ul>
-                    <li>✅ <strong>Утверждения:</strong> I am a student, She is at home</li>
-                    <li>✅ <strong>Отрицания:</strong> I'm not tired, He isn't busy</li>
-                    <li>✅ <strong>Вопросы:</strong> Are you ready? Is she at work?</li>
-                    <li>✅ <strong>Краткие ответы:</strong> Yes, I am / No, I'm not</li>
-                    <li>✅ <strong>Специальные вопросы:</strong> Where are you? Who is that?</li>
-                </ul>
-            </div>
-
-            <p><strong>Сегодня мы:</strong></p>
-            <ul>
-                <li>Используем ВСЕ формы вместе в реальных ситуациях</li>
-                <li>Учимся описывать себя, семью и окружение</li>
-                <li>Практикуем живые диалоги</li>
-                <li>Применяем знания в повседневных сценариях</li>
-            </ul>
-
-            <hr>
-
-            <h2>🔄 ЧАСТЬ 1: ВСЕ ФОРМЫ ВМЕСТЕ</h2>
-            
-            <h3>Трансформация предложений</h3>
-            <p>Одно и то же предложение можно использовать в трёх формах:</p>
-
-            <h4>Тема: Профессия</h4>
-            <table class="transform-table">
-                <thead>
-                    <tr>
-                        <th>Утверждение (+)</th>
-                        <th>Отрицание (-)</th>
-                        <th>Вопрос (?)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>I am a teacher.</td>
-                        <td>I'm not a teacher.</td>
-                        <td>Am I a teacher?</td>
-                    </tr>
-                    <tr>
-                        <td>She is a doctor.</td>
-                        <td>She isn't a doctor.</td>
-                        <td>Is she a doctor?</td>
-                    </tr>
-                    <tr>
-                        <td>They are students.</td>
-                        <td>They aren't students.</td>
-                        <td>Are they students?</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h4>Тема: Местоположение</h4>
-            <table class="transform-table">
-                <thead>
-                    <tr>
-                        <th>Утверждение (+)</th>
-                        <th>Отрицание (-)</th>
-                        <th>Вопрос (?)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>You are at home.</td>
-                        <td>You aren't at home.</td>
-                        <td>Are you at home?</td>
-                    </tr>
-                    <tr>
-                        <td>He is in London.</td>
-                        <td>He isn't in London.</td>
-                        <td>Is he in London?</td>
-                    </tr>
-                    <tr>
-                        <td>We are at work.</td>
-                        <td>We aren't at work.</td>
-                        <td>Are we at work?</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h4>Тема: Состояние</h4>
-            <table class="transform-table">
-                <thead>
-                    <tr>
-                        <th>Утверждение (+)</th>
-                        <th>Отрицание (-)</th>
-                        <th>Вопрос (?)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>I am tired.</td>
-                        <td>I'm not tired.</td>
-                        <td>Am I tired?</td>
-                    </tr>
-                    <tr>
-                        <td>It is cold.</td>
-                        <td>It isn't cold.</td>
-                        <td>Is it cold?</td>
-                    </tr>
-                    <tr>
-                        <td>They are ready.</td>
-                        <td>They aren't ready.</td>
-                        <td>Are they ready?</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3>📝 Практика трансформации</h3>
-            <div class="practice-box">
-                <strong>Упражнение: Преобразуйте предложения во все формы</strong>
-                <p><strong>Пример:</strong><br>
-                Дано: <em>She is busy.</em><br>
-                → Отрицание: <em>She isn't busy.</em><br>
-                → Вопрос: <em>Is she busy?</em><br>
-                → Краткие ответы: <em>Yes, she is. / No, she isn't.</em></p>
-                
-                <p><strong>Попробуйте сами:</strong></p>
-                <ol>
-                    <li>I am a student. → ?</li>
-                    <li>They are at school. → ?</li>
-                    <li>He is Spanish. → ?</li>
-                    <li>We are friends. → ?</li>
-                    <li>The book is on the table. → ?</li>
-                </ol>
-            </div>
-
-            <hr>
-
-            <h2>🌍 ЧАСТЬ 2: РЕАЛЬНЫЕ СИТУАЦИИ</h2>
-
-            <div class="situation-box">
-                <h3><span class="emoji-title">✈️</span> Ситуация 1: В аэропорту</h3>
-                <p><strong>Describing location and state:</strong></p>
-                <ul>
-                    <li>I am at the airport. — Я в аэропорту.</li>
-                    <li>My flight is at 3 PM. — Мой рейс в 3 часа дня.</li>
-                    <li>Where is gate 5? — Где выход 5?</li>
-                    <li>Is the flight on time? — Рейс вовремя?</li>
-                    <li>Are you here for business or vacation? — Вы здесь по бизнесу или в отпуске?</li>
-                    <li>My luggage isn't here yet. — Моего багажа еще нет.</li>
-                    <li>Are you tired after the flight? — Ты устал после полета?</li>
-                </ul>
-
-                <div class="dialogue-box">
-                    <h4>Mini-диалог:</h4>
-                    <div class="dialogue-line"><strong>A:</strong> Excuse me, where is gate 12?</div>
-                    <div class="dialogue-line"><strong>B:</strong> It's on the second floor.</div>
-                    <div class="dialogue-line"><strong>A:</strong> Is it far from here?</div>
-                    <div class="dialogue-line"><strong>B:</strong> No, it isn't. It's very close.</div>
-                    <div class="dialogue-line"><strong>A:</strong> Thank you!</div>
-                </div>
-            </div>
-
-            <div class="situation-box">
-                <h3><span class="emoji-title">👋</span> Ситуация 2: Знакомство и представление</h3>
-                <p><strong>Introducing yourself:</strong></p>
-                <ul>
-                    <li>Hi, I'm Anna. — Привет, я Анна.</li>
-                    <li>I'm from Germany. — Я из Германии.</li>
-                    <li>I'm a software engineer. — Я программист.</li>
-                    <li>I'm 28 years old. — Мне 28 лет.</li>
-                    <li>I'm here for a conference. — Я здесь на конференцию.</li>
-                </ul>
-
-                <p><strong>Asking about others:</strong></p>
-                <ul>
-                    <li>What is your name? — Как вас зовут?</li>
-                    <li>Where are you from? — Откуда вы?</li>
-                    <li>What is your job? — Кем вы работаете?</li>
-                    <li>Are you new here? — Вы здесь новенький?</li>
-                    <li>How old are you? — Сколько вам лет?</li>
-                </ul>
-
-                <div class="dialogue-box">
-                    <h4>Mini-диалог:</h4>
-                    <div class="dialogue-line"><strong>A:</strong> Hi! I'm Carlos. What's your name?</div>
-                    <div class="dialogue-line"><strong>B:</strong> I'm Sarah. Nice to meet you!</div>
-                    <div class="dialogue-line"><strong>A:</strong> Where are you from, Sarah?</div>
-                    <div class="dialogue-line"><strong>B:</strong> I'm from Canada. And you?</div>
-                    <div class="dialogue-line"><strong>A:</strong> I'm from Mexico. Are you here on vacation?</div>
-                    <div class="dialogue-line"><strong>B:</strong> No, I'm here for work.</div>
-                </div>
-            </div>
-
-            <div class="situation-box">
-                <h3><span class="emoji-title">💼</span> Ситуация 3: На работе</h3>
-                <p><strong>Talking about work:</strong></p>
-                <ul>
-                    <li>I'm at the office today. — Я сегодня в офисе.</li>
-                    <li>My colleague isn't here. — Моего коллеги нет.</li>
-                    <li>Is the boss in today? — Босс сегодня на месте?</li>
-                    <li>We are in a meeting. — Мы на встрече.</li>
-                    <li>The deadline is tomorrow. — Дедлайн завтра.</li>
-                    <li>Are you busy right now? — Ты сейчас занят?</li>
-                    <li>I'm not available this afternoon. — Я не доступен сегодня днем.</li>
-                </ul>
-
-                <div class="dialogue-box">
-                    <h4>Mini-диалог:</h4>
-                    <div class="dialogue-line"><strong>A:</strong> Is Maria in the office?</div>
-                    <div class="dialogue-line"><strong>B:</strong> No, she isn't. She's working from home today.</div>
-                    <div class="dialogue-line"><strong>A:</strong> Is she available for a call?</div>
-                    <div class="dialogue-line"><strong>B:</strong> Yes, she is. She's online.</div>
-                    <div class="dialogue-line"><strong>A:</strong> Great, thanks!</div>
-                </div>
-            </div>
-
-            <div class="situation-box">
-                <h3><span class="emoji-title">👨‍👩‍👧‍👦</span> Ситуация 4: О семье и друзьях</h3>
-                <p><strong>Describing family:</strong></p>
-                <ul>
-                    <li>I'm married. — Я женат/замужем.</li>
-                    <li>I'm not married. I'm single. — Я не женат/не замужем. Я холост/не замужем.</li>
-                    <li>My sister is a teacher. — Моя сестра учитель.</li>
-                    <li>My brother isn't here today. — Моего брата сегодня нет.</li>
-                    <li>My parents are in Spain. — Мои родители в Испании.</li>
-                    <li>Is your brother older than you? — Твой брат старше тебя?</li>
-                    <li>How old are your children? — Сколько лет твоим детям?</li>
-                </ul>
-
-                <p><strong>About friends:</strong></p>
-                <ul>
-                    <li>She's my best friend. — Она моя лучшая подруга.</li>
-                    <li>We're old friends. — Мы старые друзья.</li>
-                    <li>They're my colleagues. — Они мои коллеги.</li>
-                    <li>Are you friends with John? — Ты дружишь с Джоном?</li>
-                </ul>
-
-                <div class="dialogue-box">
-                    <h4>Mini-диалог:</h4>
-                    <div class="dialogue-line"><strong>A:</strong> Are you married?</div>
-                    <div class="dialogue-line"><strong>B:</strong> Yes, I am. And you?</div>
-                    <div class="dialogue-line"><strong>A:</strong> No, I'm not. I'm single.</div>
-                    <div class="dialogue-line"><strong>B:</strong> Do you have brothers or sisters?</div>
-                    <div class="dialogue-line"><strong>A:</strong> Yes, I have one sister. She's a doctor.</div>
-                    <div class="dialogue-line"><strong>B:</strong> Oh, that's interesting!</div>
-                </div>
-            </div>
-
-            <div class="situation-box">
-                <h3><span class="emoji-title">🛍️☕</span> Ситуация 5: В магазине и кафе</h3>
-                <p><strong>At the store:</strong></p>
-                <ul>
-                    <li>Excuse me, are you a sales assistant? — Извините, вы продавец?</li>
-                    <li>Where are the fitting rooms? — Где примерочные?</li>
-                    <li>Is this on sale? — Это со скидкой?</li>
-                    <li>These shoes are too small. — Эти туфли слишком малы.</li>
-                    <li>Are these available in size 8? — Они есть в размере 8?</li>
-                </ul>
-
-                <p><strong>At the café:</strong></p>
-                <ul>
-                    <li>Is this seat free? — Это место свободно?</li>
-                    <li>Are you ready to order? — Вы готовы заказать?</li>
-                    <li>I'm allergic to nuts. — У меня аллергия на орехи.</li>
-                    <li>Is the coffee strong? — Кофе крепкий?</li>
-                    <li>We're ready for the bill. — Мы готовы к счету.</li>
-                </ul>
-
-                <div class="dialogue-box">
-                    <h4>Mini-диалог:</h4>
-                    <div class="dialogue-line"><strong>A:</strong> Excuse me, is this table free?</div>
-                    <div class="dialogue-line"><strong>B:</strong> Yes, it is. Please, sit down.</div>
-                    <div class="dialogue-line"><strong>A:</strong> Thank you. Are you the waiter?</div>
-                    <div class="dialogue-line"><strong>B:</strong> Yes, I am. Are you ready to order?</div>
-                    <div class="dialogue-line"><strong>A:</strong> Not yet. I'm waiting for my friend.</div>
-                    <div class="dialogue-line"><strong>B:</strong> No problem. I'm here when you're ready.</div>
-                </div>
-            </div>
-
-            <div class="situation-box">
-                <h3><span class="emoji-title">🏥</span> Ситуация 6: О здоровье и самочувствии</h3>
-                <p><strong>Talking about how you feel:</strong></p>
-                <ul>
-                    <li>I'm fine, thanks. — Я в порядке, спасибо.</li>
-                    <li>I'm not feeling well. — Я плохо себя чувствую.</li>
-                    <li>I'm sick. — Я болен.</li>
-                    <li>Are you okay? — Ты в порядке?</li>
-                    <li>Is your head still hurting? — Голова все еще болит?</li>
-                    <li>She's better now. — Ей сейчас лучше.</li>
-                    <li>We're tired after the trip. — Мы устали после поездки.</li>
-                </ul>
-
-                <div class="dialogue-box">
-                    <h4>Mini-диалог:</h4>
-                    <div class="dialogue-line"><strong>A:</strong> Hey, are you okay? You look tired.</div>
-                    <div class="dialogue-line"><strong>B:</strong> I'm fine, just a little tired.</div>
-                    <div class="dialogue-line"><strong>A:</strong> Are you sick?</div>
-                    <div class="dialogue-line"><strong>B:</strong> No, I'm not sick. I'm just working too much.</div>
-                    <div class="dialogue-line"><strong>A:</strong> You need to rest!</div>
-                    <div class="dialogue-line"><strong>B:</strong> Yes, you're right.</div>
-                </div>
-            </div>
-
-            <hr>
-
-            <h2>🏠 ЧАСТЬ 3: ОПИСАНИЕ МЕСТ И ПРЕДМЕТОВ</h2>
-
-            <h3>Describing your home:</h3>
-            <ul>
-                <li>My apartment is small but cozy. — Моя квартира маленькая, но уютная.</li>
-                <li>My room is on the second floor. — Моя комната на втором этаже.</li>
-                <li>The kitchen is very modern. — Кухня очень современная.</li>
-                <li>Where is the bathroom? — Где ванная?</li>
-                <li>Is the wi-fi password on the table? — Пароль от wi-fi на столе?</li>
-                <li>My keys are in my bag. — Мои ключи в сумке.</li>
-                <li>The TV isn't working. — Телевизор не работает.</li>
-            </ul>
-
-            <h3>Describing objects:</h3>
-            <ul>
-                <li>This book is interesting. — Эта книга интересная.</li>
-                <li>My phone is new. — Мой телефон новый.</li>
-                <li>These shoes are comfortable. — Эти туфли удобные.</li>
-                <li>Is your laptop expensive? — Твой ноутбук дорогой?</li>
-                <li>The coffee is cold. — Кофе холодный.</li>
-                <li>Where is my wallet? — Где мой кошелек?</li>
-            </ul>
-
-            <hr>
-
-            <h2>📱 ЧАСТЬ 4: ПО ТЕЛЕФОНУ И В ПЕРЕПИСКЕ</h2>
-
-            <h3>Phone conversations:</h3>
-            <ul>
-                <li>Hello, is Anna there? — Алло, Анна там?</li>
-                <li>Yes, I am. / No, she isn't. — Да, это я. / Нет, её нет.</li>
-                <li>Is this a good time to talk? — Сейчас удобно говорить?</li>
-                <li>I'm busy right now. — Я сейчас занят.</li>
-                <li>Are you free this evening? — Ты свободен сегодня вечером?</li>
-                <li>Where are you now? — Где ты сейчас?</li>
-                <li>I'm on my way. — Я в пути.</li>
-            </ul>
-
-            <h3>Text messages style:</h3>
-            <div class="dialogue-box">
-                <div class="dialogue-line">Hi! Are you home?</div>
-                <div class="dialogue-line">Yes, I am. Why?</div>
-                <div class="dialogue-line">Are you free? Let's meet!</div>
-                <div class="dialogue-line">Sorry, I'm not. I'm at work.</div>
-                <div class="dialogue-line">Okay. Are you free tomorrow?</div>
-                <div class="dialogue-line">Yes! What time?</div>
-            </div>
-
-            <hr>
-
-            <h2>🎯 ЧАСТЬ 5: ПРАКТИЧЕСКИЕ СЦЕНАРИИ</h2>
-
-            <div class="scenario-box">
-                <h4>Сценарий 1: Планирование встречи</h4>
-                <div class="dialogue-line"><strong>A:</strong> Hi! Are you free on Friday evening?</div>
-                <div class="dialogue-line"><strong>B:</strong> Let me check... Yes, I am! Why?</div>
-                <div class="dialogue-line"><strong>A:</strong> Great! There's a new Italian restaurant. Are you interested?</div>
-                <div class="dialogue-line"><strong>B:</strong> Yes! I love Italian food. Where is it?</div>
-                <div class="dialogue-line"><strong>A:</strong> It's in the city center, near the park.</div>
-                <div class="dialogue-line"><strong>B:</strong> Perfect! What time?</div>
-                <div class="dialogue-line"><strong>A:</strong> Is 7 PM okay for you?</div>
-                <div class="dialogue-line"><strong>B:</strong> Yes, it is. See you then!</div>
-            </div>
-
-            <div class="scenario-box">
-                <h4>Сценарий 2: Опоздание</h4>
-                <div class="dialogue-line"><strong>A:</strong> Hi, sorry I'm late!</div>
-                <div class="dialogue-line"><strong>B:</strong> It's okay. Where were you?</div>
-                <div class="dialogue-line"><strong>A:</strong> I was stuck in traffic.</div>
-                <div class="dialogue-line"><strong>B:</strong> Are you here now?</div>
-                <div class="dialogue-line"><strong>A:</strong> Yes, I'm at the entrance. Where are you?</div>
-                <div class="dialogue-line"><strong>B:</strong> I'm inside, at table 5.</div>
-                <div class="dialogue-line"><strong>A:</strong> Great! I'm coming!</div>
-            </div>
-
-            <div class="scenario-box">
-                <h4>Сценарий 3: На новой работе</h4>
-                <div class="dialogue-line"><strong>A:</strong> Excuse me, are you the new employee?</div>
-                <div class="dialogue-line"><strong>B:</strong> Yes, I am. I'm Sarah.</div>
-                <div class="dialogue-line"><strong>A:</strong> Nice to meet you, Sarah. I'm Tom. I'm your team leader.</div>
-                <div class="dialogue-line"><strong>B:</strong> Nice to meet you too!</div>
-                <div class="dialogue-line"><strong>A:</strong> Is this your first day?</div>
-                <div class="dialogue-line"><strong>B:</strong> Yes, it is. I'm a bit nervous!</div>
-                <div class="dialogue-line"><strong>A:</strong> Don't worry! Everyone is very friendly here.</div>
-                <div class="dialogue-line"><strong>B:</strong> That's good to know. Thank you!</div>
-            </div>
-
-            <div class="scenario-box">
-                <h4>Сценарий 4: Помощь туристу</h4>
-                <div class="dialogue-line"><strong>A:</strong> Excuse me, are you local?</div>
-                <div class="dialogue-line"><strong>B:</strong> Yes, I am. Can I help you?</div>
-                <div class="dialogue-line"><strong>A:</strong> I'm looking for the train station. Is it near here?</div>
-                <div class="dialogue-line"><strong>B:</strong> Yes, it is. It's about 5 minutes from here.</div>
-                <div class="dialogue-line"><strong>A:</strong> Which direction?</div>
-                <div class="dialogue-line"><strong>B:</strong> Go straight, then turn left. It's on the right.</div>
-                <div class="dialogue-line"><strong>A:</strong> Thank you so much!</div>
-                <div class="dialogue-line"><strong>B:</strong> You're welcome! Enjoy your stay!</div>
-            </div>
-
-            <div class="scenario-box">
-                <h4>Сценарий 5: У врача</h4>
-                <div class="dialogue-line"><strong>Doctor:</strong> Hello, how are you today?</div>
-                <div class="dialogue-line"><strong>Patient:</strong> I'm not feeling well.</div>
-                <div class="dialogue-line"><strong>Doctor:</strong> What's wrong?</div>
-                <div class="dialogue-line"><strong>Patient:</strong> I'm tired all the time and I have a headache.</div>
-                <div class="dialogue-line"><strong>Doctor:</strong> Are you sleeping well?</div>
-                <div class="dialogue-line"><strong>Patient:</strong> No, I'm not. I'm very stressed at work.</div>
-                <div class="dialogue-line"><strong>Doctor:</strong> I see. Are you taking any medication?</div>
-                <div class="dialogue-line"><strong>Patient:</strong> No, I'm not.</div>
-                <div class="dialogue-line"><strong>Doctor:</strong> Okay, let me examine you.</div>
-            </div>
-
-            <hr>
-
-            <h2>💡 ЧАСТЬ 6: ПОЛЕЗНЫЕ КОМБИНАЦИИ</h2>
-
-            <div class="useful-phrases">
-                <h4>Expressing certainty:</h4>
-                <ul>
-                    <li>I'm sure. — Я уверен.</li>
-                    <li>I'm not sure. — Я не уверен.</li>
-                    <li>Are you sure? — Ты уверен?</li>
-                    <li>It's certain. — Это точно.</li>
-                </ul>
-            </div>
-
-            <div class="useful-phrases">
-                <h4>Expressing availability:</h4>
-                <ul>
-                    <li>I'm free. — Я свободен.</li>
-                    <li>I'm busy. — Я занят.</li>
-                    <li>Are you available? — Ты доступен?</li>
-                    <li>We're not available today. — Мы сегодня недоступны.</li>
-                </ul>
-            </div>
-
-            <div class="useful-phrases">
-                <h4>Expressing readiness:</h4>
-                <ul>
-                    <li>I'm ready. — Я готов.</li>
-                    <li>We're not ready yet. — Мы еще не готовы.</li>
-                    <li>Are you ready? — Ты готов?</li>
-                    <li>Everything is ready. — Всё готово.</li>
-                </ul>
-            </div>
-
-            <div class="useful-phrases">
-                <h4>Expressing problems:</h4>
-                <ul>
-                    <li>Something is wrong. — Что-то не так.</li>
-                    <li>I'm in trouble. — У меня проблемы.</li>
-                    <li>Is everything okay? — Всё в порядке?</li>
-                    <li>It's not a problem. — Это не проблема.</li>
-                </ul>
-            </div>
-
-            <hr>
-
-            <h2>📊 ТАБЛИЦА: Полная трансформация</h2>
-
-            <table class="full-table">
-                <thead>
-                    <tr>
-                        <th>Утверждение</th>
-                        <th>Отрицание</th>
-                        <th>Общий вопрос</th>
-                        <th>Специальный вопрос</th>
-                        <th>Краткий ответ</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>I am at home</td>
-                        <td>I'm not at home</td>
-                        <td>Are you at home?</td>
-                        <td>Where are you?</td>
-                        <td>Yes, I am / No, I'm not</td>
-                    </tr>
-                    <tr>
-                        <td>She is a teacher</td>
-                        <td>She isn't a teacher</td>
-                        <td>Is she a teacher?</td>
-                        <td>What is her job?</td>
-                        <td>Yes, she is / No, she isn't</td>
-                    </tr>
-                    <tr>
-                        <td>They are busy</td>
-                        <td>They aren't busy</td>
-                        <td>Are they busy?</td>
-                        <td>Why are they busy?</td>
-                        <td>Yes, they are / No, they aren't</td>
-                    </tr>
-                    <tr>
-                        <td>It is cold</td>
-                        <td>It isn't cold</td>
-                        <td>Is it cold?</td>
-                        <td>How is the weather?</td>
-                        <td>Yes, it is / No, it isn't</td>
-                    </tr>
-                    <tr>
-                        <td>We are friends</td>
-                        <td>We aren't friends</td>
-                        <td>Are we friends?</td>
-                        <td>Who are they?</td>
-                        <td>Yes, we are / No, we aren't</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <hr>
-
-            <div class="recap-box">
-                <h3>🎓 КРАТКОЕ РЕЗЮМЕ: Всё, что вы знаете о to be</h3>
-                
-                <p><strong>Вы теперь умеете:</strong></p>
-                <ul>
-                    <li>✅ Использовать am/is/are во всех формах (утверждение, отрицание, вопрос)</li>
-                    <li>✅ Описывать себя, других людей и предметы</li>
-                    <li>✅ Говорить о местоположении и состоянии</li>
-                    <li>✅ Задавать вопросы и давать короткие ответы</li>
-                    <li>✅ Использовать специальные вопросы (Where, Who, What, How, Why)</li>
-                    <li>✅ Вести простые диалоги в реальных ситуациях</li>
-                </ul>
-
-                <p><strong>Главные правила:</strong></p>
-                <ul>
-                    <li>🔹 <strong>I am</strong>, <strong>he/she/it is</strong>, <strong>you/we/they are</strong></li>
-                    <li>🔹 Сокращения: I'm, he's, she's, it's, we're, you're, they're</li>
-                    <li>🔹 Отрицания: am not (I'm not), isn't, aren't</li>
-                    <li>🔹 Вопросы: глагол выходит на первое место</li>
-                    <li>🔹 Краткие ответы: Yes, I am / No, I'm not (без сокращений в положительных ответах!)</li>
-                </ul>
-
-                <p><strong>Практикуйте каждый день:</strong></p>
-                <ul>
-                    <li>📝 Описывайте себя и свой день по-английски</li>
-                    <li>💬 Задавайте себе вопросы: Where am I? What time is it? Am I tired?</li>
-                    <li>🗣️ Используйте фразы из диалогов в реальной жизни</li>
-                    <li>📱 Пишите короткие сообщения на английском</li>
-                </ul>
-            </div>
-
-            <div class="practice-box">
-                <strong>🎯 Следующий шаг:</strong>
-                <p>Теперь, когда вы освоили глагол to be, вы готовы к изучению других глаголов и более сложных конструкций. Продолжайте практиковаться, и английский станет для вас естественным!</p>
-                <p><strong>Помните:</strong> Глагол to be — это фундамент английского языка. Чем лучше вы его знаете, тем легче будет учить всё остальное!</p>
-            </div>
-        </div>
-
-        <div class="grammar-footer">
-            <button class="btn-primary" onclick="window.Telegram.WebApp.close()">
-                Завершить урок
-            </button>
+<div class="grammar-container">
+    <div class="grammar-header">
+        <h1>Глагол to be: Практика и реальные ситуации</h1>
+        <p class="subtitle">Practice &amp; Real Situations</p>
+        <div class="module-info">
+            <span class="badge">Модуль 20 | Урок 4</span>
         </div>
     </div>
 
-    <script src="../../js/grammar.js"></script>
-</body>
-</html>
+    <div class="content">
+        <h2>🔄 Что мы уже знаем</h2>
+        <p>В предыдущих трех уроках вы изучили:</p>
+        <ul>
+            <li>✅ Утверждения: <em>I am a student</em>, <em>She is at home</em></li>
+            <li>✅ Отрицания: <em>I'm not tired</em>, <em>He isn't busy</em></li>
+            <li>✅ Вопросы: <em>Are you ready?</em> <em>Is she at work?</em></li>
+            <li>✅ Краткие ответы: <em>Yes, I am</em> / <em>No, I'm not</em></li>
+            <li>✅ Специальные вопросы: <em>Where are you?</em> <em>Who is that?</em></li>
+        </ul>
+
+        <p>Сегодня мы:</p>
+        <ul>
+            <li>Используем ВСЕ формы вместе в реальных ситуациях</li>
+            <li>Учимся описывать себя, семью и окружение</li>
+            <li>Практикуем живые диалоги</li>
+            <li>Применяем знания в повседневных сценариях</li>
+        </ul>
+
+        <hr>
+
+        <h2>🔄 ЧАСТЬ 1: ВСЕ ФОРМЫ ВМЕСТЕ</h2>
+
+        <p><strong>Трансформация предложений</strong></p>
+        <p>Одно и то же предложение можно использовать в трёх формах:</p>
+
+        <h3>Тема: Профессия</h3>
+        <table>
+            <thead>
+                <tr><th>Утверждение (+)</th><th>Отрицание (-)</th><th>Вопрос (?)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>I am a teacher.</td><td>I'm not a teacher.</td><td>Am I a teacher?</td></tr>
+                <tr><td>She is a doctor.</td><td>She isn't a doctor.</td><td>Is she a doctor?</td></tr>
+                <tr><td>They are students.</td><td>They aren't students.</td><td>Are they students?</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Тема: Местоположение</h3>
+        <table>
+            <thead>
+                <tr><th>Утверждение (+)</th><th>Отрицание (-)</th><th>Вопрос (?)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>You are at home.</td><td>You aren't at home.</td><td>Are you at home?</td></tr>
+                <tr><td>He is in London.</td><td>He isn't in London.</td><td>Is he in London?</td></tr>
+                <tr><td>We are at work.</td><td>We aren't at work.</td><td>Are we at work?</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Тема: Состояние</h3>
+        <table>
+            <thead>
+                <tr><th>Утверждение (+)</th><th>Отрицание (-)</th><th>Вопрос (?)</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>I am tired.</td><td>I'm not tired.</td><td>Am I tired?</td></tr>
+                <tr><td>It is cold.</td><td>It isn't cold.</td><td>Is it cold?</td></tr>
+                <tr><td>They are ready.</td><td>They aren't ready.</td><td>Are they ready?</td></tr>
+            </tbody>
+        </table>
+
+        <div class="important-note">
+            <strong>📝 Практика трансформации:</strong>
+            <p>Упражнение: преобразуйте предложения во все формы</p>
+        </div>
+
+        <p><strong>Пример:</strong><br>
+        Дано: <em>She is busy.</em><br>
+        → Отрицание: <em>She isn't busy.</em><br>
+        → Вопрос: <em>Is she busy?</em><br>
+        → Краткие ответы: <em>Yes, she is.</em> / <em>No, she isn't.</em></p>
+
+        <p><strong>Попробуйте сами:</strong></p>
+        <ol>
+            <li>I am a student. → ?</li>
+            <li>They are at school. → ?</li>
+            <li>He is Spanish. → ?</li>
+            <li>We are friends. → ?</li>
+            <li>The book is on the table. → ?</li>
+        </ol>
+
+        <hr>
+
+        <h2>🌍 ЧАСТЬ 2: РЕАЛЬНЫЕ СИТУАЦИИ</h2>
+
+        <h3>Ситуация 1: В аэропорту ✈️</h3>
+        <p><strong>Describing location and state:</strong></p>
+        <ul>
+            <li>I am at the airport. — Я в аэропорту.</li>
+            <li>My flight is at 3 PM. — Мой рейс в 3 часа дня.</li>
+            <li>Where is gate 5? — Где выход 5?</li>
+            <li>Is the flight on time? — Рейс вовремя?</li>
+            <li>Are you here for business or vacation? — Вы здесь по бизнесу или в отпуске?</li>
+            <li>My luggage isn't here yet. — Моего багажа еще нет.</li>
+            <li>Are you tired after the flight? — Ты устал после полета?</li>
+        </ul>
+
+        <p><strong>Mini-диалог:</strong></p>
+        <pre class="code-block">
+A: Excuse me, where is gate 12?
+B: It's on the second floor.
+A: Is it far from here?
+B: No, it isn't. It's very close.
+A: Thank you!
+        </pre>
+
+        <h3>Ситуация 2: Знакомство и представление 👋</h3>
+        <p><strong>Introducing yourself:</strong></p>
+        <ul>
+            <li>Hi, I'm Anna. — Привет, я Анна.</li>
+            <li>I'm from Germany. — Я из Германии.</li>
+            <li>I'm a software engineer. — Я программист.</li>
+            <li>I'm 28 years old. — Мне 28 лет.</li>
+            <li>I'm here for a conference. — Я здесь на конференцию.</li>
+        </ul>
+
+        <p><strong>Asking about others:</strong></p>
+        <ul>
+            <li>What is your name? — Как вас зовут?</li>
+            <li>Where are you from? — Откуда вы?</li>
+            <li>What is your job? — Кем вы работаете?</li>
+            <li>Are you new here? — Вы здесь новенький?</li>
+            <li>How old are you? — Сколько вам лет?</li>
+        </ul>
+
+        <p><strong>Mini-диалог:</strong></p>
+        <pre class="code-block">
+A: Hi! I'm Carlos. What's your name?
+B: I'm Sarah. Nice to meet you!
+A: Where are you from, Sarah?
+B: I'm from Canada. And you?
+A: I'm from Mexico. Are you here on vacation?
+B: No, I'm here for work.
+        </pre>
+
+        <h3>Ситуация 3: На работе 💼</h3>
+        <p><strong>Talking about work:</strong></p>
+        <ul>
+            <li>I'm at the office today. — Я сегодня в офисе.</li>
+            <li>My colleague isn't here. — Моего коллеги нет.</li>
+            <li>Is the boss in today? — Босс сегодня на месте?</li>
+            <li>We are in a meeting. — Мы на встрече.</li>
+            <li>The deadline is tomorrow. — Дедлайн завтра.</li>
+            <li>Are you busy right now? — Ты сейчас занят?</li>
+            <li>I'm not available this afternoon. — Я не доступен сегодня днем.</li>
+        </ul>
+
+        <p><strong>Mini-диалог:</strong></p>
+        <pre class="code-block">
+A: Is Maria in the office?
+B: No, she isn't. She's working from home today.
+A: Is she available for a call?
+B: Yes, she is. She's online.
+A: Great, thanks!
+        </pre>
+
+        <h3>Ситуация 4: О семье и друзьях 👨‍👩‍👧‍👦</h3>
+        <p><strong>Describing family:</strong></p>
+        <ul>
+            <li>I'm married. — Я женат/замужем.</li>
+            <li>I'm not married. I'm single. — Я не женат/не замужем. Я холост/не замужем.</li>
+            <li>My sister is a teacher. — Моя сестра учитель.</li>
+            <li>My brother isn't here today. — Моего брата сегодня нет.</li>
+            <li>My parents are in Spain. — Мои родители в Испании.</li>
+            <li>Is your brother older than you? — Твой брат старше тебя?</li>
+            <li>How old are your children? — Сколько лет твоим детям?</li>
+        </ul>
+
+        <p><strong>About friends:</strong></p>
+        <ul>
+            <li>She's my best friend. — Она моя лучшая подруга.</li>
+            <li>We're old friends. — Мы старые друзья.</li>
+            <li>They're my colleagues. — Они мои коллеги.</li>
+            <li>Are you friends with John? — Ты дружишь с Джоном?</li>
+        </ul>
+
+        <p><strong>Mini-диалог:</strong></p>
+        <pre class="code-block">
+A: Are you married?
+B: Yes, I am. And you?
+A: No, I'm not. I'm single.
+B: Do you have brothers or sisters?
+A: Yes, I have one sister. She's a doctor.
+B: Oh, that's interesting!
+        </pre>
+
+        <h3>Ситуация 5: В магазине и кафе 🛍️☕</h3>
+        <p><strong>At the store:</strong></p>
+        <ul>
+            <li>Excuse me, are you a sales assistant? — Извините, вы продавец?</li>
+            <li>Where are the fitting rooms? — Где примерочные?</li>
+            <li>Is this on sale? — Это со скидкой?</li>
+            <li>These shoes are too small. — Эти туфли слишком малы.</li>
+            <li>Are these available in size 8? — Они есть в размере 8?</li>
+        </ul>
+
+        <p><strong>At the café:</strong></p>
+        <ul>
+            <li>Is this seat free? — Это место свободно?</li>
+            <li>Are you ready to order? — Вы готовы заказать?</li>
+            <li>I'm allergic to nuts. — У меня аллергия на орехи.</li>
+            <li>Is the coffee strong? — Кофе крепкий?</li>
+            <li>We're ready for the bill. — Мы готовы к счету.</li>
+        </ul>
+
+        <p><strong>Mini-диалог:</strong></p>
+        <pre class="code-block">
+A: Excuse me, is this table free?
+B: Yes, it is. Please, sit down.
+A: Thank you. Are you the waiter?
+B: Yes, I am. Are you ready to order?
+A: Not yet. I'm waiting for my friend.
+B: No problem. I'm here when you're ready.
+        </pre>
+
+        <h3>Ситуация 6: О здоровье и самочувствии 🏥</h3>
+        <p><strong>Talking about how you feel:</strong></p>
+        <ul>
+            <li>I'm fine, thanks. — Я в порядке, спасибо.</li>
+            <li>I'm not feeling well. — Я плохо себя чувствую.</li>
+            <li>I'm sick. — Я болен.</li>
+            <li>Are you okay? — Ты в порядке?</li>
+            <li>Is your head still hurting? — Голова все еще болит?</li>
+            <li>She's better now. — Ей сейчас лучше.</li>
+            <li>We're tired after the trip. — Мы устали после поездки.</li>
+        </ul>
+
+        <p><strong>Mini-диалог:</strong></p>
+        <pre class="code-block">
+A: Hey, are you okay? You look tired.
+B: I'm fine, just a little tired.
+A: Are you sick?
+B: No, I'm not sick. I'm just working too much.
+A: You need to rest!
+B: Yes, you're right.
+        </pre>
+
+        <hr>
+
+        <h2>🏠 ЧАСТЬ 3: ОПИСАНИЕ МЕСТ И ПРЕДМЕТОВ</h2>
+        <p><strong>Describing your home:</strong></p>
+        <ul>
+            <li>My apartment is small but cozy. — Моя квартира маленькая, но уютная.</li>
+            <li>My room is on the second floor. — Моя комната на втором этаже.</li>
+            <li>The kitchen is very modern. — Кухня очень современная.</li>
+            <li>Where is the bathroom? — Где ванная?</li>
+            <li>Is the wi-fi password on the table? — Пароль от wi-fi на столе?</li>
+            <li>My keys are in my bag. — Мои ключи в сумке.</li>
+            <li>The TV isn't working. — Телевизор не работает.</li>
+        </ul>
+
+        <p><strong>Describing objects:</strong></p>
+        <ul>
+            <li>This book is interesting. — Эта книга интересная.</li>
+            <li>My phone is new. — Мой телефон новый.</li>
+            <li>These shoes are comfortable. — Эти туфли удобные.</li>
+            <li>Is your laptop expensive? — Твой ноутбук дорогой?</li>
+            <li>The coffee is cold. — Кофе холодный.</li>
+            <li>Where is my wallet? — Где мой кошелек?</li>
+        </ul>
+
+        <hr>
+
+        <h2>📱 ЧАСТЬ 4: ПО ТЕЛЕФОНУ И В ПЕРЕПИСКЕ</h2>
+        <p><strong>Phone conversations:</strong></p>
+        <ul>
+            <li>Hello, is Anna there? — Алло, Анна там?</li>
+            <li>Yes, I am. / No, she isn't. — Да, это я. / Нет, её нет.</li>
+            <li>Is this a good time to talk? — Сейчас удобно говорить?</li>
+            <li>I'm busy right now. — Я сейчас занят.</li>
+            <li>Are you free this evening? — Ты свободен сегодня вечером?</li>
+            <li>Where are you now? — Где ты сейчас?</li>
+            <li>I'm on my way. — Я в пути.</li>
+        </ul>
+
+        <p><strong>Text messages style:</strong></p>
+        <ul>
+            <li>Hi! Are you home?</li>
+            <li>Yes, I am. Why?</li>
+            <li>Are you free? Let's meet!</li>
+            <li>Sorry, I'm not. I'm at work.</li>
+            <li>Okay. Are you free tomorrow?</li>
+            <li>Yes! What time?</li>
+        </ul>
+
+        <hr>
+
+        <h2>🎯 ЧАСТЬ 5: ПРАКТИЧЕСКИЕ СЦЕНАРИИ</h2>
+        <h3>Сценарий 1: Планирование встречи</h3>
+        <pre class="code-block">
+A: Hi! Are you free on Friday evening?
+B: Let me check... Yes, I am! Why?
+A: Great! There's a new Italian restaurant. Are you interested?
+B: Yes! I love Italian food. Where is it?
+A: It's in the city center, near the park.
+B: Perfect! What time?
+A: Is 7 PM okay for you?
+B: Yes, it is. See you then!
+        </pre>
+
+        <h3>Сценарий 2: Опоздание</h3>
+        <pre class="code-block">
+A: Hi, sorry I'm late!
+B: It's okay. Where were you?
+A: I was stuck in traffic.
+B: Are you here now?
+A: Yes, I'm at the entrance. Where are you?
+B: I'm inside, at table 5.
+A: Great! I'm coming!
+        </pre>
+
+        <h3>Сценарий 3: На новой работе</h3>
+        <pre class="code-block">
+A: Excuse me, are you the new employee?
+B: Yes, I am. I'm Sarah.
+A: Nice to meet you, Sarah. I'm Tom. I'm your team leader.
+B: Nice to meet you too!
+A: Is this your first day?
+B: Yes, it is. I'm a bit nervous!
+A: Don't worry! Everyone is very friendly here.
+B: That's good to know. Thank you!
+        </pre>
+
+        <h3>Сценарий 4: Помощь туристу</h3>
+        <pre class="code-block">
+A: Excuse me, are you local?
+B: Yes, I am. Can I help you?
+A: I'm looking for the train station. Is it near here?
+B: Yes, it is. It's about 5 minutes from here.
+A: Which direction?
+B: Go straight, then turn left. It's on the right.
+A: Thank you so much!
+B: You're welcome! Enjoy your stay!
+        </pre>
+
+        <h3>Сценарий 5: У врача</h3>
+        <pre class="code-block">
+Doctor: Hello, how are you today?
+Patient: I'm not feeling well.
+Doctor: What's wrong?
+Patient: I'm tired all the time and I have a headache.
+Doctor: Are you sleeping well?
+Patient: No, I'm not. I'm very stressed at work.
+Doctor: I see. Are you taking any medication?
+Patient: No, I'm not.
+Doctor: Okay, let me examine you.
+        </pre>
+
+        <hr>
+
+        <h2>💡 ЧАСТЬ 6: ПОЛЕЗНЫЕ КОМБИНАЦИИ</h2>
+        <p><strong>Expressing certainty:</strong></p>
+        <ul>
+            <li>I'm sure. — Я уверен.</li>
+            <li>I'm not sure. — Я не уверен.</li>
+            <li>Are you sure? — Ты уверен?</li>
+            <li>It's certain. — Это точно.</li>
+        </ul>
+
+        <p><strong>Expressing availability:</strong></p>
+        <ul>
+            <li>I'm free. — Я свободен.</li>
+            <li>I'm busy. — Я занят.</li>
+            <li>Are you available? — Ты доступен?</li>
+            <li>We're not available today. — Мы сегодня недоступны.</li>
+        </ul>
+
+        <p><strong>Expressing readiness:</strong></p>
+        <ul>
+            <li>I'm ready. — Я готов.</li>
+            <li>We're not ready yet. — Мы еще не готовы.</li>
+            <li>Are you ready? — Ты готов?</li>
+            <li>Everything is ready. — Всё готово.</li>
+        </ul>
+
+        <p><strong>Expressing problems:</strong></p>
+        <ul>
+            <li>Something is wrong. — Что-то не так.</li>
+            <li>I'm in trouble. — У меня проблемы.</li>
+            <li>Is everything okay? — Всё в порядке?</li>
+            <li>It's not a problem. — Это не проблема.</li>
+        </ul>
+
+        <hr>
+
+        <h2>📊 ТАБЛИЦА: Полная трансформация</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Утверждение</th>
+                    <th>Отрицание</th>
+                    <th>Общий вопрос</th>
+                    <th>Специальный вопрос</th>
+                    <th>Краткий ответ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>I am at home</td><td>I'm not at home</td><td>Are you at home?</td><td>Where are you?</td><td>Yes, I am / No, I'm not</td></tr>
+                <tr><td>She is a teacher</td><td>She isn't a teacher</td><td>Is she a teacher?</td><td>What is her job?</td><td>Yes, she is / No, she isn't</td></tr>
+                <tr><td>They are busy</td><td>They aren't busy</td><td>Are they busy?</td><td>Why are they busy?</td><td>Yes, they are / No, they aren't</td></tr>
+                <tr><td>It is cold</td><td>It isn't cold</td><td>Is it cold?</td><td>How is the weather?</td><td>Yes, it is / No, it isn't</td></tr>
+                <tr><td>We are friends</td><td>We aren't friends</td><td>Are we friends?</td><td>Who are they?</td><td>Yes, we are / No, we aren't</td></tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <h2>🎓 КРАТКОЕ РЕЗЮМЕ УРОКА</h2>
+        <ul>
+            <li>✅ Все формы глагола to be в реальных ситуациях</li>
+            <li>✅ Описание себя, семьи и окружения</li>
+            <li>✅ Практические диалоги: в аэропорту, на работе, в магазине</li>
+            <li>✅ Трансформация предложений (утверждение → отрицание → вопрос)</li>
+            <li>✅ Живое общение в повседневных сценариях</li>
+        </ul>
+
+        <p><strong>Главное:</strong> Глагол to be — это основа английского! Теперь вы можете:</p>
+        <ul>
+            <li>Рассказывать о себе</li>
+            <li>Задавать вопросы</li>
+            <li>Описывать людей и места</li>
+            <li>Вести простые диалоги</li>
+        </ul>
+
+        <div class="important-note">
+            <strong>🌟 Практикуйте эти ситуации каждый день!</strong>
+            <p>Попробуйте: описать свой день с использованием <em>to be</em>, рассказать о семье, задать вопросы коллегам или друзьям, составить свои диалоги по образцу.</p>
+        </div>
+    </div>
+
+    <div class="grammar-footer">
+        <button class="btn-primary" onclick="window.Telegram.WebApp.close()">
+            Закрыть
+        </button>
+    </div>
+</div>
+
+<style>
+.grammar-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px;
+    background: var(--tg-theme-bg-color, #ffffff);
+    color: var(--tg-theme-text-color, #000000);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+}
+
+.grammar-header {
+    text-align: center;
+    margin-bottom: 28px;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 14px;
+    color: white;
+}
+
+.grammar-header h1 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.subtitle {
+    font-size: 15px;
+    opacity: 0.95;
+    margin-top: 6px;
+}
+
+.module-info {
+    margin-top: 10px;
+}
+
+.badge {
+    background: rgba(255,255,255,0.18);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 13px;
+    display: inline-block;
+    color: #fff;
+}
+
+.content h2 {
+    margin-top: 28px;
+    color: #222;
+}
+
+.content h3 {
+    margin-top: 18px;
+    color: #333;
+}
+
+.content p, .content li {
+    color: var(--tg-theme-text-color, #000000);
+    font-size: 15px;
+}
+
+.content ul, .content ol {
+    margin-left: 20px;
+}
+
+.content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px 0;
+}
+
+.content th, .content td {
+    border: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+    padding: 10px 12px;
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+}
+
+.important-note {
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin: 16px 0;
+    color: #92400e;
+}
+
+.code-block {
+    background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+    padding: 12px;
+    border-radius: 8px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.grammar-footer {
+    text-align: center;
+    margin-top: 28px;
+}
+
+.btn-primary {
+    background: var(--tg-theme-button-color, #3390ec);
+    color: var(--tg-theme-button-text-color, #ffffff);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .grammar-container {
+        padding: 16px;
+    }
+    .grammar-header {
+        padding: 18px;
+    }
+    .grammar-header h1 {
+        font-size: 20px;
+    }
+    .subtitle {
+        font-size: 14px;
+    }
+    .content h2 {
+        font-size: 20px;
+    }
+    .content h3 {
+        font-size: 17px;
+    }
+    .content table {
+        font-size: 13px;
+    }
+    .content table th,
+    .content table td {
+        padding: 8px;
+    }
+}
+</style>
