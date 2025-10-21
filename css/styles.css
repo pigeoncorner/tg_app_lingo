@@ -285,6 +285,7 @@ body {
 }
 
 /* Важные замечания */
+/*
 .important-note {
     background: #fef3c7;
     border-left: 4px solid #f59e0b;
@@ -292,6 +293,18 @@ body {
     padding: 16px;
     margin: 20px 0;
 }
+*/
+
+.important-note {
+    background: var(--tg-theme-bg-color, #ffffff);  /* Белый фон */
+    border: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);  /* Легкая рамка */
+    border-left: 4px solid #f59e0b;  /* Оранжевая "скобка" слева */
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px 0;
+    color: var(--tg-theme-text-color, #000000);  /* Темный текст */
+}
+
 
 .important-note strong {
     display: block;
