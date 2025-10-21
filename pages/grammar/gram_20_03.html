@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Be: Вопросы и ответы</title>
+    <link rel="stylesheet" href="../../css/styles.css">
+    <style>
+        .grammar-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--tg-theme-text-color, #000000);
+        }
+
+        .grammar-header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding: 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            color: white;
+        }
+
+        .grammar-header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.95;
+            margin-bottom: 16px;
+            color: white;
+        }
+
+        .module-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            background: var(--tg-theme-bg-color, #ffffff);
+        }
+
+        .content h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin: 32px 0 16px 0;
+            color: var(--tg-theme-text-color, #000000);
+            border-bottom: 2px solid var(--tg-theme-section-separator-color, #e5e5e5);
+            padding-bottom: 8px;
+        }
+
+        .content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 24px 0 12px 0;
+            color: var(--tg-theme-text-color, #000000);
+        }
+
+        .content p {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+
+        .content ul,
+        .content ol {
+            margin: 12px 0 12px 24px;
+        }
+
+        .content li {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .content hr {
+            border: none;
+            border-top: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+            margin: 24px 0;
+        }
+
+        .formula-box {
+            background: #e8f4fd;
+            border-left: 4px solid #3390ec;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .comparison-table,
+        .answer-table,
+        .wh-table,
+        .transform-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table thead,
+        .answer-table thead,
+        .wh-table thead,
+        .transform-table thead {
+            background: #667eea;
+            color: white;
+        }
+
+        .comparison-table th,
+        .comparison-table td,
+        .answer-table th,
+        .answer-table td,
+        .wh-table th,
+        .wh-table td,
+        .transform-table th,
+        .transform-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+        }
+
+        .comparison-table tr:last-child td,
+        .answer-table tr:last-child td,
+        .wh-table tr:last-child td,
+        .transform-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+
+        .warning-box strong {
+            display: block;
+            margin-bottom: 8px;
+            color: #92400e;
+        }
+
+        .examples-grid {
+            display: grid;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .example-item {
+            background: var(--tg-theme-secondary-bg-color, #f8f9fa);
+            padding: 12px 16px;
+            border-radius: 8px;
+            border-left: 3px solid #667eea;
+        }
+
+        .example-item strong {
+            color: #667eea;
+        }
+
+        .dialogue-box {
+            background: #f0f9ff;
+            border-radius: 12px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .dialogue-box h4 {
+            margin: 0 0 12px 0;
+            color: #0369a1;
+            font-size: 16px;
+        }
+
+        .dialogue-line {
+            margin: 6px 0;
+            padding-left: 12px;
+        }
+
+        .error-box {
+            background: #fee;
+            border-left: 4px solid #dc2626;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px 0;
+        }
+
+        .error-box h4 {
+            color: #991b1b;
+            margin: 0 0 12px 0;
+        }
+
+        .correct {
+            color: #16a34a;
+        }
+
+        .incorrect {
+            color: #dc2626;
+        }
+
+        .recap-box {
+            background: linear-gradient(135deg, #e0e7ff 0%, #ddd6fe 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+        }
+
+        .recap-box h3 {
+            margin-top: 0;
+            color: #4c1d95;
+        }
+
+        .recap-box ul {
+            margin: 12px 0 12px 20px;
+        }
+
+        .recap-box li {
+            margin: 8px 0;
+        }
+
+        .key-point {
+            background: #dbeafe;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 16px 0;
+            font-weight: 600;
+        }
+
+        .grammar-footer {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--tg-theme-section-separator-color, #e5e5e5);
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .grammar-container {
+                padding: 16px;
+            }
+            
+            .grammar-header {
+                padding: 20px;
+            }
+            
+            .grammar-header h1 {
+                font-size: 22px;
+            }
+            
+            .subtitle {
+                font-size: 15px;
+            }
+            
+            .content h2 {
+                font-size: 20px;
+            }
+            
+            .content h3 {
+                font-size: 17px;
+            }
+            
+            .comparison-table,
+            .answer-table,
+            .wh-table,
+            .transform-table {
+                font-size: 13px;
+            }
+            
+            .comparison-table th,
+            .comparison-table td,
+            .answer-table th,
+            .answer-table td,
+            .wh-table th,
+            .wh-table td,
+            .transform-table th,
+            .transform-table td {
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grammar-container">
+        <div class="grammar-header">
+            <h1>Глагол to be: Задаём вопросы и отвечаем</h1>
+            <p class="subtitle">Questions & Answers</p>
+            <div class="module-info">
+                <span class="badge">Уровень A1</span>
+                <span class="badge">Модуль 20</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>🔄 Что мы уже знаем</h2>
+            <p>В предыдущих уроках вы научились:</p>
+            <ul>
+                <li>Использовать am/is/are в утвердительных предложениях</li>
+                <li>Говорить о себе и других: <em>I am a teacher, She is smart</em></li>
+                <li>Делать предложения отрицательными: <em>I'm not, She isn't, They aren't</em></li>
+                <li>Рассказывать о местоположении: <em>I'm at home, She's in London</em></li>
+            </ul>
+
+            <p><strong>Сегодня мы учимся:</strong></p>
+            <ul>
+                <li>Задавать вопросы с глаголом to be</li>
+                <li>Давать короткие ответы (Yes/No)</li>
+                <li>Задавать вопросы со словами Where, Who, What</li>
+                <li>Вести простые диалоги</li>
+            </ul>
+
+            <hr>
+
+            <h2>❓ ЧАСТЬ 1: КАК ЗАДАВАТЬ ВОПРОСЫ</h2>
+            
+            <h3>Основное правило вопросов</h3>
+            <p>Чтобы задать вопрос с глаголом to be, меняем порядок слов:</p>
+
+            <div class="formula-box">
+                📝 Формула вопроса:<br>
+                Am/Is/Are + подлежащее + остальное + ?
+            </div>
+
+            <h3>🔄 Сравнение утверждения и вопроса:</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Утверждение (.)</th>
+                        <th>Вопрос (?)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>You are a student.</td>
+                        <td>Are you a student?</td>
+                    </tr>
+                    <tr>
+                        <td>She is at home.</td>
+                        <td>Is she at home?</td>
+                    </tr>
+                    <tr>
+                        <td>They are doctors.</td>
+                        <td>Are they doctors?</td>
+                    </tr>
+                    <tr>
+                        <td>I am late.</td>
+                        <td>Am I late?</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ Важно:</strong>
+                В вопросе глагол to be выходит НА ПЕРВОЕ МЕСТО!
+            </div>
+
+            <h3>🔑 Формула для всех местоимений:</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Местоимение</th>
+                        <th>Вопрос</th>
+                        <th>Пример</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>I</td>
+                        <td>Am I...?</td>
+                        <td>Am I late?</td>
+                    </tr>
+                    <tr>
+                        <td>He</td>
+                        <td>Is he...?</td>
+                        <td>Is he a doctor?</td>
+                    </tr>
+                    <tr>
+                        <td>She</td>
+                        <td>Is she...?</td>
+                        <td>Is she at work?</td>
+                    </tr>
+                    <tr>
+                        <td>It</td>
+                        <td>Is it...?</td>
+                        <td>Is it cold?</td>
+                    </tr>
+                    <tr>
+                        <td>We</td>
+                        <td>Are we...?</td>
+                        <td>Are we friends?</td>
+                    </tr>
+                    <tr>
+                        <td>You</td>
+                        <td>Are you...?</td>
+                        <td>Are you tired?</td>
+                    </tr>
+                    <tr>
+                        <td>They</td>
+                        <td>Are they...?</td>
+                        <td>Are they students?</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>✅ 15 примеров вопросов</h3>
+            
+            <div class="examples-grid">
+                <div class="example-item">
+                    <strong>Вопросы о людях:</strong>
+                    <ul>
+                        <li>Are you a student? — Ты студент?</li>
+                        <li>Is she a teacher? — Она учитель?</li>
+                        <li>Is he American? — Он американец?</li>
+                        <li>Are they from Spain? — Они из Испании?</li>
+                        <li>Am I late? — Я опоздал?</li>
+                    </ul>
+                </div>
+
+                <div class="example-item">
+                    <strong>Вопросы о местоположении:</strong>
+                    <ul>
+                        <li>Are you at home? — Ты дома?</li>
+                        <li>Is she in the office? — Она в офисе?</li>
+                        <li>Are they at school? — Они в школе?</li>
+                        <li>Is he at the airport? — Он в аэропорту?</li>
+                        <li>Are we in the right place? — Мы в правильном месте?</li>
+                    </ul>
+                </div>
+
+                <div class="example-item">
+                    <strong>Вопросы о состоянии:</strong>
+                    <ul>
+                        <li>Are you tired? — Ты устал?</li>
+                        <li>Is it cold today? — Сегодня холодно?</li>
+                        <li>Are you busy? — Ты занят?</li>
+                        <li>Is she happy? — Она счастлива?</li>
+                        <li>Are they ready? — Они готовы?</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+
+            <h2>💬 ЧАСТЬ 2: КРАТКИЕ ОТВЕТЫ (Short Answers)</h2>
+
+            <div class="key-point">
+                В английском НЕ отвечают просто "Yes" или "No"!
+            </div>
+
+            <p><strong>Правило кратких ответов:</strong><br>
+            Yes/No + местоимение + am/is/are (или not)</p>
+
+            <div class="formula-box">
+                📝 Формула кратких ответов:<br><br>
+                <strong>Положительные ответы:</strong><br>
+                • Yes, I am.<br>
+                • Yes, he/she/it is.<br>
+                • Yes, we/you/they are.<br><br>
+                
+                <strong>Отрицательные ответы:</strong><br>
+                • No, I'm not.<br>
+                • No, he/she/it isn't. (или is not)<br>
+                • No, we/you/they aren't. (или are not)
+            </div>
+
+            <h3>🔑 Таблица кратких ответов:</h3>
+            <table class="answer-table">
+                <thead>
+                    <tr>
+                        <th>Вопрос</th>
+                        <th>Положительный ответ</th>
+                        <th>Отрицательный ответ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Am I late?</td>
+                        <td>Yes, you are.</td>
+                        <td>No, you aren't.</td>
+                    </tr>
+                    <tr>
+                        <td>Are you a student?</td>
+                        <td>Yes, I am.</td>
+                        <td>No, I'm not.</td>
+                    </tr>
+                    <tr>
+                        <td>Is he a doctor?</td>
+                        <td>Yes, he is.</td>
+                        <td>No, he isn't.</td>
+                    </tr>
+                    <tr>
+                        <td>Is she at home?</td>
+                        <td>Yes, she is.</td>
+                        <td>No, she isn't.</td>
+                    </tr>
+                    <tr>
+                        <td>Is it cold?</td>
+                        <td>Yes, it is.</td>
+                        <td>No, it isn't.</td>
+                    </tr>
+                    <tr>
+                        <td>Are we ready?</td>
+                        <td>Yes, we are.</td>
+                        <td>No, we aren't.</td>
+                    </tr>
+                    <tr>
+                        <td>Are they friends?</td>
+                        <td>Yes, they are.</td>
+                        <td>No, they aren't.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ Важно:</strong>
+                В кратких положительных ответах НЕ используются сокращения!<br><br>
+                <span class="incorrect">❌ Yes, I'm. / Yes, he's. / Yes, they're.</span><br>
+                <span class="correct">✅ Yes, I am. / Yes, he is. / Yes, they are.</span>
+            </div>
+
+            <h3>✅ 20 примеров вопросов и ответов</h3>
+            
+            <div class="examples-grid">
+                <div class="example-item">
+                    <strong>О профессии:</strong>
+                    <ul>
+                        <li>Are you a teacher? — Yes, I am. / No, I'm not.</li>
+                        <li>Is she a doctor? — Yes, she is. / No, she isn't.</li>
+                        <li>Are they students? — Yes, they are. / No, they aren't.</li>
+                    </ul>
+                </div>
+
+                <div class="example-item">
+                    <strong>О местоположении:</strong>
+                    <ul>
+                        <li>Are you at home? — Yes, I am. / No, I'm not.</li>
+                        <li>Is he in London? — Yes, he is. / No, he isn't.</li>
+                        <li>Are they at work? — Yes, they are. / No, they aren't.</li>
+                    </ul>
+                </div>
+
+                <div class="example-item">
+                    <strong>О состоянии:</strong>
+                    <ul>
+                        <li>Are you tired? — Yes, I am. / No, I'm not.</li>
+                        <li>Is it cold today? — Yes, it is. / No, it isn't.</li>
+                        <li>Are you busy? — Yes, I am. / No, I'm not.</li>
+                    </ul>
+                </div>
+
+                <div class="example-item">
+                    <strong>О национальности:</strong>
+                    <ul>
+                        <li>Are you German? — Yes, I am. / No, I'm not.</li>
+                        <li>Is she Spanish? — Yes, she is. / No, she isn't.</li>
+                        <li>Are they from India? — Yes, they are. / No, they aren't.</li>
+                    </ul>
+                </div>
+
+                <div class="example-item">
+                    <strong>Общие вопросы:</strong>
+                    <ul>
+                        <li>Am I late? — No, you aren't. You're on time.</li>
+                        <li>Are we friends? — Yes, we are.</li>
+                        <li>Is this your book? — Yes, it is. / No, it isn't.</li>
+                        <li>Are you ready? — Yes, I am. / No, I'm not.</li>
+                        <li>Is everything okay? — Yes, it is. / No, it isn't.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr>
+
+            <h2>❌ Частые ошибки с вопросами</h2>
+
+            <div class="error-box">
+                <h4>Ошибка 1: Неправильный порядок слов</h4>
+                <p><span class="incorrect">❌ You are a student?</span><br>
+                <span class="correct">✅ Are you a student?</span></p>
+                <p><span class="incorrect">❌ She is at home?</span><br>
+                <span class="correct">✅ Is she at home?</span></p>
+                <p>💡 <strong>Правило:</strong> Глагол to be всегда идёт ПЕРВЫМ в вопросе!</p>
+            </div>
+
+            <div class="error-box">
+                <h4>Ошибка 2: Использование "do/does" с to be</h4>
+                <p><span class="incorrect">❌ Do you are a student?</span><br>
+                <span class="correct">✅ Are you a student?</span></p>
+                <p><span class="incorrect">❌ Does she is at home?</span><br>
+                <span class="correct">✅ Is she at home?</span></p>
+                <p>💡 <strong>Правило:</strong> С глаголом to be НЕ нужны вспомогательные глаголы do/does!</p>
+            </div>
+
+            <div class="error-box">
+                <h4>Ошибка 3: Неправильные краткие ответы</h4>
+                <p><span class="incorrect">❌ Yes, I'm. / Yes, he's. / Yes, they're.</span><br>
+                <span class="correct">✅ Yes, I am. / Yes, he is. / Yes, they are.</span></p>
+                <p><span class="incorrect">❌ Are you tired? — Yes.</span><br>
+                <span class="correct">✅ Are you tired? — Yes, I am.</span></p>
+                <p>💡 <strong>Правило:</strong> В положительных кратких ответах сокращения не используются!</p>
+            </div>
+
+            <div class="error-box">
+                <h4>Ошибка 4: Пропуск местоимения в ответе</h4>
+                <p><span class="incorrect">❌ Are you a student? — Yes, am.</span><br>
+                <span class="correct">✅ Are you a student? — Yes, I am.</span></p>
+                <p><span class="incorrect">❌ Is she at home? — No, isn't.</span><br>
+                <span class="correct">✅ Is she at home? — No, she isn't.</span></p>
+                <p>💡 <strong>Правило:</strong> Местоимение в кратком ответе ОБЯЗАТЕЛЬНО!</p>
+            </div>
+
+            <hr>
+
+            <h2>🌟 ЧАСТЬ 3: WH-QUESTIONS (Специальные вопросы)</h2>
+
+            <h3>Вопросы с вопросительными словами</h3>
+            <p>Помимо простых вопросов Yes/No, можем задавать вопросы со специальными словами:</p>
+
+            <div class="formula-box">
+                📝 Формула Wh-вопроса:<br>
+                Wh-word + am/is/are + подлежащее + остальное + ?
+            </div>
+
+            <h3>🔑 Основные вопросительные слова:</h3>
+            <table class="wh-table">
+                <thead>
+                    <tr>
+                        <th>Wh-word</th>
+                        <th>Перевод</th>
+                        <th>Пример</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Where</td>
+                        <td>Где? Куда?</td>
+                        <td>Where are you?</td>
+                    </tr>
+                    <tr>
+                        <td>Who</td>
+                        <td>Кто?</td>
+                        <td>Who is that?</td>
+                    </tr>
+                    <tr>
+                        <td>What</td>
+                        <td>Что? Какой?</td>
+                        <td>What is your name?</td>
+                    </tr>
+                    <tr>
+                        <td>How</td>
+                        <td>Как?</td>
+                        <td>How are you?</td>
+                    </tr>
+                    <tr>
+                        <td>Why</td>
+                        <td>Почему?</td>
+                        <td>Why are you late?</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>✅ Примеры специальных вопросов</h3>
+
+            <div class="examples-grid">
+                <div class="example-item">
+                    <strong>Вопросы WHERE (Где? Куда?):</strong>
+                    <ul>
+                        <li>Where are you? — Где ты? → I'm at home.</li>
+                        <li>Where is she? — Где она? → She's in Paris.</li>
+                        <li>Where are they from? — Откуда они? → They're from Germany.</li>
+                        <li>Where is the book? — Где книга? → It's on the table.</li>
+                        <li>Where are my keys? — Где мои ключи? → They're in your bag.</li>
+                    </ul>
+                </div>
+
+                <div class="example-item">
+                    <strong>Вопросы WHO (Кто?):</strong>
+                    <ul>
+                        <li>Who are you? — Кто ты? → I'm a student.</li>
+                        <li>Who is that? — Кто это? → That's my friend.</li>
+                        <li>Who is she? — Кто она? → She's my sister.</li>
+                        <li>Who are they? — Кто они? → They're my colleagues.</li>
+                    </ul>
+                </div>
+
+                <div class="example-item">
+                    <strong>Вопросы WHAT (Что? Какой?):</strong>
+                    <ul>
+                        <li>What is your name? — Как тебя зовут? → My name is Anna.</li>
+                        <li>What is it? — Что это? → It's a book.</li>
+                        <li>What is your job? — Кто ты по профессии? → I'm a teacher.</li>
+                        <li>What are these? — Что это (мн.ч.)? → They're my keys.</li>
+                    </ul>
+                </div>
+
+                <div class="example-item">
+                    <strong>Вопросы HOW (Как?):</strong>
+                    <ul>
+                        <li>How are you? — Как дела? → I'm fine, thanks.</li>
+                        <li>How is your brother? — Как твой брат? → He's good.</li>
+                        <li>How old are you? — Сколько тебе лет? → I'm 25.</li>
+                    </ul>
+                </div>
+
+                <div class="example-item">
+                    <strong>Вопросы WHY (Почему?):</strong>
+                    <ul>
+                        <li>Why are you late? — Почему ты опоздал? → I'm sorry, the bus was late.</li>
+                        <li>Why is she sad? — Почему она грустная? → She's tired.</li>
+                        <li>Why are they here? — Почему они здесь? → They're at a meeting.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Важно:</strong>
+                В специальных вопросах тоже делаем инверсию (глагол перед подлежащим)!
+            </div>
+
+            <hr>
+
+            <h2>💬 ЧАСТЬ 4: ПРОСТЫЕ ДИАЛОГИ</h2>
+
+            <div class="dialogue-box">
+                <h4>Диалог 1: Знакомство</h4>
+                <div class="dialogue-line"><strong>A:</strong> Hi! Are you new here?</div>
+                <div class="dialogue-line"><strong>B:</strong> Yes, I am. My name is Maria.</div>
+                <div class="dialogue-line"><strong>A:</strong> Nice to meet you, Maria. Where are you from?</div>
+                <div class="dialogue-line"><strong>B:</strong> I'm from Spain. And you?</div>
+                <div class="dialogue-line"><strong>A:</strong> I'm from England.</div>
+            </div>
+
+            <div class="dialogue-box">
+                <h4>Диалог 2:
