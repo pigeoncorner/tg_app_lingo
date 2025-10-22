@@ -1,0 +1,132 @@
+<div class="grammar-container">
+    <div class="grammar-header">
+        <h1>Третье лицо единственного числа (He/She/It + S)</h1>
+        <p class="subtitle">Third person singular (He/She/It + S)</p>
+        <div class="module-info">
+            <span class="badge">Модуль Present Simple | Урок 3</span>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <h2>🎯 Главное правило</h2>
+        <p>Для <strong>he, she, it</strong> добавляем окончание <strong>-s</strong> или <strong>-es</strong> к глаголу.</p>
+
+        <hr>
+
+        <h2>📋 Правила добавления окончаний</h2>
+
+        <h3>Правило 1: Большинство глаголов → добавляем -S</h3>
+        <table>
+            <thead>
+                <tr><th>Инфинитив</th><th>He/She/It</th><th>Пример</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>work</td><td>works</td><td>He works in London.</td></tr>
+                <tr><td>play</td><td>plays</td><td>She plays tennis.</td></tr>
+                <tr><td>live</td><td>lives</td><td>It lives in the ocean.</td></tr>
+                <tr><td>like</td><td>likes</td><td>He likes coffee.</td></tr>
+                <tr><td>speak</td><td>speaks</td><td>She speaks German.</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Правило 2: Глаголы на -s, -ss, -sh, -ch, -x, -o → добавляем -ES</h3>
+        <table>
+            <thead>
+                <tr><th>Инфинитив</th><th>He/She/It</th><th>Пример</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>watch</td><td>watches</td><td>She watches TV.</td></tr>
+                <tr><td>go</td><td>goes</td><td>He goes to work.</td></tr>
+                <tr><td>do</td><td>does</td><td>It does the job.</td></tr>
+                <tr><td>miss</td><td>misses</td><td>She misses her family.</td></tr>
+                <tr><td>wash</td><td>washes</td><td>He washes the car.</td></tr>
+                <tr><td>teach</td><td>teaches</td><td>She teaches English.</td></tr>
+                <tr><td>fix</td><td>fixes</td><td>He fixes computers.</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Правило 3: Глаголы на согласную + Y → меняем Y на I и добавляем -ES</h3>
+        <table>
+            <thead>
+                <tr><th>Инфинитив</th><th>He/She/It</th><th>Пример</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>study</td><td>studies</td><td>She studies history.</td></tr>
+                <tr><td>try</td><td>tries</td><td>He tries hard.</td></tr>
+                <tr><td>fly</td><td>flies</td><td>The bird flies high.</td></tr>
+                <tr><td>cry</td><td>cries</td><td>The baby cries.</td></tr>
+                <tr><td>carry</td><td>carries</td><td>She carries a bag.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="important-note">
+            <strong>⚠️ НО!</strong> Если перед <strong>Y</strong> стоит гласная → просто добавляем <strong>-S</strong>:
+            <ul>
+                <li>play → plays (He plays)</li>
+                <li>say → says (She says)</li>
+                <li>buy → buys (He buys)</li>
+            </ul>
+        </div>
+
+        <h3>Правило 4: Глагол <strong>HAVE → HAS</strong></h3>
+        <table>
+            <thead>
+                <tr><th>Инфинитив</th><th>He/She/It</th><th>Пример</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>have</td><td>has</td><td>She has a car.</td></tr>
+            </tbody>
+        </table>
+
+        <p><em>Это исключение! Запомните!</em></p>
+
+        <hr>
+
+        <h2>✅ Примеры с третьим лицом</h2>
+
+        <h3>О других людях</h3>
+        <ul>
+            <li>Anna works in a bank. — Анна работает в банке.</li>
+            <li>Tom lives in New York. — Том живет в Нью-Йорке.</li>
+            <li>My friend speaks Spanish fluently. — Мой друг свободно говорит по-испански.</li>
+            <li>Sarah teaches children. — Сара учит детей.</li>
+        </ul>
+
+        <h3>О животных и предметах</h3>
+        <ul>
+            <li>My cat sleeps all day. — Моя кошка спит весь день.</li>
+            <li>The dog loves to play. — Собака любит играть.</li>
+            <li>This computer works very fast. — Этот компьютер работает очень быстро.</li>
+            <li>The sun shines brightly. — Солнце светит ярко.</li>
+        </ul>
+
+        <h3>С частотными словами</h3>
+        <ul>
+            <li>He always arrives on time. — Он всегда приходит вовремя.</li>
+            <li>She often goes to the cinema. — Она часто ходит в кино.</li>
+            <li>It usually rains in autumn. — Обычно осенью идет дождь.</li>
+            <li>My sister never eats meat. — Моя сестра никогда не ест мясо.</li>
+        </ul>
+
+        <hr>
+
+        <h2>🎓 Итог урока</h2>
+        <ul>
+            <li>✅ Добавляем -s для he/she/it</li>
+            <li>✅ Добавляем -es для глаголов на -s, -ss, -sh, -ch, -x, -o</li>
+            <li>✅ Меняем -y на -ies после согласной</li>
+            <li>✅ Исключение: have → has</li>
+            <li>✅ Тренируемся в живых примерах</li>
+        </ul>
+
+        <p><strong>Главное:</strong> в Present Simple <em>he/she/it</em> всегда требует <strong>-s</strong> в конце глагола!</p>
+
+    </div>
+
+    <div class="grammar-footer">
+        <button class="btn-primary" onclick="window.Telegram.WebApp.close()">
+            Закрыть
+        </button>
+    </div>
+</div>
