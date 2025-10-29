@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Present Perfect - Урок 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .grammar-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .grammar-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .grammar-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .module-info {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 30px 0 20px 0;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+        }
+
+        h4 {
+            color: #555;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        .grammar-rule {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .example-box {
+            background: #f8f9ff;
+            border-left: 4px solid #764ba2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f8f9ff;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .formula-box {
+            background: white;
+            border: 3px solid #667eea;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .timeline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8f9ff;
+            border-radius: 10px;
+        }
+
+        .timeline-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .compare-item {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .grammar-header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            table {
+                font-size: 0.9em;
+            }
+
+            .formula-box {
+                font-size: 1em;
+            }
+
+            .comparison-box {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grammar-container">
+        <div class="grammar-header">
+            <h1>Present Perfect</h1>
+            <p class="subtitle">Урок 1: Введение в настоящее совершенное время</p>
+            <div class="module-info">
+                <span class="badge">Модуль Present Perfect | Урок 1</span>
+                <span class="badge">Уровень B1</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>🎯 Что такое Present Perfect?</h2>
+            
+            <p><strong>Present Perfect</strong> (настоящее совершенное время) — это время, которое соединяет <strong>прошлое с настоящим</strong>. Оно описывает действия, которые произошли в прошлом, но <strong>имеют результат или значение сейчас</strong>.</p>
+
+            <div class="formula-box">
+                HAVE/HAS + PAST PARTICIPLE (V3)
+            </div>
+
+            <div class="grammar-rule">
+                <p><strong>📌 Основная идея:</strong></p>
+                <p>Present Perfect показывает <strong>связь прошлого с настоящим</strong>. Действие произошло в прошлом, но <em>важно сейчас</em>!</p>
+            </div>
+
+            <h2>🔗 Связь прошлого с настоящим</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div style="font-size: 2em;">⏪</div>
+                    <p><strong>PAST</strong></p>
+                    <p style="font-size: 0.9em;">Действие произошло</p>
+                </div>
+                <div class="timeline-item">
+                    <div style="font-size: 2em;">🔗</div>
+                    <p><strong>CONNECTION</strong></p>
+                    <p style="font-size: 0.9em;">Связь</p>
+                </div>
+                <div class="timeline-item">
+                    <div style="font-size: 2em;">⏩</div>
+                    <p><strong>NOW</strong></p>
+                    <p style="font-size: 0.9em;">Результат сейчас</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Пример:</strong></p>
+                <p>🔹 I <strong>have lost</strong> my keys. 🔑</p>
+                <p>→ Я потерял ключи (в прошлом) → <em>И сейчас их нет!</em> (результат в настоящем)</p>
+                <br>
+                <p>🔹 She <strong>has gone</strong> to Paris. 🇫🇷✈️</p>
+                <p>→ Она уехала в Париж (в прошлом) → <em>И сейчас её здесь нет!</em> (результат в настоящем)</p>
+            </div>
+
+            <h2>🔤 Формула Present Perfect</h2>
+
+            <div class="grammar-rule">
+                <p><strong>Структура:</strong></p>
+                <p>Subject + <strong>HAVE/HAS</strong> + <strong>PAST PARTICIPLE (V3)</strong></p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Подлежащее</th>
+                        <th>Have/Has</th>
+                        <th>Пример</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>I, You, We, They</td>
+                        <td><strong>have</strong></td>
+                        <td>I <strong>have worked</strong></td>
+                    </tr>
+                    <tr>
+                        <td>He, She, It</td>
+                        <td><strong>has</strong></td>
+                        <td>She <strong>has worked</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>📝 Первые примеры</h2>
+
+            <h3>С HAVE (I, you, we, they)</h3>
+
+            <div class="example-box">
+                <p>🔹 I <strong>have visited</strong> London three times. 🇬🇧</p>
+                <p>→ Я посетил Лондон три раза (это мой опыт до сейчас).</p>
+                <br>
+                <p>🔹 We <strong>have finished</strong> our work. ✅</p>
+                <p>→ Мы закончили работу (и сейчас она готова).</p>
+                <br>
+                <p>🔹 You <strong>have lived</strong> in Berlin for 5 years. 🇩🇪</p>
+                <p>→ Ты живёшь в Берлине 5 лет (и до сих пор там).</p>
+                <br>
+                <p>🔹 They <strong>have seen</strong> this movie. 🎬</p>
+                <p>→ Они видели этот фильм (и помнят его).</p>
+            </div>
+
+            <h3>С HAS (he, she, it)</h3>
+
+            <div class="example-box">
+                <p>🔹 He <strong>has been</strong> to Tokyo twice. 🇯🇵</p>
+                <p>→ Он был в Токио дважды (это его опыт).</p>
+                <br>
+                <p>🔹 She <strong>has started</strong> a new job. 💼</p>
+                <p>→ Она начала новую работу (и сейчас работает там).</p>
+                <br>
+                <p>🔹 It <strong>has rained</strong> all day. 🌧️</p>
+                <p>→ Дождь шёл весь день (и улицы мокрые).</p>
+            </div>
+
+            <h2>🕐 Когда используем Present Perfect?</h2>
+
+            <p>Present Perfect используется в следующих ситуациях:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Ситуация</th>
+                        <th>Пример</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Опыт (Experience)</strong></td>
+                        <td>I <strong>have been</strong> to Paris. 🇫🇷</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Недавние действия (Recent)</strong></td>
+                        <td>She <strong>has just arrived</strong>. ✈️</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Незавершённое время</strong></td>
+                        <td>I <strong>have worked</strong> hard this week. 📅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. Результат в настоящем</strong></td>
+                        <td>I <strong>have lost</strong> my phone. 📱❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. С FOR/SINCE</strong></td>
+                        <td>I <strong>have lived</strong> here for 3 years. 🏠</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>🔍 Краткое сравнение: Present Perfect vs Past Simple</h2>
+
+            <div class="comparison-box">
+                <div class="compare-item">
+                    <h4 style="color: #667eea;">Present Perfect</h4>
+                    <p><strong>Связь с настоящим</strong></p>
+                    <p style="margin-top: 15px;"><strong>Пример:</strong></p>
+                    <p>I <strong>have visited</strong> Madrid.</p>
+                    <p style="font-size: 0.9em; color: #666; margin-top: 10px;">→ Это мой опыт (не важно когда, важно что был)</p>
+                </div>
+                <div class="compare-item">
+                    <h4 style="color: #764ba2;">Past Simple</h4>
+                    <p><strong>Законченное прошлое</strong></p>
+                    <p style="margin-top: 15px;"><strong>Пример:</strong></p>
+                    <p>I <strong>visited</strong> Madrid last year.</p>
+                    <p style="font-size: 0.9em; color: #666; margin-top: 10px;">→ Конкретное время в прошлом (last year)</p>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <p><strong>⚠️ Ключевое отличие:</strong></p>
+                <ul>
+                    <li><strong>Present Perfect:</strong> Не указываем <em>когда именно</em> произошло действие</li>
+                    <li><strong>Past Simple:</strong> Указываем <em>конкретное время</em> (yesterday, last week, in 2020)</li>
+                </ul>
+            </div>
+
+            <h2>🌍 Примеры из разных городов</h2>
+
+            <div class="example-box">
+                <p><strong>London 🇬🇧:</strong></p>
+                <p>→ I <strong>have visited</strong> the British Museum many times.</p>
+                <p>→ She <strong>has lived</strong> in London for 10 years.</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Berlin 🇩🇪:</strong></p>
+                <p>→ We <strong>have explored</strong> Berlin's nightlife. 🎉</p>
+                <p>→ He <strong>has been</strong> to the Brandenburg Gate.</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Paris 🇫🇷:</strong></p>
+                <p>→ They <strong>have climbed</strong> the Eiffel Tower. 🗼</p>
+                <p>→ I <strong>have eaten</strong> at many Parisian cafés. ☕</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Tokyo 🇯🇵:</strong></p>
+                <p>→ She <strong>has tried</strong> authentic sushi in Tokyo. 🍣</p>
+                <p>→ We <strong>have seen</strong> cherry blossoms. 🌸</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Madrid 🇪🇸:</strong></p>
+                <p>→ I <strong>have watched</strong> flamenco in Madrid. 💃</p>
+                <p>→ He <strong>has visited</strong> the Royal Palace. 👑</p>
+            </div>
+
+            <h2>🔑 Важные моменты</h2>
+
+            <div class="success-box">
+                <h4>✅ Что важно понимать:</h4>
+                <ul>
+                    <li>✅ Present Perfect = <strong>HAVE/HAS + V3 (Past Participle)</strong></li>
+                    <li>✅ Показывает <strong>связь прошлого с настоящим</strong></li>
+                    <li>✅ НЕ используем с конкретным временем (yesterday ❌, last week ❌)</li>
+                    <li>✅ Используем для: опыта, недавних действий, результатов</li>
+                    <li>✅ <strong>HAVE</strong> для I/you/we/they, <strong>HAS</strong> для he/she/it</li>
+                </ul>
+            </div>
+
+            <h2>✅ Что мы узнали в этом уроке</h2>
+
+            <div class="success-box">
+                <ul>
+                    <li>✅ Present Perfect соединяет <strong>прошлое с настоящим</strong></li>
+                    <li>✅ Формула: <strong>HAVE/HAS + Past Participle (V3)</strong></li>
+                    <li>✅ Используется для опыта, результатов, недавних действий</li>
+                    <li>✅ Отличается от Past Simple (нет конкретного времени)</li>
+                    <li>✅ В следующем уроке научимся образовывать Past Participle! 🚀</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
