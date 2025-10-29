@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Conditional - Урок 1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .grammar-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .grammar-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .grammar-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .module-info {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 30px 0 20px 0;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+        }
+
+        h4 {
+            color: #555;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        .grammar-rule {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .example-box {
+            background: #f8f9ff;
+            border-left: 4px solid #764ba2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f8f9ff;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .formula-box {
+            background: white;
+            border: 3px solid #667eea;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .grammar-header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            table {
+                font-size: 0.9em;
+            }
+
+            .formula-box {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grammar-container">
+        <div class="grammar-header">
+            <h1>Zero Conditional</h1>
+            <p class="subtitle">Урок 1: Введение в нулевой условный тип</p>
+            <div class="module-info">
+                <span class="badge">Модуль Zero Conditional | Урок 1</span>
+                <span class="badge">Уровень B1</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>🎯 Что такое Zero Conditional?</h2>
+            
+            <p><strong>Zero Conditional</strong> (нулевой условный тип) — это особый тип условных предложений, который описывает <strong>общие истины, научные факты и вещи, которые всегда происходят при определённом условии</strong>.</p>
+
+            <div class="grammar-rule">
+                <p><strong>📌 Главное правило:</strong></p>
+                <p>Zero Conditional используется, когда результат <strong>всегда один и тот же</strong> — это не предположение, а <strong>факт</strong>! 💯</p>
+            </div>
+
+            <div class="formula-box">
+                IF + PRESENT SIMPLE, PRESENT SIMPLE
+            </div>
+
+            <div class="example-box">
+                <p><strong>Простые примеры:</strong></p>
+                <p>🔹 <strong>If you heat water to 100°C</strong>, it boils. 🌡️💧</p>
+                <p>→ Если нагреваешь воду до 100°C, она кипит. (Это всегда так!)</p>
+                <br>
+                <p>🔹 <strong>If you press this button</strong>, the light turns on. 💡</p>
+                <p>→ Если нажимаешь эту кнопку, свет включается. (Каждый раз!)</p>
+                <br>
+                <p>🔹 <strong>If it rains in London</strong>, the streets get wet. 🌧️</p>
+                <p>→ Если в Лондоне идёт дождь, улицы становятся мокрыми. (Всегда!)</p>
+            </div>
+
+            <h2>🔍 Зачем нужен Zero Conditional?</h2>
+
+            <p>Zero Conditional используется в следующих ситуациях:</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Когда используем</th>
+                        <th>Пример</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1. Научные факты 🔬</strong></td>
+                        <td><strong>If you mix blue and yellow</strong>, you get green.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. Общие истины 🌍</strong></td>
+                        <td><strong>If the sun sets</strong>, it gets dark.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. Автоматические действия ⚙️</strong></td>
+                        <td><strong>If I press "start"</strong>, the machine works.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. Привычки и рутины 🔄</strong></td>
+                        <td><strong>If I go to Berlin</strong>, I always visit museums.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. Инструкции 📋</strong></td>
+                        <td><strong>If you need help</strong>, call this number.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>⚖️ Отличие от обычных предложений</h2>
+
+            <div class="grammar-rule">
+                <h4>Обычное предложение (без IF):</h4>
+                <p>Water boils at 100°C. 💧</p>
+                <p>→ Простое утверждение факта.</p>
+            </div>
+
+            <div class="grammar-rule">
+                <h4>Zero Conditional (с IF):</h4>
+                <p><strong>If you heat water to 100°C</strong>, it boils. 🔥💧</p>
+                <p>→ Показывает <em>условие</em> и <em>автоматический результат</em>.</p>
+            </div>
+
+            <div class="success-box">
+                <p><strong>✅ Ключевое отличие:</strong></p>
+                <p>Zero Conditional подчёркивает <strong>причинно-следственную связь</strong> — "если это, то всегда то".</p>
+            </div>
+
+            <h2>📝 Первые примеры Zero Conditional</h2>
+
+            <h3>Научные факты 🔬</h3>
+
+            <div class="example-box">
+                <p>🔹 <strong>If you freeze water</strong>, it becomes ice. ❄️</p>
+                <p>→ Если замораживаешь воду, она становится льдом.</p>
+                <br>
+                <p>🔹 <strong>If you heat ice</strong>, it melts. 🧊→💧</p>
+                <p>→ Если нагреваешь лёд, он тает.</p>
+                <br>
+                <p>🔹 <strong>If plants don't get water</strong>, they die. 🌱</p>
+                <p>→ Если растения не получают воду, они умирают.</p>
+            </div>
+
+            <h3>Общие истины 🌍</h3>
+
+            <div class="example-box">
+                <p>🔹 <strong>If the sun rises</strong>, it's morning. 🌅</p>
+                <p>→ Если солнце встаёт, это утро.</p>
+                <br>
+                <p>🔹 <strong>If you don't eat</strong>, you feel hungry. 🍽️</p>
+                <p>→ Если не ешь, чувствуешь голод.</p>
+                <br>
+                <p>🔹 <strong>If it's winter in Berlin</strong>, it's cold. 🇩🇪❄️</p>
+                <p>→ Если в Берлине зима, холодно.</p>
+            </div>
+
+            <h3>Автоматические действия ⚙️</h3>
+
+            <div class="example-box">
+                <p>🔹 <strong>If you touch fire</strong>, you get burned. 🔥</p>
+                <p>→ Если трогаешь огонь, обжигаешься.</p>
+                <br>
+                <p>🔹 <strong>If you drop something</strong>, it falls down. ⬇️</p>
+                <p>→ Если роняешь что-то, оно падает вниз.</p>
+                <br>
+                <p>🔹 <strong>If you turn the key</strong>, the car starts. 🚗</p>
+                <p>→ Если поворачиваешь ключ, машина заводится.</p>
+            </div>
+
+            <h3>Примеры из разных городов 🌍</h3>
+
+            <div class="example-box">
+                <p><strong>London 🇬🇧:</strong></p>
+                <p>→ <strong>If it rains in London</strong>, people use umbrellas. ☂️</p>
+                <p>→ <strong>If you take the Underground</strong>, you get there fast. 🚇</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Paris 🇫🇷:</strong></p>
+                <p>→ <strong>If you visit Paris</strong>, you see the Eiffel Tower. 🗼</p>
+                <p>→ <strong>If you speak French in Paris</strong>, people are happy. 😊</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Tokyo 🇯🇵:</strong></p>
+                <p>→ <strong>If you travel by train in Tokyo</strong>, it's always on time. ⏰</p>
+                <p>→ <strong>If you bow in Japan</strong>, people bow back. 🙇</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Madrid 🇪🇸:</strong></p>
+                <p>→ <strong>If you go to Madrid in summer</strong>, it's very hot. ☀️🔥</p>
+                <p>→ <strong>If you eat late in Spain</strong>, that's normal. 🍽️</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Berlin 🇩🇪:</strong></p>
+                <p>→ <strong>If you cycle in Berlin</strong>, you find bike lanes everywhere. 🚴</p>
+                <p>→ <strong>If you visit museums in Berlin</strong>, there's so much history. 🎨</p>
+            </div>
+
+            <h2>🔑 Ключевые особенности Zero Conditional</h2>
+
+            <div class="success-box">
+                <h4>✅ Что важно понимать:</h4>
+                <ul>
+                    <li>✅ Используется <strong>Present Simple</strong> в обеих частях предложения</li>
+                    <li>✅ Описывает то, что <strong>всегда</strong> происходит при определённом условии</li>
+                    <li>✅ Это не предположение — это <strong>факт</strong> или <strong>правило</strong></li>
+                    <li>✅ Можно заменить IF на WHEN (об этом подробнее в уроке 6!)</li>
+                    <li>✅ Результат <strong>100% предсказуем</strong></li>
+                </ul>
+            </div>
+
+            <h2>❓ IF = Если (в Zero Conditional)</h2>
+
+            <div class="grammar-rule">
+                <p><strong>IF</strong> в Zero Conditional означает "если" или "когда" и показывает <strong>условие</strong>, при котором что-то всегда происходит.</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Структура:</strong></p>
+                <p><span class="highlight">IF + условие</span>, <span class="highlight">результат</span></p>
+                <br>
+                <p><strong>Пример:</strong></p>
+                <p><span class="highlight">If you study hard</span>, <span class="highlight">you learn more</span>. 📚</p>
+                <p>→ Если усердно учишься, узнаёшь больше.</p>
+            </div>
+
+            <h2>🔄 Два варианта порядка частей</h2>
+
+            <div class="grammar-rule">
+                <h4>Вариант 1: IF clause в начале</h4>
+                <p><strong>If you heat ice</strong>, <strong>it melts</strong>.</p>
+                <p><em>⚠️ Запятая нужна!</em></p>
+            </div>
+
+            <div class="grammar-rule">
+                <h4>Вариант 2: Main clause в начале</h4>
+                <p><strong>It melts</strong> <strong>if you heat ice</strong>.</p>
+                <p><em>⚠️ Запятая НЕ нужна!</em></p>
+            </div>
+
+            <div class="warning-box">
+                <p><strong>⚠️ Правило запятой:</strong></p>
+                <ul>
+                    <li>✅ IF clause в начале → <strong>запятая НУЖНА</strong></li>
+                    <li>✅ Main clause в начале → <strong>запятая НЕ нужна</strong></li>
+                </ul>
+            </div>
+
+            <h2>✅ Что мы узнали в этом уроке</h2>
+
+            <div class="success-box">
+                <ul>
+                    <li>✅ Zero Conditional описывает <strong>общие истины и факты</strong></li>
+                    <li>✅ Формула: <strong>IF + Present Simple, Present Simple</strong></li>
+                    <li>✅ Используется для научных фактов, привычек, автоматических действий</li>
+                    <li>✅ Результат всегда <strong>100% предсказуем</strong></li>
+                    <li>✅ Можно менять порядок частей (с запятой или без)</li>
+                    <li>✅ В следующем уроке детально разберём структуру и формулу! 🚀</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zero Conditional - Урок 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .grammar-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .grammar-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .grammar-header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+            margin-bottom: 20px;
+        }
+
+        .module-info {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        h2 {
+            color: #667eea;
+            margin: 30px 0 20px 0;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #764ba2;
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+        }
+
+        h4 {
+            color: #555;
+            margin: 20px 0 10px 0;
+            font-size: 1.2em;
+        }
+
+        .grammar-rule {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .example-box {
+            background: #f8f9ff;
+            border-left: 4px solid #764ba2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f8f9ff;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        .formula-box {
+            background: white;
+            border: 3px solid #667eea;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .parts-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .part-item {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .grammar-header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            table {
+                font-size: 0.9em;
+            }
+
+            .formula-box {
+                font-size: 1em;
+            }
+
+            .parts-box {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grammar-container">
+        <div class="grammar-header">
+            <h1>Структура Zero Conditional</h1>
+            <p class="subtitle">Урок 2: Детальный разбор формулы</p>
+            <div class="module-info">
+                <span class="badge">Модуль Zero Conditional | Урок 2</span>
+                <span class="badge">Уровень B1</span>
+            </div>
+        </div>
+
+        <div class="content">
+            <h2>📐 Формула Zero Conditional</h2>
+            
+            <div class="formula-box">
+                IF + PRESENT SIMPLE, PRESENT SIMPLE
+            </div>
+
+            <div class="grammar-rule">
+                <p><strong>📌 Детальная формула:</strong></p>
+                <p><strong>IF + subject + verb (Present Simple)</strong>, <strong>subject + verb (Present Simple)</strong></p>
+            </div>
+
+            <div class="parts-box">
+                <div class="part-item">
+                    <h4 style="color: #667eea;">IF CLAUSE (условие)</h4>
+                    <p><strong>If you heat water</strong></p>
+                    <p style="margin-top: 10px;">IF + подлежащее + глагол (Present Simple)</p>
+                </div>
+                <div class="part-item">
+                    <h4 style="color: #764ba2;">MAIN CLAUSE (результат)</h4>
+                    <p><strong>it boils</strong></p>
+                    <p style="margin-top: 10px;">подлежащее + глагол (Present Simple)</p>
+                </div>
+            </div>
+
+            <h2>🔤 Примеры с разными подлежащими</h2>
+
+            <h3>С подлежащим I (я)</h3>
+
+            <div class="example-box">
+                <p>🔹 <strong>If I eat too much</strong>, I feel sick. 🤢</p>
+                <p>→ Если я ем слишком много, мне становится плохо.</p>
+                <br>
+                <p>🔹 <strong>If I don't sleep well</strong>, I'm tired. 😴</p>
+                <p>→ Если я плохо сплю, я устаю.</p>
+                <br>
+                <p>🔹 <strong>If I visit London</strong>, I always see Big Ben. 🇬🇧🏰</p>
+                <p>→ Если я посещаю Лондон, я всегда вижу Биг-Бен.</p>
+            </div>
+
+            <h3>С подлежащим YOU (ты/вы)</h3>
+
+            <div class="example-box">
+                <p>🔹 <strong>If you study hard</strong>, you learn more. 📚</p>
+                <p>→ Если ты усердно учишься, ты узнаёшь больше.</p>
+                <br>
+                <p>🔹 <strong>If you mix red and blue</strong>, you get purple. 🎨</p>
+                <p>→ Если ты смешиваешь красный и синий, получается фиолетовый.</p>
+                <br>
+                <p>🔹 <strong>If you go to Paris</strong>, you see beautiful architecture. 🇫🇷</p>
+                <p>→ Если ты едешь в Париж, ты видишь красивую архитектуру.</p>
+            </div>
+
+            <h3>С подлежащим HE/SHE/IT (он/она/оно)</h3>
+
+            <div class="warning-box">
+                <p><strong>⚠️ Внимание!</strong></p>
+                <p>Не забывайте добавлять <strong>-s/-es</strong> к глаголу в третьем лице единственного числа!</p>
+            </div>
+
+            <div class="example-box">
+                <p>🔹 <strong>If he work<span style="color: #667eea; font-weight: bold;">s</span> late</strong>, he get<span style="color: #667eea; font-weight: bold;">s</span> tired. 💼</p>
+                <p>→ Если он работает допоздна, он устаёт.</p>
+                <br>
+                <p>🔹 <strong>If she live<span style="color: #667eea; font-weight: bold;">s</span> in Berlin</strong>, she speak<span style="color: #667eea; font-weight: bold;">s</span> German. 🇩🇪</p>
+                <p>→ Если она живёт в Берлине, она говорит по-немецки.</p>
+                <br>
+                <p>🔹 <strong>If it rain<span style="color: #667eea; font-weight: bold;">s</span></strong>, the ground get<span style="color: #667eea; font-weight: bold;">s</span> wet. 🌧️</p>
+                <p>→ Если идёт дождь, земля становится мокрой.</p>
+            </div>
+
+            <h3>С подлежащим WE/THEY (мы/они)</h3>
+
+            <div class="example-box">
+                <p>🔹 <strong>If we travel to Tokyo</strong>, we always eat sushi. 🇯🇵🍣</p>
+                <p>→ Если мы едем в Токио, мы всегда едим суши.</p>
+                <br>
+                <p>🔹 <strong>If they arrive late</strong>, they miss the train. 🚂</p>
+                <p>→ Если они приезжают поздно, они опаздывают на поезд.</p>
+                <br>
+                <p>🔹 <strong>If people exercise</strong>, they stay healthy. 💪</p>
+                <p>→ Если люди занимаются спортом, они остаются здоровыми.</p>
+            </div>
+
+            <h2>🔄 Порядок частей предложения</h2>
+
+            <div class="grammar-rule">
+                <h4>Вариант 1: IF CLAUSE в начале</h4>
+                <p><strong>If you heat ice</strong><strong>,</strong> <strong>it melts</strong>.</p>
+                <p style="margin-top: 10px;">✅ <strong>Запятая ОБЯЗАТЕЛЬНА!</strong></p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Примеры:</strong></p>
+                <p>🔹 <strong>If I feel stressed</strong><strong>,</strong> I go for a walk. 🚶</p>
+                <p>🔹 <strong>If you press the button</strong><strong>,</strong> the door opens. 🚪</p>
+                <p>🔹 <strong>If it snows in Madrid</strong><strong>,</strong> it's unusual. 🇪🇸❄️</p>
+            </div>
+
+            <div class="grammar-rule">
+                <h4>Вариант 2: MAIN CLAUSE в начале</h4>
+                <p><strong>It melts</strong> <strong>if you heat ice</strong>.</p>
+                <p style="margin-top: 10px;">✅ <strong>Запятая НЕ нужна!</strong></p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Примеры:</strong></p>
+                <p>🔹 I go for a walk <strong>if I feel stressed</strong>. 🚶</p>
+                <p>🔹 The door opens <strong>if you press the button</strong>. 🚪</p>
+                <p>🔹 It's unusual <strong>if it snows in Madrid</strong>. 🇪🇸❄️</p>
+            </div>
+
+            <div class="success-box">
+                <p><strong>✅ Оба варианта правильные!</strong> Значение не меняется, меняется только акцент:</p>
+                <ul>
+                    <li>✅ IF clause в начале → акцент на условии</li>
+                    <li>✅ Main clause в начале → акцент на результате</li>
+                </ul>
+            </div>
+
+            <h2>❌ Отрицательные предложения</h2>
+
+            <div class="grammar-rule">
+                <p><strong>Формула для отрицания:</strong></p>
+                <p>IF + subject + <strong>don't/doesn't</strong> + verb, result</p>
+            </div>
+
+            <h3>С DON'T (I, you, we, they)</h3>
+
+            <div class="example-box">
+                <p>🔹 <strong>If I don't drink coffee</strong>, I feel sleepy. ☕😴</p>
+                <p>→ Если я не пью кофе, я чувствую сонливость.</p>
+                <br>
+                <p>🔹 <strong>If you don't water plants</strong>, they die. 🌱</p>
+                <p>→ Если ты не поливаешь растения, они умирают.</p>
+                <br>
+                <p>🔹 <strong>If we don't leave early</strong>, we're late. ⏰</p>
+                <p>→ Если мы не выходим рано, мы опаздываем.</p>
+            </div>
+
+            <h3>С DOESN'T (he, she, it)</h3>
+
+            <div class="example-box">
+                <p>🔹 <strong>If he doesn't study</strong>, he fails exams. 📚❌</p>
+                <p>→ Если он не учится, он проваливает экзамены.</p>
+                <br>
+                <p>🔹 <strong>If she doesn't exercise</strong>, she feels unfit. 🏃‍♀️</p>
+                <p>→ Если она не занимается спортом, она чувствует себя не в форме.</p>
+                <br>
+                <p>🔹 <strong>If it doesn't rain</strong>, the grass turns brown. 🌾</p>
+                <p>→ Если не идёт дождь, трава становится коричневой.</p>
+            </div>
+
+            <h3>Отрицание в Main Clause</h3>
+
+            <div class="example-box">
+                <p>🔹 <strong>If you heat water</strong>, it doesn't stay cold. 🌡️</p>
+                <p>→ Если нагреваешь воду, она не остаётся холодной.</p>
+                <br>
+                <p>🔹 <strong>If I'm busy</strong>, I don't answer the phone. 📱</p>
+                <p>→ Если я занят, я не отвечаю на телефон.</p>
+                <br>
+                <p>🔹 <strong>If it's Sunday in Paris</strong>, many shops don't open. 🇫🇷🏪</p>
+                <p>→ Если в Париже воскресенье, многие магазины не открываются.</p>
+            </div>
+
+            <h2>📝 Примеры из разных городов</h2>
+
+            <div class="example-box">
+                <p><strong>London 🇬🇧:</strong></p>
+                <p>→ <strong>If you visit London in December</strong>, it's usually cold and rainy. ☔❄️</p>
+                <p>→ <strong>If tourists go to London</strong>, they take photos of red phone boxes. 📸📞</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Berlin 🇩🇪:</strong></p>
+                <p>→ <strong>If you live in Berlin</strong>, you probably cycle everywhere. 🚴</p>
+                <p>→ <strong>If people visit Berlin</strong>, they see a lot of street art. 🎨</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Paris 🇫🇷:</strong></p>
+                <p>→ <strong>If you order coffee in Paris</strong>, it comes in a small cup. ☕</p>
+                <p>→ <strong>If tourists visit Paris</strong>, they always go to the Eiffel Tower. 🗼</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Tokyo 🇯🇵:</strong></p>
+                <p>→ <strong>If you take the train in Tokyo</strong>, it's always on time. 🚄⏰</p>
+                <p>→ <strong>If it rains in Tokyo</strong>, everyone has an umbrella. ☂️</p>
+            </div>
+
+            <div class="example-box">
+                <p><strong>Madrid 🇪🇸:</strong></p>
+                <p>→ <strong>If you have dinner in Madrid</strong>, you eat late (around 10 PM). 🍽️🌙</p>
+                <p>→ <strong>If it's summer in Madrid</strong>, it gets very hot. ☀️🔥</p>
+            </div>
+
+            <h2>📊 Сводная таблица структуры</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Тип</th>
+                        <th>Структура</th>
+                        <th>Пример</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Утвердительное</strong></td>
+                        <td>If + S + V, S + V</td>
+                        <td><strong>If you heat ice</strong>, it melts.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Отрицание в IF</strong></td>
+                        <td>If + S + don't/doesn't + V, S + V</td>
+                        <td><strong>If you don't eat</strong>, you feel hungry.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Отрицание в результате</strong></td>
+                        <td>If + S + V, S + don't/doesn't + V</td>
+                        <td><strong>If I'm tired</strong>, I don't work well.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Обратный порядок</strong></td>
+                        <td>S + V if + S + V</td>
+                        <td>It melts <strong>if you heat ice</strong>.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2>✅ Что мы узнали в этом уроке</h2>
+
+            <div class="success-box">
+                <ul>
+                    <li>✅ Детальная формула: <strong>IF + Present Simple, Present Simple</strong></li>
+                    <li>✅ Примеры с разными подлежащими (I, you, he/she/it, we, they)</li>
+                    <li>✅ Не забываем <strong>-s/-es</strong> в третьем лице единственного числа!</li>
+                    <li>✅ Два порядка: IF clause в начале (с запятой) или Main clause в начале (без запятой)</li>
+                    <li>✅ Отрицания с <strong>don't/doesn't</strong></li>
+                    <li>✅ В следующем уроке разберём научные факты и общие истины! 🚀</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
