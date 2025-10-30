@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futsal Streaming Platform - C4 Container Diagram</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .diagram-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .header h2 {
+            color: #7f8c8d;
+            font-size: 18px;
+            font-weight: normal;
+        }
+        
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-box {
+            width: 40px;
+            height: 30px;
+            border-radius: 4px;
+            border: 2px solid #333;
+        }
+        
+        .legend-box.person { background: #08427b; }
+        .legend-box.container { background: #1168bd; }
+        .legend-box.external { background: #999999; }
+        
+        .diagram {
+            position: relative;
+            min-height: 900px;
+        }
+        
+        /* Container styles */
+        .container {
+            position: absolute;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .container-header {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: white;
+        }
+        
+        .container-type {
+            font-size: 12px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 12px;
+            font-style: italic;
+        }
+        
+        .container-description {
+            font-size: 13px;
+            line-height: 1.5;
+            color: white;
+        }
+        
+        .container-tech {
+            font-size: 11px;
+            color: rgba(255,255,255,0.8);
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        /* Person */
+        .person {
+            background: #08427b;
+            border: 3px solid #052e56;
+        }
+        
+        /* Internal Containers */
+        .internal-container {
+            background: #1168bd;
+            border: 3px solid #0b4884;
+        }
+        
+        /* External Systems */
+        .external-system {
+            background: #999999;
+            border: 3px solid #707070;
+        }
+        
+        /* System Boundary */
+        .system-boundary {
+            position: absolute;
+            border: 3px dashed #1168bd;
+            border-radius: 12px;
+            background: rgba(17, 104, 189, 0.02);
+        }
+        
+        .boundary-label {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: white;
+            padding: 0 10px;
+            font-weight: bold;
+            color: #1168bd;
+            font-size: 14px;
+        }
+        
+        /* Arrows */
+        .arrow {
+            position: absolute;
+            display: flex;
+            align-items: center;
+        }
+        
+        .arrow-line {
+            height: 2px;
+            background: #666;
+            position: relative;
+        }
+        
+        .arrow-line::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid #666;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+        }
+        
+        .arrow-label {
+            position: absolute;
+            background: white;
+            padding: 4px 8px;
+            font-size: 11px;
+            color: #666;
+            border-radius: 3px;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        
+        .arrow-vertical .arrow-line {
+            width: 2px;
+            height: auto;
+        }
+        
+        .arrow-vertical .arrow-line::after {
+            right: -4px;
+            top: auto;
+            bottom: -8px;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 8px solid #666;
+            border-bottom: none;
+        }
+        
+        /* Specific positioning */
+        .viewer { top: 50px; left: 50px; width: 200px; }
+        .admin { top: 50px; right: 50px; width: 200px; }
+        
+        .system-boundary-main { top: 180px; left: 30px; width: 1320px; height: 650px; }
+        
+        .spa { top: 250px; left: 150px; width: 280px; }
+        .api { top: 250px; left: 500px; width: 280px; }
+        .database { top: 480px; left: 500px; width: 280px; }
+        
+        .media-server-1 { top: 250px; left: 850px; width: 220px; }
+        .media-server-2 { top: 480px; left: 850px; width: 220px; }
+        
+        .cdn { top: 250px; left: 1120px; width: 200px; }
+        
+        .srt-source { top: 370px; right: 50px; width: 200px; }
+        .stripe { top: 690px; left: 500px; width: 200px; }
+        
+        /* Custom arrows */
+        .arr1 { top: 130px; left: 150px; }
+        .arr1 .arrow-line { width: 150px; }
+        .arr1 .arrow-label { top: -25px; left: 30px; }
+        
+        .arr2 { top: 370px; left: 80px; }
+        .arr2 .arrow-line { width: 50px; }
+        .arr2 .arrow-label { top: -25px; left: 5px; }
+        
+        .arr3 { top: 340px; left: 450px; }
+        .arr3 .arrow-line { width: 30px; }
+        .arr3 .arrow-label { top: -25px; left: -50px; }
+        
+        .arr4 { top: 430px; left: 640px; }
+        .arr4 .arrow-line { height: 30px; }
+        .arr4 .arrow-label { left: 10px; top: 5px; }
+        
+        .arr5 { top: 340px; left: 800px; }
+        .arr5 .arrow-line { width: 30px; }
+        .arr5 .arrow-label { top: -25px; left: -30px; }
+        
+        .arr6 { top: 340px; left: 1090px; }
+        .arr6 .arrow-line { width: 10px; }
+        .arr6 .arrow-label { top: -25px; left: -60px; }
+        
+        .arr7 { top: 340px; left: 280px; }
+        .arr7 .arrow-line { width: 820px; }
+        .arr7 .arrow-label { top: -25px; left: 350px; }
+        
+        .arr8 { top: 640px; left: 640px; }
+        .arr8 .arrow-line { height: 30px; }
+        .arr8 .arrow-label { left: 10px; top: 5px; }
+        
+        .arr9 { top: 470px; left: 1200px; }
+        .arr9 .arrow-line { height: 100px; transform: rotate(180deg); }
+        .arr9 .arrow-label { left: 10px; top: 40px; }
+        
+        .arr10 { top: 130px; right: 140px; }
+        .arr10 .arrow-line { width: 150px; transform: rotate(180deg); }
+        .arr10 .arrow-label { top: -25px; left: 40px; }
+        
+        .arr11 { top: 500px; right: 270px; }
+        .arr11 .arrow-line { width: 80px; transform: rotate(180deg); }
+        .arr11 .arrow-label { top: -25px; left: 5px; }
+        
+        .notes {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 4px solid #1168bd;
+        }
+        
+        .notes h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .notes ul {
+            list-style-position: inside;
+            color: #555;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+        
+        @media print {
+            body {
+                background: white;
+            }
+            .diagram-container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="diagram-container">
+        <div class="header">
+            <h1>Futsal Streaming Platform</h1>
+            <h2>System Architecture - Container Diagram (C4 Level 2)</h2>
+        </div>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box person"></div>
+                <span>Person</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box container"></div>
+                <span>Container</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box external"></div>
+                <span>External System</span>
+            </div>
+        </div>
+        
+        <div class="diagram">
+            <!-- People -->
+            <div class="container person viewer">
+                <div class="container-header">Viewer</div>
+                <div class="container-type">[Person]</div>
+                <div class="container-description">
+                    A user who watches futsal matches via the streaming platform
+                </div>
+            </div>
+            
+            <div class="container person admin">
+                <div class="container-header">Administrator</div>
+                <div class="container-type">[Person]</div>
+                <div class="container-description">
+                    Platform administrator managing content, users, and system settings
+                </div>
+            </div>
+            
+            <!-- System Boundary -->
+            <div class="system-boundary system-boundary-main">
+                <div class="boundary-label">Futsal Streaming Platform</div>
+            </div>
+            
+            <!-- Containers -->
+            <div class="container internal-container spa">
+                <div class="container-header">Single Page Application</div>
+                <div class="container-type">[Container: Next.js + React]</div>
+                <div class="container-description">
+                    Provides streaming interface, user authentication, match catalog, and payment flows to users via web browser
+                </div>
+                <div class="container-tech">Technology: Next.js 14, TypeScript, Tailwind CSS, HLS.js</div>
+            </div>
+            
+            <div class="container internal-container api">
+                <div class="container-header">API Application</div>
+                <div class="container-type">[Container: Node.js + Express]</div>
+                <div class="container-description">
+                    Provides REST API for authentication, user management, payment processing, and streaming access control
+                </div>
+                <div class="container-tech">Technology: Node.js 18, Express.js, NextAuth.js, JWT</div>
+            </div>
+            
+            <div class="container internal-container database">
+                <div class="container-header">Database</div>
+                <div class="container-type">[Container: PostgreSQL]</div>
+                <div class="container-description">
+                    Stores user accounts, subscriptions, transactions, match metadata, and access tokens
+                </div>
+                <div class="container-tech">Technology: PostgreSQL 15+, Prisma ORM</div>
+            </div>
+            
+            <div class="container internal-container media-server-1">
+                <div class="container-header">Media Server 1</div>
+                <div class="container-type">[Container: Nginx-RTMP]</div>
+                <div class="container-description">
+                    Receives SRT streams and transcodes to HLS format (handles 2 concurrent matches)
+                </div>
+                <div class="container-tech">Technology: Nginx-RTMP, FFmpeg, 16GB RAM, 18 cores</div>
+            </div>
+            
+            <div class="container internal-container media-server-2">
+                <div class="container-header">Media Server 2</div>
+                <div class="container-type">[Container: Nginx-RTMP]</div>
+                <div class="container-description">
+                    Receives SRT streams and transcodes to HLS format (handles 1 concurrent match)
+                </div>
+                <div class="container-tech">Technology: Nginx-RTMP, FFmpeg, 8GB RAM, 10 cores</div>
+            </div>
+            
+            <div class="container internal-container cdn">
+                <div class="container-header">CDN</div>
+                <div class="container-type">[Container: Cloudflare/CloudFront]</div>
+                <div class="container-description">
+                    Distributes HLS video segments globally to reduce latency and server load
+                </div>
+                <div class="container-tech">Technology: Cloudflare or AWS CloudFront</div>
+            </div>
+            
+            <!-- External Systems -->
+            <div class="container external-system srt-source">
+                <div class="container-header">SRT Source</div>
+                <div class="container-type">[External System]</div>
+                <div class="container-description">
+                    Broadcasting equipment that sends live match video via SRT protocol (1080p, 8-10 Mbps)
+                </div>
+            </div>
+            
+            <div class="container external-system stripe">
+                <div class="container-header">Payment Gateway</div>
+                <div class="container-type">[External System]</div>
+                <div class="container-description">
+                    Processes subscription and pay-per-view payments via Stripe or PayPal
+                </div>
+            </div>
+            
+            <!-- Arrows -->
+            <div class="arrow arr1">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Views matches, manages account</div>
+            </div>
+            
+            <div class="arrow arr2">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Uses</div>
+            </div>
+            
+            <div class="arrow arr3">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Makes API calls to<br/>[JSON/HTTPS]</div>
+            </div>
+            
+            <div class="arrow arrow-vertical arr4">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Reads/Writes<br/>[SQL/TCP]</div>
+            </div>
+            
+            <div class="arrow arr5">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Requests<br/>streams</div>
+            </div>
+            
+            <div class="arrow arr6">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Delivers<br/>HLS</div>
+            </div>
+            
+            <div class="arrow arr7">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Streams video to [HLS/HTTPS]</div>
+            </div>
+            
+            <div class="arrow arrow-vertical arr8">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Processes<br/>payments<br/>[REST/HTTPS]</div>
+            </div>
+            
+            <div class="arrow arrow-vertical arr9">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Pulls HLS<br/>segments</div>
+            </div>
+            
+            <div class="arrow arr10">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Manages platform</div>
+            </div>
+            
+            <div class="arrow arr11">
+                <div class="arrow-line"></div>
+                <div class="arrow-label">Sends SRT<br/>[SRT/UDP]</div>
+            </div>
+        </div>
+        
+        <div class="notes">
+            <h3>Key Architecture Notes:</h3>
+            <ul>
+                <li><strong>SPA (Single Page Application):</strong> Ensures continuous streaming without interruption during navigation</li>
+                <li><strong>Media Servers:</strong> Distributed architecture handles up to 3 concurrent matches with transcoding to adaptive bitrate HLS</li>
+                <li><strong>CDN Integration:</strong> Reduces server load and provides global low-latency distribution</li>
+                <li><strong>SRT Protocol:</strong> Secure and reliable transport for low-latency live video ingestion (1080p@50fps, 8-10 Mbps)</li>
+                <li><strong>API-First Design:</strong> RESTful API enables future mobile app development and third-party integrations</li>
+                <li><strong>PostgreSQL Database:</strong> Stores all user data, transactions, and access control information</li>
+                <li><strong>Payment Integration:</strong> Stripe or PayPal handles subscription and pay-per-view monetization</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
