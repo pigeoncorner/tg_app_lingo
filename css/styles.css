@@ -1,5 +1,13 @@
 /* Общие стили для всех страниц LingoMojo */
 
+:root {
+    --lm-orange: #FF6B00;
+    --lm-orange-hover: #E55F00;
+    --lm-green: #16a34a;
+    --lm-dark: #1B1F3B;
+    --lm-dark-2: #2d3a5e;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -24,8 +32,8 @@ body {
 
 /* Кнопки */
 .btn-primary {
-    background: var(--tg-theme-button-color, #3390ec);
-    color: var(--tg-theme-button-text-color, #ffffff);
+    background: var(--lm-orange);
+    color: #ffffff;
     border: none;
     border-radius: 8px;
     padding: 14px 16px;
@@ -37,8 +45,13 @@ body {
 }
 
 .btn-primary:hover {
-    opacity: 0.9;
+    background: var(--lm-orange-hover);
     transform: translateY(-1px);
+}
+
+.btn-primary:active {
+    background: var(--lm-orange-hover);
+    transform: translateY(0);
 }
 
 .btn-secondary {
@@ -139,15 +152,39 @@ body {
     }
 }
 
-.logo-text {
-  background: #000;
-  color: #fff;
-  font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 6px;
-  display: inline-block;
-  letter-spacing: 2px;
-  font-family: 'Segoe UI', Roboto, sans-serif;
+/* LingoMojo branded header (logo + name) */
+.lm-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.lm-logo {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+}
+
+.lm-brand {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1;
+}
+
+.lm-lingo {
+    color: #ffffff;
+}
+
+.lm-mojo {
+    color: var(--lm-orange);
+}
+
+/* Вариант логотипа для светлого фона */
+.lm-lingo-dark {
+    color: var(--lm-dark);
 }
 
 .add-margin {
@@ -176,7 +213,7 @@ body {
     text-align: center;
     margin-bottom: 32px;
     padding: 24px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--lm-dark) 0%, var(--lm-dark-2) 100%);
     border-radius: 16px;
     color: white;
 }
@@ -349,8 +386,8 @@ body {
 }
 
 .grammar-footer .btn-primary {
-    background: var(--tg-theme-button-color, #3390ec);
-    color: var(--tg-theme-button-text-color, #ffffff);
+    background: var(--lm-orange);
+    color: #ffffff;
     border: none;
     border-radius: 8px;
     padding: 14px 16px;

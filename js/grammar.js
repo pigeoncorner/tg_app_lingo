@@ -1,27 +1,31 @@
 // grammar.js - Логика для грамматических страниц
 
-// Функция для безопасного закрытия WebApp
 function safeClose() {
     if (window.tg && typeof window.tg.close === 'function') {
         window.tg.close();
     } else {
-        console.warn('Telegram WebApp API недоступен');
         window.close();
     }
 }
 
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('Grammar page loaded');
-    
-    // Добавляем обработчики для всех кнопок закрытия
-    const closeButtons = document.querySelectorAll('.btn-primary');
-    closeButtons.forEach(button => {
-        if (button.textContent.includes('Закрыть') || button.textContent.includes('Завершить')) {
-            button.addEventListener('click', safeClose);
-        }
-    });
+// Inject brand header into grammar pages (runs immediately after content injection)
+(function injectBrandHeader() {
+    const header = document.querySelector('.grammar-header');
+    if (header) {
+        header.insertAdjacentHTML('afterbegin', `
+            <div class="lm-header">
+                <img src="icons/icon48.png" class="lm-logo" alt="LingoMojo">
+                <span class="lm-brand"><span class="lm-lingo">Lingo</span><span class="lm-mojo">Mojo</span></span>
+            </div>
+        `);
+    }
+})();
+
+// Bind close buttons (DOM already ready since content is injected before script loads)
+document.querySelectorAll('.btn-primary').forEach(button => {
+    if (button.textContent.includes('Закрыть') || button.textContent.includes('Завершить')) {
+        button.addEventListener('click', safeClose);
+    }
 });
 
-// Экспорт функций для глобального использования
 window.safeClose = safeClose;

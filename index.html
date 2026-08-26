@@ -19,99 +19,56 @@
         const urlParams = new URLSearchParams(window.location.search);
         const page = urlParams.get('page') || 'timezone';
         
-        // Маппинг страниц
-        const pages = {
-            'timezone': 'pages/timezone.html',
-            'agreement': 'pages/agreement.html',
-            'help': 'pages/help.html',
-            'c4': 'pages/C4.html',
-            // Grammar pages - Module 10: Sentence Structure (SPO)
-            'gram_10_01': 'pages/grammar/gram_10_01.html',
-            'gram_10_02': 'pages/grammar/gram_10_02.html',
-            'gram_10_03': 'pages/grammar/gram_10_03.html',
-            'gram_10_04': 'pages/grammar/gram_10_04.html',
-            'gram_10_05': 'pages/grammar/gram_10_05.html',
-            'gram_10_06': 'pages/grammar/gram_10_06.html',
-            'gram_20_01': 'pages/grammar/gram_20_01.html',
-            'gram_20_02': 'pages/grammar/gram_20_02.html',
-            'gram_20_03': 'pages/grammar/gram_20_03.html',
-            'gram_20_04': 'pages/grammar/gram_20_04.html',
-            'gram_30_01': 'pages/grammar/gram_30_01.html',
-            'gram_30_02': 'pages/grammar/gram_30_02.html',
-            'gram_30_03': 'pages/grammar/gram_30_03.html',
-            'gram_30_04': 'pages/grammar/gram_30_04.html',
-            'gram_30_05': 'pages/grammar/gram_30_05.html',
-            'gram_30_06': 'pages/grammar/gram_30_06.html',
-            'gram_30_07': 'pages/grammar/gram_30_07.html',
-            'gram_30_08': 'pages/grammar/gram_30_08.html',
-            'gram_30_09': 'pages/grammar/gram_30_09.html',
-            'gram_40_01': 'pages/grammar/gram_40_01.html',
-            'gram_40_02': 'pages/grammar/gram_40_02.html',
-            'gram_40_03': 'pages/grammar/gram_40_03.html',
-            'gram_40_04': 'pages/grammar/gram_40_04.html',
-            'gram_40_05': 'pages/grammar/gram_40_05.html',
-            'gram_40_06': 'pages/grammar/gram_40_06.html',
-            'gram_40_07': 'pages/grammar/gram_40_07.html',
-            'gram_50_01': 'pages/grammar/gram_50_01.html',
-            'gram_50_02': 'pages/grammar/gram_50_02.html',
-            'gram_50_03': 'pages/grammar/gram_50_03.html',
-            'gram_50_04': 'pages/grammar/gram_50_04.html',
-            'gram_50_05': 'pages/grammar/gram_50_05.html',
-            'gram_50_06': 'pages/grammar/gram_50_06.html',
-            'gram_50_07': 'pages/grammar/gram_50_07.html',
-            'gram_60_01': 'pages/grammar/gram_60_01.html',
-            'gram_60_02': 'pages/grammar/gram_60_02.html',
-            'gram_60_03': 'pages/grammar/gram_60_03.html',
-            'gram_60_04': 'pages/grammar/gram_60_04.html',
-            'gram_60_05': 'pages/grammar/gram_60_05.html',
-            'gram_70_01': 'pages/grammar/gram_70_01.html',
-            'gram_70_02': 'pages/grammar/gram_70_02.html',
-            'gram_70_03': 'pages/grammar/gram_70_03.html',
-            'gram_70_04': 'pages/grammar/gram_70_04.html',
-            'gram_70_05': 'pages/grammar/gram_70_05.html',
-            'gram_80_01': 'pages/grammar/gram_80_01.html',
-            'gram_80_02': 'pages/grammar/gram_80_02.html',
-            'gram_80_03': 'pages/grammar/gram_80_03.html',
-            'gram_80_04': 'pages/grammar/gram_80_04.html',
-            'gram_80_05': 'pages/grammar/gram_80_05.html',
-            'gram_90_01': 'pages/grammar/gram_90_01.html',
-            'gram_90_02': 'pages/grammar/gram_90_02.html',
-            'gram_90_03': 'pages/grammar/gram_90_03.html',
-            'gram_90_04': 'pages/grammar/gram_90_04.html',
-            'gram_90_05': 'pages/grammar/gram_90_05.html',
-            'gram_90_06': 'pages/grammar/gram_90_06.html',
-            'gram_90_07': 'pages/grammar/gram_90_07.html',
-            'wordselector': 'pages/wordselector.html'
+        // API base: dev tunnel or production
+        const API_BASE = window.location.hostname.includes('dev')
+            ? 'https://dev-api.lingomojo.com'
+            : 'https://api.lingomojo.com';
+
+        // Static pages only — grammar is served dynamically via API
+        const staticPages = {
+            'timezone':    'pages/timezone.html',
+            'agreement':   'pages/agreement.html',
+            'help':        'pages/help.html',
+            'c4':          'pages/C4.html',
+            'wordselector':'pages/wordselector.html',
+            'progress':    'pages/progress.html',
         };
-        
+
+        function showError(msg) {
+            document.getElementById('app-container').innerHTML = `
+                <div style="padding: 20px; text-align: center;">
+                    <h2>Ошибка загрузки</h2>
+                    <p>${msg}</p>
+                </div>
+            `;
+        }
+
         // Загрузка соответствующей страницы
         async function loadPage(pageName) {
-            const pageUrl = pages[pageName];
-            
-            if (!pageUrl) {
-                document.getElementById('app-container').innerHTML = `
-                    <div style="padding: 20px; text-align: center;">
-                        <h2>Страница не найдена</h2>
-                        <p>Страница "${pageName}" не существует</p>
-                    </div>
-                `;
-                return;
+            let pageUrl;
+
+            if (pageName.startsWith('gram_')) {
+                pageUrl = `${API_BASE}/grammar/${pageName}`;
+            } else {
+                pageUrl = staticPages[pageName];
+                if (!pageUrl) {
+                    showError(`Страница "${pageName}" не существует`);
+                    return;
+                }
             }
-        
+
             try {
                 const response = await fetch(pageUrl);
+                if (!response.ok) {
+                    showError(`Не удалось загрузить страницу (${response.status})`);
+                    return;
+                }
                 const html = await response.text();
                 document.getElementById('app-container').innerHTML = html;
-                
-                // Определяем какой скрипт загружать
-                let scriptName = pageName;
-                
-                // Для всех грамматических страниц используем один общий скрипт
-                if (pageName.startsWith('gram_')) {
-                    scriptName = 'grammar';
-                }
-                
-                // Загружаем скрипт и ждем его выполнения
+
+                // Для всех грамматических страниц — один общий скрипт
+                const scriptName = pageName.startsWith('gram_') ? 'grammar' : pageName;
+
                 const script = document.createElement('script');
                 script.src = `js/${scriptName}.js`;
                 script.onload = function() {
@@ -121,15 +78,10 @@
                     console.warn(`Script js/${scriptName}.js not found or failed to load`);
                 };
                 document.body.appendChild(script);
-                
+
             } catch (error) {
                 console.error('Error loading page:', error);
-                document.getElementById('app-container').innerHTML = `
-                    <div style="padding: 20px; text-align: center;">
-                        <h2>Ошибка загрузки</h2>
-                        <p>Не удалось загрузить страницу</p>
-                    </div>
-                `;
+                showError('Не удалось загрузить страницу');
             }
         }
         
