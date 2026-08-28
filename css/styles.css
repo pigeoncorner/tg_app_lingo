@@ -448,3 +448,17 @@ body {
         padding: 12px;
     }
 }
+
+/* ── Progress page ─────────────────────────────────────────────────── */
+.pg-root { padding: 20px 16px 32px; }
+.pg-root h1 { font-size: 20px; font-weight: 700; margin-bottom: 20px; text-align: center; }
+.pg-card {
+    background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+}
+.pg-card-title { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.5; margin-bottom: 6px; }
+.pg-card-value { font-size: 36px; font-weight: 700; line-height: 1; }
+.pg-card-sub { font-size: 13px; opacity: 0.6; margin-top: 4px; }
+.pg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
